@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R&M Gestioni Immobiliari — Property & Revenue Management in Toscana</title>
+<meta name="description" content="Gestiamo ville e strutture ricettive in Toscana. Affitto garantito o gestione a percentuale. Revenue management, consulenze e strumenti per affitti brevi professionali.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nero: #0a0a0a;
+  --bianco: #ffffff;
+  --oro: #C9A84C;
+  --oro-scuro: #a8873a;
+  --oro-pale: #f7f0e0;
+  --grigio: #6b6b6b;
+  --grigio-chiaro: #f8f7f5;
+  --grigio-medio: #e8e6e1;
+  --grigio-scuro: #2a2a2a;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;color:var(--nero);background:var(--bianco);overflow-x:hidden;font-weight:300;}
+h1,h2,h3,h4,blockquote{font-family:'Cormorant Garamond',serif;}
+img{max-width:100%;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--grigio-medio);
+  padding:0 60px;height:76px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.06);}
+.nav-logo{height:46px;width:auto;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  font-family:'Jost',sans-serif;font-weight:400;font-size:12px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--nero);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--oro);}
+.nav-actions{display:flex;gap:12px;align-items:center;}
+.nav-btn{
+  font-family:'Jost',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:10px 22px;text-decoration:none;transition:all .2s;
+}
+.nav-btn-outline{border:1px solid var(--nero);color:var(--nero);}
+.nav-btn-outline:hover{background:var(--nero);color:var(--bianco);}
+.nav-btn-gold{background:var(--oro);color:var(--nero);}
+.nav-btn-gold:hover{background:var(--oro-scuro);}
+
+/* ── HERO ── */
+.hero{
+  padding-top:76px;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:55% 45%;
+  position:relative;
+}
+.hero-left{
+  background:var(--nero);
+  padding:100px 72px 100px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-left::before{
+  content:'RM';
+  position:absolute;right:-40px;bottom:-60px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:320px;font-weight:600;
+  color:rgba(255,255,255,0.03);
+  line-height:1;pointer-events:none;
+  letter-spacing:-0.05em;
+}
+.hero-tag{
+  font-family:'Jost',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--oro);margin-bottom:36px;display:block;
+}
+.hero h1{
+  font-size:clamp(40px,4.5vw,66px);font-weight:300;
+  color:var(--bianco);line-height:1.08;
+  letter-spacing:-0.02em;margin-bottom:28px;
+}
+.hero h1 em{font-style:italic;color:var(--oro);}
+.hero-sub{
+  font-size:17px;color:rgba(255,255,255,0.55);
+  line-height:1.85;max-width:460px;
+  font-weight:300;margin-bottom:52px;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  font-family:'Jost',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:16px 32px;text-decoration:none;
+  transition:all .2s;display:inline-block;
+}
+.btn-gold{background:var(--oro);color:var(--nero);}
+.btn-gold:hover{background:var(--oro-scuro);transform:translateY(-1px);}
+.btn-white-outline{
+  border:1px solid rgba(255,255,255,0.25);
+  color:rgba(255,255,255,0.7);
+}
+.btn-white-outline:hover{border-color:var(--oro);color:var(--oro);}
+.btn-dark{background:var(--nero);color:var(--bianco);}
+.btn-dark:hover{background:var(--grigio-scuro);transform:translateY(-1px);}
+.btn-outline{border:1px solid var(--nero);color:var(--nero);}
+.btn-outline:hover{background:var(--nero);color:var(--bianco);}
+
+.hero-right{
+  background:var(--grigio-chiaro);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px 80px 72px;gap:0;
+}
+.hero-kpi-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--grigio-medio);
+  border:1px solid var(--grigio-medio);
+  margin-bottom:40px;
+}
+.hero-kpi{
+  background:var(--bianco);padding:28px 24px;
+}
+.hero-kpi .num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:300;
+  color:var(--nero);line-height:1;margin-bottom:6px;
+}
+.hero-kpi .num span{font-size:24px;color:var(--oro);}
+.hero-kpi .label{
+  font-size:11px;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--grigio);font-weight:400;
+}
+.hero-case-preview{
+  background:var(--nero);padding:28px;
+  display:flex;align-items:center;gap:20px;
+  cursor:pointer;text-decoration:none;
+  border:1px solid transparent;
+  transition:border-color .2s;
+}
+.hero-case-preview:hover{border-color:var(--oro);}
+.case-badge{
+  background:var(--oro);color:var(--nero);
+  font-size:10px;font-weight:600;letter-spacing:0.15em;
+  text-transform:uppercase;padding:6px 12px;
+  white-space:nowrap;flex-shrink:0;
+}
+.case-info strong{
+  display:block;font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:400;color:var(--bianco);
+  margin-bottom:2px;
+}
+.case-info span{font-size:12px;color:rgba(255,255,255,0.45);}
+.case-arrow{
+  margin-left:auto;color:var(--oro);font-size:20px;flex-shrink:0;
+}
+
+/* ── SEZIONI GENERALI ── */
+.section-wrap{max-width:1280px;margin:0 auto;padding:0 60px;}
+.section-tag{
+  font-family:'Jost',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--oro);display:block;margin-bottom:20px;
+}
+.section-title{
+  font-size:clamp(30px,3.5vw,52px);font-weight:300;
+  color:var(--nero);line-height:1.12;
+  letter-spacing:-0.02em;margin-bottom:16px;
+}
+.section-title em{font-style:italic;color:var(--oro);}
+.section-title.white{color:var(--bianco);}
+.section-lead{
+  font-size:17px;color:var(--grigio);
+  line-height:1.85;font-weight:300;
+}
+.divider{width:56px;height:1px;background:var(--oro);margin:24px 0;}
+
+/* ── PROBLEMA ── */
+.problema{padding:100px 0;background:var(--bianco);}
+.problema-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.problema-lista{list-style:none;margin-top:32px;display:flex;flex-direction:column;gap:0;}
+.problema-lista li{
+  display:flex;gap:16px;align-items:flex-start;
+  font-size:16px;color:#333;line-height:1.75;
+  padding:18px 0;border-bottom:1px solid var(--grigio-medio);
+}
+.problema-lista li:first-child{border-top:1px solid var(--grigio-medio);}
+.problema-lista li::before{
+  content:'';display:inline-block;
+  width:20px;height:1px;background:var(--oro);
+  margin-top:13px;flex-shrink:0;
+}
+.problema-quote{
+  background:var(--nero);padding:52px;
+  position:relative;
+}
+.problema-quote::before{
+  content:'"';
+  position:absolute;top:-20px;left:40px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:120px;color:var(--oro);line-height:1;
+  opacity:0.4;
+}
+.problema-quote p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;font-style:italic;
+  color:var(--bianco);line-height:1.55;
+  position:relative;z-index:1;
+}
+
+/* ── SOLUZIONI PROPRIETARI ── */
+.soluzioni{padding:100px 0;background:var(--grigio-chiaro);}
+.soluzioni-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:var(--grigio-medio);
+  margin-top:64px;
+}
+.soluzione-card{
+  background:var(--bianco);
+  padding:52px 44px;
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.soluzione-card.featured{background:var(--nero);}
+.soluzione-card::before{
+  content:attr(data-num);
+  position:absolute;right:-16px;top:-24px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:160px;font-weight:600;
+  color:rgba(0,0,0,0.04);line-height:1;
+  pointer-events:none;
+}
+.soluzione-card.featured::before{color:rgba(255,255,255,0.04);}
+.sol-badge{
+  display:inline-block;
+  font-family:'Jost',sans-serif;font-size:10px;
+  font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  padding:6px 14px;margin-bottom:28px;
+}
+.sol-badge-gold{background:var(--oro);color:var(--nero);}
+.sol-badge-outline{border:1px solid var(--grigio-medio);color:var(--grigio);}
+.sol-badge-outline-white{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);}
+.soluzione-card h3{
+  font-size:clamp(26px,2.5vw,36px);font-weight:300;
+  color:var(--nero);margin-bottom:12px;line-height:1.2;
+}
+.soluzione-card.featured h3{color:var(--bianco);}
+.sol-tagline{
+  font-size:15px;color:var(--grigio);line-height:1.7;
+  margin-bottom:32px;font-weight:300;
+}
+.soluzione-card.featured .sol-tagline{color:rgba(255,255,255,0.5);}
+.sol-pain{
+  background:var(--grigio-chiaro);padding:20px;
+  margin-bottom:28px;border-left:3px solid var(--oro);
+}
+.soluzione-card.featured .sol-pain{background:rgba(255,255,255,0.06);}
+.sol-pain-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--oro);font-weight:500;margin-bottom:8px;
+}
+.sol-pain p{font-size:14px;color:#555;line-height:1.65;}
+.soluzione-card.featured .sol-pain p{color:rgba(255,255,255,0.5);}
+.sol-benefici{list-style:none;margin-bottom:36px;display:flex;flex-direction:column;gap:10px;}
+.sol-benefici li{
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:15px;color:#333;line-height:1.6;
+}
+.soluzione-card.featured .sol-benefici li{color:rgba(255,255,255,0.7);}
+.sol-benefici li::before{
+  content:'';display:inline-block;
+  width:14px;height:1px;background:var(--oro);
+  margin-top:11px;flex-shrink:0;
+}
+
+/* ── REVENUE MANAGEMENT ── */
+.revenue{padding:100px 0;background:var(--bianco);}
+.revenue-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.revenue-lista{list-style:none;margin-top:32px;display:flex;flex-direction:column;gap:0;}
+.revenue-lista li{
+  padding:20px 0;border-bottom:1px solid var(--grigio-medio);
+  display:flex;flex-direction:column;gap:4px;
+}
+.revenue-lista li:first-child{border-top:1px solid var(--grigio-medio);}
+.rev-num{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);font-weight:500;}
+.rev-titolo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--nero);}
+.rev-desc{font-size:14px;color:var(--grigio);line-height:1.65;font-weight:300;}
+.revenue-right{
+  background:var(--grigio-chiaro);padding:52px;
+}
+.rev-price-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grigio);margin-bottom:8px;}
+.rev-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;font-weight:300;color:var(--nero);line-height:1;
+  margin-bottom:4px;
+}
+.rev-price small{font-size:24px;color:var(--oro);vertical-align:super;}
+.rev-price-sub{font-size:13px;color:var(--grigio);margin-bottom:32px;}
+.rev-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+.rev-features li{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:14px;color:#333;line-height:1.55;
+}
+.rev-features li::before{
+  content:'';display:inline-block;
+  width:14px;height:1px;background:var(--oro);
+  margin-top:9px;flex-shrink:0;
+}
+
+/* ── PORTFOLIO / CASO STUDIO ── */
+.portfolio{padding:100px 0;background:var(--nero);}
+.portfolio-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:72px;gap:40px;
+}
+.portfolio-header .section-title{color:var(--bianco);}
+.caso-studio{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:rgba(255,255,255,0.06);
+}
+.caso-left{
+  padding:56px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.caso-label{
+  font-size:10px;font-weight:600;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--oro);
+  margin-bottom:8px;display:block;
+}
+.caso-nome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3vw,42px);font-weight:300;
+  color:var(--bianco);line-height:1.2;margin-bottom:6px;
+}
+.caso-luogo{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:36px;}
+.caso-timeline{
+  display:flex;flex-direction:column;gap:0;
+  margin-bottom:40px;
+}
+.caso-year{
+  display:grid;grid-template-columns:80px 1fr;
+  gap:20px;align-items:center;
+  padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.caso-year:first-child{border-top:1px solid rgba(255,255,255,0.06);}
+.caso-year-label{
+  font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);font-weight:400;
+}
+.caso-year-data{display:flex;flex-direction:column;gap:4px;}
+.caso-year-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:300;color:var(--bianco);line-height:1;
+}
+.caso-year-num.gold{color:var(--oro);}
+.caso-year-bar-wrap{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:6px;}
+.caso-year-bar{height:4px;background:var(--oro);border-radius:2px;}
+.caso-year-desc{font-size:12px;color:rgba(255,255,255,0.35);}
+.caso-right{
+  padding:56px;background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.06);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.caso-delta{margin-bottom:40px;}
+.caso-delta-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px;font-weight:300;
+  color:var(--oro);line-height:1;margin-bottom:4px;
+}
+.caso-delta-label{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
+.caso-risultati{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-bottom:40px;
+}
+.caso-ris{
+  background:rgba(255,255,255,0.04);padding:20px;
+}
+.caso-ris .n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:var(--bianco);
+  line-height:1;margin-bottom:4px;
+}
+.caso-ris .l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.caso-testo{
+  font-size:15px;color:rgba(255,255,255,0.5);
+  line-height:1.8;font-weight:300;font-style:italic;
+  border-left:2px solid var(--oro);padding-left:20px;
+}
+
+/* ── SERVIZI UNA TANTUM ── */
+.servizi{padding:100px 0;background:var(--grigio-chiaro);}
+.servizi-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;margin-bottom:72px;
+}
+.pack-box{
+  background:var(--nero);padding:44px;
+  border:1px solid transparent;
+  transition:border-color .2s;
+}
+.pack-box:hover{border-color:var(--oro);}
+.pack-prezzo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:72px;font-weight:300;color:var(--bianco);
+  line-height:1;margin-bottom:4px;
+}
+.pack-prezzo sup{font-size:28px;color:var(--oro);vertical-align:super;}
+.pack-tipo{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:28px;}
+.pack-lista{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.pack-lista li{
+  font-size:14px;color:rgba(255,255,255,0.6);line-height:1.5;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.pack-lista li::before{
+  content:'';width:12px;height:1px;background:var(--oro);
+  margin-top:9px;flex-shrink:0;
+}
+.pack-garanzia{
+  font-size:13px;color:rgba(255,255,255,0.3);
+  padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);
+  line-height:1.6;
+}
+.pack-garanzia strong{color:var(--oro);}
+
+.categorie-wrap{display:flex;flex-direction:column;gap:2px;}
+.cat-block{background:var(--bianco);border:1px solid var(--grigio-medio);}
+.cat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 28px;
+}
+.cat-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--nero);}
+.cat-count{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grigio);}
+.cat-items{
+  border-top:1px solid var(--grigio-medio);
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;background:var(--grigio-medio);
+}
+.serv-item{
+  background:var(--bianco);padding:24px;
+  transition:background .15s;
+}
+.serv-item:hover{background:var(--grigio-chiaro);}
+.serv-cod{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);margin-bottom:6px;}
+.serv-nome{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--nero);margin-bottom:4px;}
+.serv-prezzo{font-size:20px;font-weight:500;color:var(--nero);margin-bottom:8px;font-family:'Cormorant Garamond',serif;}
+.serv-desc{font-size:13px;color:var(--grigio);line-height:1.6;margin-bottom:14px;}
+.serv-cta{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--oro);text-decoration:none;
+  display:inline-flex;align-items:center;gap:5px;
+  font-weight:500;transition:opacity .15s;
+}
+.serv-cta:hover{opacity:.7;}
+.serv-cta::after{content:'→';}
+
+/* ── CHI SIAMO ── */
+.team{padding:100px 0;background:var(--bianco);}
+.team-header{margin-bottom:72px;}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--grigio-medio);}
+.team-card{background:var(--bianco);padding:0;}
+.team-photo{
+  width:100%;aspect-ratio:4/3;
+  background:var(--grigio-chiaro);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.team-photo img{width:100%;height:100%;object-fit:cover;}
+.photo-placeholder{
+  text-align:center;padding:24px;
+}
+.photo-placeholder p{
+  font-size:12px;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--grigio);
+  line-height:1.8;
+}
+.photo-placeholder small{font-size:11px;color:#bbb;}
+.team-info{padding:40px;}
+.team-nome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:var(--nero);
+  margin-bottom:4px;
+}
+.team-ruolo{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--oro);font-weight:500;margin-bottom:20px;
+}
+.team-bio{font-size:15px;color:#444;line-height:1.85;font-weight:300;}
+
+/* ── CTA FINALE ── */
+.cta-finale{
+  background:var(--nero);padding:120px 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-finale::before{
+  content:'R&M';
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:400px;font-weight:600;
+  color:rgba(255,255,255,0.02);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:-0.05em;
+}
+.cta-finale h2{
+  font-size:clamp(36px,5vw,64px);font-weight:300;
+  color:var(--bianco);line-height:1.1;
+  margin-bottom:20px;letter-spacing:-0.02em;
+  position:relative;z-index:1;
+}
+.cta-finale h2 em{font-style:italic;color:var(--oro);}
+.cta-finale p{
+  font-size:17px;color:rgba(255,255,255,0.45);
+  line-height:1.8;margin-bottom:48px;
+  font-weight:300;position:relative;z-index:1;
+}
+.cta-group{
+  display:flex;gap:16px;justify-content:center;
+  flex-wrap:wrap;position:relative;z-index:1;
+}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--oro);color:var(--nero);
+  font-family:'Jost',sans-serif;font-weight:600;
+  font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:18px 36px;text-decoration:none;
+  transition:background .2s;
+}
+.btn-wa:hover{background:var(--oro-scuro);}
+.btn-wa svg{width:16px;height:16px;fill:var(--nero);flex-shrink:0;}
+
+/* ── FOOTER ── */
+footer{
+  background:#050505;padding:40px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #181818;
+}
+.footer-logo{height:34px;filter:invert(1);opacity:0.6;}
+.footer-nav{display:flex;gap:28px;list-style:none;}
+.footer-nav a{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;
+}
+.footer-nav a:hover{color:var(--oro);}
+.footer-info{font-size:12px;color:rgba(255,255,255,0.25);text-align:right;line-height:1.8;}
+.footer-info a{color:var(--oro);text-decoration:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  nav{padding:0 32px;}
+  .nav-links{gap:24px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-left{padding:80px 32px;}
+  .hero-left::before{display:none;}
+  .hero-right{padding:48px 32px;}
+  .hero-kpi-grid{grid-template-columns:1fr 1fr;}
+  .section-wrap{padding:0 32px;}
+  .problema-inner,.revenue-inner,.servizi-intro,.caso-studio{grid-template-columns:1fr;gap:40px;}
+  .soluzioni-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr;}
+  .portfolio-header{flex-direction:column;align-items:flex-start;}
+  footer{flex-direction:column;gap:20px;padding:32px;}
+  .footer-nav{display:none;}
+  .footer-info{text-align:center;}
+  .caso-studio{grid-template-columns:1fr;}
+  .hero-ctas{flex-direction:column;}
+}
+@media(max-width:600px){
+  nav{padding:0 20px;}
+  .nav-actions{display:none;}
+  .hero-kpi-grid{grid-template-columns:1fr 1fr;}
+  .cat-items{grid-template-columns:1fr;}
+  .caso-risultati{grid-template-columns:1fr 1fr;}
+  .cta-group{flex-direction:column;align-items:center;}
+}
+
+/* ── ANIMAZIONI ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero-tag,.hero h1,.hero-sub,.hero-ctas{animation:fadeUp .8s ease both;}
+.hero h1{animation-delay:.1s;}
+.hero-sub{animation-delay:.2s;}
+.hero-ctas{animation-delay:.3s;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <img src="data:image/png;base64,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" alt="R&M Property Management" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#gestione">Gestione</a></li>
+    <li><a href="#revenue">Revenue</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#servizi" class="nav-btn nav-btn-outline">Servizi &amp; Consulenze</a>
+    <a href="https://wa.me/393485259881" class="nav-btn nav-btn-gold">Contattaci</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Property &amp; Revenue Management — Maremma, Toscana</span>
+    <h1>La tua proprietà può rendere <em>molto di più.</em></h1>
+    <p class="hero-sub">Gestiamo ville e strutture ricettive in Toscana — dalla strategia di pricing alla gestione operativa completa. Due modelli, un unico obiettivo: massimizzare il tuo rendimento.</p>
+    <div class="hero-ctas">
+      <a href="#gestione" class="btn btn-gold">Scopri come gestiamo</a>
+      <a href="#servizi" class="btn btn-white-outline">Consulenze &amp; Servizi</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-kpi-grid">
+      <div class="hero-kpi">
+        <div class="num">+117<span>%</span></div>
+        <div class="label">Incremento fatturato caso studio 2025</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="num">0<span>€</span></div>
+        <div class="label">Costo attivazione — compenso solo a risultato</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="num">7<span>/7</span></div>
+        <div class="label">Gestione operativa e comunicazione ospiti</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="num">2</div>
+        <div class="label">Modelli di gestione — scegli quello che fa per te</div>
+      </div>
+    </div>
+    <a href="#portfolio" class="hero-case-preview">
+      <span class="case-badge">Caso studio</span>
+      <div class="case-info">
+        <strong>Agriturismo Turin — Alberese (GR)</strong>
+        <span>Da 30.000€ a 65.000€ in 12 mesi</span>
+      </div>
+      <span class="case-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<div class="problema" id="problema">
+  <div class="section-wrap">
+    <div class="problema-inner">
+      <div>
+        <span class="section-tag">Il problema</span>
+        <h2 class="section-title">Hai una proprietà che vale. La stai <em>sfruttando davvero?</em></h2>
+        <div class="divider"></div>
+        <ul class="problema-lista">
+          <li>Agosto va bene, ma il resto dell'anno è quasi vuoto — e non capisci perché</li>
+          <li>Hai provato a gestire da solo, ma è diventato un lavoro a tempo pieno</li>
+          <li>Hai affidato a un'agenzia che prende il 20-30% senza darti numeri chiari</li>
+          <li>Hai avuto inquilini che non pagavano — e sai quanto è difficile riprendersi la casa</li>
+          <li>Non sai mai con certezza quanto stai guadagnando rispetto a quanto potresti</li>
+        </ul>
+      </div>
+      <div class="problema-quote">
+        <p>Il problema non è la tua proprietà. È che non hai il sistema giusto — né la persona giusta — a gestirla.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUZIONI PROPRIETARI -->
+<div class="soluzioni" id="gestione">
+  <div class="section-wrap">
+    <span class="section-tag">Due modelli, una scelta</span>
+    <h2 class="section-title">Scegli la soluzione che <em>ti fa dormire meglio.</em></h2>
+    <div class="soluzioni-grid">
+
+      <!-- AFFITTO GARANTITO -->
+      <div class="soluzione-card featured" data-num="01">
+        <span class="sol-badge sol-badge-gold">Affitto Garantito</span>
+        <h3>L'affitto te lo paghiamo noi. Ogni mese. Sempre.</h3>
+        <p class="sol-tagline">Subentro completo nella gestione — tu ricevi un canone fisso mensile, noi gestiamo tutto e rimettiamo la tua proprietà sul mercato degli affitti brevi.</p>
+        <div class="sol-pain">
+          <div class="sol-pain-title">Il pain che risolviamo</div>
+          <p>Inquilini che non pagano. Morosità che dura mesi. Cause di sfratto che durano anni. Casa occupata che non puoi vendere, non puoi ristrutturare, non puoi toccare. Il pensiero fisso ogni primo del mese: "stavolta paga?"</p>
+        </div>
+        <ul class="sol-benefici">
+          <li>Canone fisso garantito ogni mese — indipendentemente dall'occupazione</li>
+          <li>Zero rischio morosità — il problema non è più tuo</li>
+          <li>Nessuna gestione operativa — ti occupi di niente</li>
+          <li>Contratto di sublocazione regolare e tutelante</li>
+          <li>Casa sempre manutenuta e in perfetto stato</li>
+          <li>Rendiconto mensile trasparente</li>
+        </ul>
+        <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sul modello Affitto Garantito" class="btn btn-gold" style="display:block;text-align:center;">Parliamo — è gratuito →</a>
+      </div>
+
+      <!-- GESTIONE A % -->
+      <div class="soluzione-card" data-num="02">
+        <span class="sol-badge sol-badge-outline">Gestione a Percentuale</span>
+        <h3>Massimizza il rendimento. Senza pensarci.</h3>
+        <p class="sol-tagline">Gestiamo la tua villa o struttura ricettiva su Airbnb e Booking.com. Pricing dinamico, gestione operativa completa, report mensile. Il nostro compenso è una percentuale sul fatturato generato.</p>
+        <div class="sol-pain">
+          <div class="sol-pain-title">Il pain che risolviamo</div>
+          <p>Stai lasciando soldi sul tavolo ogni stagione. I tuoi vicini sono al completo ad agosto mentre tu hai ancora settimane vuote. Non hai tempo per gestire ospiti, prezzi, pulizie e burocrazia insieme.</p>
+        </div>
+        <ul class="sol-benefici">
+          <li>Pricing dinamico aggiornato ogni settimana — prezzi sempre ottimizzati</li>
+          <li>Listing ottimizzato su Airbnb e Booking.com</li>
+          <li>Gestione ospiti H24 — check-in, check-out, reclami</li>
+          <li>Coordinamento team pulizie e manutenzione</li>
+          <li>Adempimenti burocratici — Alloggiati Web, tassa soggiorno, CIN</li>
+          <li>Zero costi fissi — paghiamo solo quando guadagni tu</li>
+        </ul>
+        <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sulla Gestione a Percentuale" class="btn btn-dark" style="display:block;text-align:center;">Richiedi una valutazione →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- REVENUE MANAGEMENT -->
+<div class="revenue" id="revenue">
+  <div class="section-wrap">
+    <div class="revenue-inner">
+      <div>
+        <span class="section-tag">Revenue Management</span>
+        <h2 class="section-title">Il pricing giusto vale più di <em>qualsiasi promozione.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Per chi gestisce già la propria struttura ma vuole smettere di lasciare soldi sul tavolo. Gestiamo la strategia di pricing in outsourcing — tu ti occupi degli ospiti, noi dei prezzi.</p>
+        <ul class="revenue-lista">
+          <li>
+            <span class="rev-num">01</span>
+            <span class="rev-titolo">Analisi stagionale e competitor</span>
+            <span class="rev-desc">Studio della domanda nella tua zona, analisi dei competitor e definizione della finestra di prezzo ottimale per ogni periodo.</span>
+          </li>
+          <li>
+            <span class="rev-num">02</span>
+            <span class="rev-titolo">Floor, Target e Ceiling</span>
+            <span class="rev-desc">Definiamo insieme il minimo sotto cui non scendi mai, il target realistico e il massimo per i picchi di domanda.</span>
+          </li>
+          <li>
+            <span class="rev-num">03</span>
+            <span class="rev-titolo">Aggiornamento settimanale</span>
+            <span class="rev-desc">Ogni settimana aggiorniamo i prezzi in base alla domanda, agli eventi locali e al comportamento dei competitor.</span>
+          </li>
+          <li>
+            <span class="rev-num">04</span>
+            <span class="rev-titolo">Report KPI mensile</span>
+            <span class="rev-desc">ADR, RevPAR e occupancy ogni mese — con confronto vs obiettivi e piano di aggiustamento.</span>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="revenue-right">
+          <div class="rev-price-label">A partire da</div>
+          <div class="rev-price"><small>€</small>150</div>
+          <div class="rev-price-sub">/mese — fee sul fatturato incrementale</div>
+          <ul class="rev-features">
+            <li>Nessun costo fisso se non portiamo risultati</li>
+            <li>Monitoring competitor settimanale</li>
+            <li>Aggiornamento prezzi su Airbnb e Booking.com</li>
+            <li>Report mensile con KPI dettagliati</li>
+            <li>Alert su eventi e picchi di domanda locali</li>
+            <li>WhatsApp diretto per aggiornamenti urgenti</li>
+          </ul>
+          <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sul servizio Revenue Management mensile" class="btn btn-dark" style="display:block;text-align:center;margin-bottom:12px;">Richiedi un preventivo →</a>
+          <a href="#servizi" class="btn btn-outline" style="display:block;text-align:center;">Preferisci una consulenza una tantum</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="portfolio" id="portfolio">
+  <div class="section-wrap">
+    <div class="portfolio-header">
+      <div>
+        <span class="section-tag" style="color:var(--oro);">Portfolio &amp; Risultati</span>
+        <h2 class="section-title" style="color:var(--bianco);">I numeri parlano <em>meglio di noi.</em></h2>
+      </div>
+      <p class="section-lead" style="color:rgba(255,255,255,0.4);max-width:360px;">Un caso studio reale. Dati verificabili. Nessuna promessa senza fondamento.</p>
+    </div>
+
+    <div class="caso-studio">
+      <div class="caso-left">
+        <span class="caso-label">Caso Studio — Revenue Management</span>
+        <h3 class="caso-nome">Agriturismo Turin</h3>
+        <p class="caso-luogo">Alberese, Grosseto (GR) — Parco della Maremma</p>
+
+        <div class="caso-timeline">
+          <div class="caso-year">
+            <div class="caso-year-label">2024<br><small style="color:rgba(255,255,255,0.2);font-size:10px;">Prima di R&M</small></div>
+            <div class="caso-year-data">
+              <div class="caso-year-num">30.000€</div>
+              <div class="caso-year-bar-wrap"><div class="caso-year-bar" style="width:46%;background:rgba(255,255,255,0.2);"></div></div>
+              <div class="caso-year-desc">Gestione autonoma senza strategia pricing</div>
+            </div>
+          </div>
+          <div class="caso-year">
+            <div class="caso-year-label">2025<br><small style="color:var(--oro);font-size:10px;">Con R&M</small></div>
+            <div class="caso-year-data">
+              <div class="caso-year-num gold">65.000€</div>
+              <div class="caso-year-bar-wrap"><div class="caso-year-bar" style="width:100%;"></div></div>
+              <div class="caso-year-desc">Revenue management + ottimizzazione listing</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.7;">L'agriturismo era già attivo e ben recensito. Il problema non era la struttura — era il pricing e la visibilità OTA. In 12 mesi di gestione abbiamo ridefinito la strategia stagionale, ottimizzato il listing su Airbnb e Booking e introdotto un sistema di revenue management settimanale.</p>
+      </div>
+
+      <div class="caso-right">
+        <div class="caso-delta">
+          <div class="caso-delta-num">+117%</div>
+          <div class="caso-delta-label">di fatturato in 12 mesi<br>da 30.000€ a 65.000€</div>
+        </div>
+
+        <div class="caso-risultati">
+          <div class="caso-ris">
+            <div class="n">+35k€</div>
+            <div class="l">Fatturato aggiuntivo</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">12</div>
+            <div class="l">Mesi di gestione</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">Alberese</div>
+            <div class="l">Parco Maremma, GR</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">Rev.</div>
+            <div class="l">Servizio applicato</div>
+          </div>
+        </div>
+
+        <p class="caso-testo">Un risultato costruito settimana per settimana, con dati reali e aggiustamenti continui. Non c'è formula magica — c'è un sistema applicato con costanza.</p>
+        <a href="https://wa.me/393485259881?text=Ciao, ho visto il caso studio dell'Agriturismo Turin e vorrei una valutazione per la mia struttura" class="btn btn-gold" style="display:block;text-align:center;margin-top:32px;">Voglio risultati simili →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIZI UNA TANTUM -->
+<div class="servizi" id="servizi">
+  <div class="section-wrap">
+    <div class="servizi-intro">
+      <div>
+        <span class="section-tag">Servizi &amp; Consulenze</span>
+        <h2 class="section-title">Paghi solo quello <em>che ti serve.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Non hai bisogno di una gestione completa? Nessun problema. Offriamo consulenze e servizi una tantum per host e property manager che vogliono migliorare su aspetti specifici.</p>
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://wa.me/393485259881" class="btn btn-dark">Chiedi un preventivo →</a>
+        </div>
+      </div>
+      <div class="pack-box">
+        <span class="section-tag">Pack digitale</span>
+        <div class="pack-prezzo"><sup>€</sup>67</div>
+        <div class="pack-tipo">Pagamento unico — accesso immediato</div>
+        <ul class="pack-lista">
+          <li>Pricing Engine con 283 formule già scritte</li>
+          <li>5 SOP operative complete (Word + PDF)</li>
+          <li>15 Script Messaggi Ospiti pronti</li>
+          <li>Welcome Book Template personalizzabile</li>
+          <li>Regolamento Casa IT + EN con spazio firma</li>
+          <li>Guida al pack con FAQ</li>
+        </ul>
+        <a href="LINK_GUMROAD" class="btn btn-gold" style="display:block;text-align:center;margin-bottom:10px;">Acquista ora →</a>
+        <div class="pack-garanzia"><strong>Garanzia 14 giorni.</strong> Non ti convince? Ti rimborsiamo.</div>
+      </div>
+    </div>
+
+    <div class="categorie-wrap">
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Pricing &amp; Revenue</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">PR-01</div><div class="serv-nome">Strategia pricing stagionale</div><div class="serv-prezzo">297€</div><div class="serv-desc">Floor, target e ceiling per ogni periodo. Pricing Engine compilato con i dati della tua proprietà. Consegna 48-72h.</div><a href="https://wa.me/393485259881?text=Info su PR-01 Strategia Pricing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-02</div><div class="serv-nome">Audit pricing esistente</div><div class="serv-prezzo">197€</div><div class="serv-desc">Analisi prezzi vs competitor. Report con stima fatturato perso e raccomandazioni prioritizzate. Consegna 24-48h.</div><a href="https://wa.me/393485259881?text=Info su PR-02 Audit Pricing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-03</div><div class="serv-nome">Setup Pricing Engine</div><div class="serv-prezzo">197€</div><div class="serv-desc">Configurazione guidata in call 2-3h. Esci con il foglio pronto e operativo sulla tua proprietà.</div><a href="https://wa.me/393485259881?text=Info su PR-03 Setup Pricing Engine" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-04</div><div class="serv-nome">Proiezioni revenue annuali</div><div class="serv-prezzo">247€</div><div class="serv-desc">Tre scenari (ottimistico/realistico/conservativo) con KPI mensili. Presentabile a commercialisti e banche.</div><a href="https://wa.me/393485259881?text=Info su PR-04 Proiezioni Revenue" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Listing &amp; OTA</span>
+          <span class="cat-count">3 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">LI-01</div><div class="serv-nome">Audit listing Airbnb / Booking</div><div class="serv-prezzo">147€</div><div class="serv-desc">Scoring su titolo, descrizione, foto, pricing e risposte pubbliche. Per ogni elemento: valutazione + raccomandazione.</div><a href="https://wa.me/393485259881?text=Info su LI-01 Audit Listing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">LI-02</div><div class="serv-nome">Ottimizzazione listing completa</div><div class="serv-prezzo">247€</div><div class="serv-desc">Nuovo titolo e descrizione IT+EN con keyword OTA pronti da copiare. Indicazioni ordine foto incluse.</div><a href="https://wa.me/393485259881?text=Info su LI-02 Ottimizzazione Listing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">LI-03</div><div class="serv-nome">Setup nuovo listing da zero</div><div class="serv-prezzo">297€</div><div class="serv-desc">Listing completamente configurato in call 3-4h. Partenza ottimizzata per il new listing boost.</div><a href="https://wa.me/393485259881?text=Info su LI-03 Setup Listing" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Operatività &amp; Sistemi</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">OP-01</div><div class="serv-nome">SOP personalizzate</div><div class="serv-prezzo">197€</div><div class="serv-desc">5 SOP (Check-in, Check-out, Pulizie, Reclami, Burocrazia) con i dati reali della tua proprietà. Word + PDF.</div><a href="https://wa.me/393485259881?text=Info su OP-01 SOP Personalizzate" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-02</div><div class="serv-nome">Welcome Book su misura</div><div class="serv-prezzo">97€</div><div class="serv-desc">Guida ospiti completa con info locali reali della tua zona. Consegna 24h.</div><a href="https://wa.me/393485259881?text=Info su OP-02 Welcome Book" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-03</div><div class="serv-nome">Regolamento Casa IT+EN</div><div class="serv-prezzo">67€</div><div class="serv-desc">15 regole bilingue personalizzate, codice colore per gravità, spazio firma. Pronto in 12-24h.</div><a href="https://wa.me/393485259881?text=Info su OP-03 Regolamento Casa" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-04</div><div class="serv-nome">Script messaggi personalizzati</div><div class="serv-prezzo">97€</div><div class="serv-desc">15 template per ogni fase del soggiorno, personalizzati sulla tua proprietà. Pronti da copiare in 30 secondi.</div><a href="https://wa.me/393485259881?text=Info su OP-04 Script Messaggi" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Burocrazia &amp; Analisi</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">BU-01</div><div class="serv-nome">Check conformità normativa</div><div class="serv-prezzo">147€</div><div class="serv-desc">Stato di ogni adempimento con piano d'azione prioritizzato. CIN, Alloggiati Web, tassa soggiorno, SCIA.</div><a href="https://wa.me/393485259881?text=Info su BU-01 Check Conformita" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">BU-02</div><div class="serv-nome">Setup Alloggiati Web</div><div class="serv-prezzo">97€</div><div class="serv-desc">Configurazione in call + tutorial scritto + template per velocizzare la procedura ad ogni arrivo.</div><a href="https://wa.me/393485259881?text=Info su BU-02 Alloggiati Web" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">AN-01</div><div class="serv-nome">Report performance annuale</div><div class="serv-prezzo">197€</div><div class="serv-desc">ADR, RevPAR, occupancy analizzati mese per mese con benchmark di mercato e obiettivi per l'anno successivo.</div><a href="https://wa.me/393485259881?text=Info su AN-01 Report Performance" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">AN-02</div><div class="serv-nome">Due diligence investimento</div><div class="serv-prezzo">297€</div><div class="serv-desc">Analisi potenziale affitti brevi con tre scenari di revenue, ROI e break-even. Presentabile a banche.</div><a href="https://wa.me/393485259881?text=Info su AN-02 Due Diligence" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Formazione &amp; Consulenze 1:1</span>
+          <span class="cat-count">3 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">FO-01</div><div class="serv-nome">Sessione 1:1 revenue (60 min)</div><div class="serv-prezzo">97€</div><div class="serv-desc">Analisi della tua situazione specifica e piano d'azione 30 giorni. Niente teoria — numeri reali della tua proprietà.</div><a href="https://wa.me/393485259881?text=Prenoto FO-01 Sessione Revenue 1:1" class="serv-cta">Prenota</a></div>
+          <div class="serv-item"><div class="serv-cod">FO-02</div><div class="serv-nome">Onboarding pack guidato (60 min)</div><div class="serv-prezzo">97€</div><div class="serv-desc">Setup del Pricing Engine sulla tua proprietà, personalizzazione SOP e piano 30 giorni. Per chi ha già il pack.</div><a href="https://wa.me/393485259881?text=Prenoto FO-02 Onboarding Pack" class="serv-cta">Prenota</a></div>
+          <div class="serv-item"><div class="serv-cod">FO-03</div><div class="serv-nome">Workshop pricing dinamico (2h)</div><div class="serv-prezzo">197€</div><div class="serv-desc">Impara a gestire il pricing in autonomia. Esci con il metodo, il foglio configurato e la routine settimanale.</div><a href="https://wa.me/393485259881?text=Prenoto FO-03 Workshop Pricing" class="serv-cta">Prenota</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHI SIAMO -->
+<div class="team" id="chi-siamo">
+  <div class="section-wrap">
+    <div class="team-header">
+      <span class="section-tag">Il team</span>
+      <h2 class="section-title">Due professionisti. <em>Un unico standard.</em></h2>
+      <p class="section-lead" style="margin-top:12px;">Non teoria, non corsi. Operatività reale, sul campo, ogni giorno.</p>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo">
+          <!-- SOSTITUISCI con: <img src="foto-matteo.jpg" alt="Matteo Speroni"> -->
+          <div class="photo-placeholder">
+            <p>Inserisci qui<br>la tua foto</p>
+            <small>foto-matteo.jpg</small>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-nome">Matteo Speroni</div>
+          <div class="team-ruolo">Co-founder — Property &amp; Revenue Manager</div>
+          <p class="team-bio">Property e revenue manager con base in Maremma, Toscana. Specializzato in pricing dinamico, ottimizzazione OTA e gestione operativa di ville e strutture ricettive. Ha costruito il sistema di revenue management che oggi applica su tutte le proprietà in gestione — dati reali, aggiornamenti settimanali, nessuna improvvisazione.</p>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo">
+          <!-- SOSTITUISCI con: <img src="foto-raffaele.jpg" alt="Raffaele Iazzetta"> -->
+          <div class="photo-placeholder">
+            <p>Inserisci qui<br>la foto di Raffaele</p>
+            <small>foto-raffaele.jpg</small>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-nome">Raffaele Iazzetta</div>
+          <div class="team-ruolo">Co-founder — Property &amp; Revenue Manager</div>
+          <p class="team-bio">Responsabile delle relazioni con i proprietari e della gestione operativa sul campo. Coordina il team operativo, supervisiona la qualità dei soggiorni e garantisce che ogni proprietà in gestione mantenga gli standard che ci contraddistinguono. Il punto di contatto principale per i clienti proprietari.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINALE -->
+<div class="cta-finale">
+  <div class="section-wrap" style="text-align:center;">
+    <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Inizia adesso</span>
+    <h2>Pronto a smettere di <em>lasciare soldi sul tavolo?</em></h2>
+    <p>Che tu abbia una villa da affidare, una struttura da ottimizzare o voglia semplicemente un consiglio — scrivici. Il primo confronto è sempre gratuito.</p>
+    <div class="cta-group">
+      <a href="https://wa.me/393485259881" class="btn-wa">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Scrivici su WhatsApp — +39 348 525 9881
+      </a>
+      <a href="#gestione" class="btn btn-white-outline">Scopri i modelli di gestione</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="data:image/png;base64,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" alt="R&M Property Management" class="footer-logo">
+  <ul class="footer-nav">
+    <li><a href="#gestione">Gestione</a></li>
+    <li><a href="#revenue">Revenue</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+  </ul>
+  <div class="footer-info">
+    R&M Gestioni Immobiliari — Maremma, Toscana<br>
+    <a href="https://wa.me/393485259881">+39 348 525 9881</a>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('nav');
+  if (window.scrollY > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+</script>
+
+</body>
+</html>
