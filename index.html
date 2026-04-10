@@ -660,8 +660,7 @@ footer{
 .hero h1{animation-delay:.1s;}
 .hero-sub{animation-delay:.2s;}
 .hero-ctas{animation-delay:.3s;}
-  @media(max-width:900px){.contatti-grid{grid-template-columns:1fr !important;gap:40px !important;}}
-</style>
+@media(max-width:900px){.contatti-grid{grid-template-columns:1fr !important;gap:40px !important;}.nome-tel-grid{grid-template-columns:1fr !important;}}</style>
 </head>
 <body>
 
@@ -1083,7 +1082,7 @@ Dalla strategia di prezzo alla qualità operativa, lavora per portare ogni propr
       <div>
         <form action="https://formspree.io/f/xlgoyljo" method="POST" style="display:flex;flex-direction:column;gap:16px;">
  
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="nome-tel-grid">
             <div style="display:flex;flex-direction:column;gap:6px;">
               <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Nome *</label>
               <input type="text" name="nome" required placeholder="Mario Rossi"
