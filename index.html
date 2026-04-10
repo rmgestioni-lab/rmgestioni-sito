@@ -1056,7 +1056,136 @@ Dalla strategia di prezzo alla qualità operativa, lavora per portare ogni propr
     </div>
   </div>
 </div>
-
+<!-- FORM CONTATTI -->
+<div style="background:var(--grigio-chiaro);padding:100px 0;" id="contatti">
+  <div class="section-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+      <div>
+        <span class="section-tag">Contatti</span>
+        <h2 class="section-title">Scrivici. Ti rispondiamo <em>entro 24 ore.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Compila il modulo indicando il servizio che ti interessa — ti contattiamo noi con tutte le informazioni necessarie. Nessun impegno.</p>
+        <div style="margin-top:40px;display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--nero);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.13 1.21 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oro);margin-bottom:3px;">WhatsApp</div>
+              <a href="https://wa.me/393485259881" style="font-size:16px;color:var(--nero);text-decoration:none;font-weight:400;">+39 348 525 9881</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--nero);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oro);margin-bottom:3px;">Zona operativa</div>
+              <span style="font-size:16px;color:var(--nero);">Maremma e Toscana</span>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div>
+        <form action="https://formspree.io/f/xlgoyljo" method="POST" style="display:flex;flex-direction:column;gap:16px;">
+ 
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Nome *</label>
+              <input type="text" name="nome" required placeholder="Mario Rossi"
+                style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;width:100%;"
+                onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Telefono *</label>
+              <input type="tel" name="telefono" required placeholder="+39 333 000 0000"
+                style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;width:100%;"
+                onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+            </div>
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Email *</label>
+            <input type="email" name="email" required placeholder="mario@email.it"
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Sono interessato a *</label>
+            <select name="servizio" required
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;appearance:none;cursor:pointer;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%236b6b6b%22 d=%22M6 8L1 3h10z%22/></svg>');background-repeat:no-repeat;background-position:right 16px center;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+              <option value="" disabled selected>Seleziona un servizio...</option>
+              <optgroup label="── Gestione Proprietà ──">
+                <option value="Affitto Garantito">Affitto Garantito — canone fisso mensile</option>
+                <option value="Gestione a Percentuale">Gestione a Percentuale — massimizza il rendimento</option>
+                <option value="Revenue Management Mensile">Revenue Management Mensile — da 150€/mese</option>
+              </optgroup>
+              <optgroup label="── Pack Digitale ──">
+                <option value="Pack Digitale 67€">Pack Digitale — 67€ (9 documenti pronti)</option>
+                <option value="Onboarding Pack Guidato FO-02">Onboarding Pack Guidato 1:1 — 97€</option>
+              </optgroup>
+              <optgroup label="── Pricing & Revenue ──">
+                <option value="PR-01 Strategia Pricing Stagionale">PR-01 — Strategia pricing stagionale — 297€</option>
+                <option value="PR-02 Audit Pricing Esistente">PR-02 — Audit pricing esistente — 197€</option>
+                <option value="PR-03 Setup Pricing Engine">PR-03 — Setup Pricing Engine — 197€</option>
+                <option value="PR-04 Proiezioni Revenue Annuali">PR-04 — Proiezioni revenue annuali — 247€</option>
+              </optgroup>
+              <optgroup label="── Listing & OTA ──">
+                <option value="LI-01 Audit Listing">LI-01 — Audit listing Airbnb/Booking — 147€</option>
+                <option value="LI-02 Ottimizzazione Listing">LI-02 — Ottimizzazione listing completa — 247€</option>
+                <option value="LI-03 Setup Nuovo Listing">LI-03 — Setup nuovo listing da zero — 297€</option>
+              </optgroup>
+              <optgroup label="── Operatività & Sistemi ──">
+                <option value="OP-01 SOP Personalizzate">OP-01 — SOP personalizzate — 197€</option>
+                <option value="OP-02 Welcome Book">OP-02 — Welcome Book su misura — 97€</option>
+                <option value="OP-03 Regolamento Casa">OP-03 — Regolamento Casa IT+EN — 67€</option>
+                <option value="OP-04 Script Messaggi">OP-04 — Script messaggi personalizzati — 97€</option>
+              </optgroup>
+              <optgroup label="── Burocrazia & Analisi ──">
+                <option value="BU-01 Check Conformita">BU-01 — Check conformità normativa — 147€</option>
+                <option value="BU-02 Setup Alloggiati Web">BU-02 — Setup Alloggiati Web — 97€</option>
+                <option value="AN-01 Report Performance">AN-01 — Report performance annuale — 197€</option>
+                <option value="AN-02 Due Diligence Investimento">AN-02 — Due diligence investimento — 297€</option>
+              </optgroup>
+              <optgroup label="── Formazione & Consulenze 1:1 ──">
+                <option value="FO-01 Sessione Revenue 1:1">FO-01 — Sessione revenue 1:1 (60 min) — 97€</option>
+                <option value="FO-03 Workshop Pricing Dinamico">FO-03 — Workshop pricing dinamico (2h) — 197€</option>
+              </optgroup>
+              <optgroup label="── Altro ──">
+                <option value="Informazioni generali">Informazioni generali — non so ancora cosa mi serve</option>
+              </optgroup>
+            </select>
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Messaggio</label>
+            <textarea name="messaggio" rows="4" placeholder="Raccontaci brevemente la tua situazione o la tua proprietà..."
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;resize:vertical;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'"></textarea>
+          </div>
+ 
+          <input type="hidden" name="_subject" value="Nuova richiesta — R&M Gestioni Immobiliari">
+          <input type="text" name="_gotcha" style="display:none">
+ 
+          <button type="submit"
+            style="background:var(--nero);color:var(--bianco);border:none;padding:18px 32px;font-family:'Jost',sans-serif;font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;text-align:center;"
+            onmouseover="this.style.background='#C9A84C';this.style.color='#0a0a0a'"
+            onmouseout="this.style.background='#0a0a0a';this.style.color='#ffffff'">
+            Invia richiesta →
+          </button>
+ 
+          <p style="font-size:12px;color:var(--grigio);text-align:center;line-height:1.6;">
+            Ti risponderemo entro 24 ore. I tuoi dati non vengono condivisi con terze parti.
+          </p>
+ 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- CTA FINALE -->
 <div class="cta-finale">
   <div class="section-wrap" style="text-align:center;">
