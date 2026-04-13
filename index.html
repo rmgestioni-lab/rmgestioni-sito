@@ -3,979 +3,1559 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calcolatore Rendita — R&M Gestioni Immobiliari</title>
-<meta name="description" content="Scopri quanto può rendere il tuo immobile con la gestione professionale degli affitti brevi. Stima gratuita in 2 minuti.">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>R&M Gestioni Immobiliari — Property & Revenue Management in Toscana</title>
+<meta name="description" content="Gestiamo ville e strutture ricettive in Toscana. Affitto garantito o gestione a percentuale. Revenue management, consulenze e strumenti per affitti brevi professionali.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#C9A84C;--gold-l:#E2C97E;--gold-dim:rgba(201,168,76,0.12);--gold-border:rgba(201,168,76,0.25);
-  --black:#0D0D0D;--s1:#141414;--s2:#1E1E1E;--s3:#252525;
-  --text:#F0EDE6;--muted:#7A7570;--white:#F7F4EE;
-  --green:#4CAF50;--red:#E63946;
-  --r:12px;--r-lg:18px;
+:root {
+  --nero: #0a0a0a;
+  --bianco: #ffffff;
+  --oro: #C9A84C;
+  --oro-scuro: #a8873a;
+  --oro-pale: #f7f0e0;
+  --grigio: #6b6b6b;
+  --grigio-chiaro: #f8f7f5;
+  --grigio-medio: #e8e6e1;
+  --grigio-scuro: #2a2a2a;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);min-height:100vh;line-height:1.6}
 
-/* ── TOP BAR ── */
-.topbar{background:var(--black);border-bottom:1px solid var(--gold-border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);letter-spacing:1px;text-decoration:none}
-.logo em{color:var(--white);font-style:normal}
-.back-link{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s}
-.back-link:hover{color:var(--gold)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;color:var(--nero);background:var(--bianco);overflow-x:hidden;font-weight:300;}
+h1,h2,h3,h4,blockquote{font-family:'Cormorant Garamond',serif;}
+img{max-width:100%;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--grigio-medio);
+  padding:0 60px;height:76px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.06);}
+.nav-logo{height:46px;width:auto;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  font-family:'Jost',sans-serif;font-weight:400;font-size:12px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--nero);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--oro);}
+.nav-actions{display:flex;gap:12px;align-items:center;}
+.nav-btn{
+  font-family:'Jost',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:10px 22px;text-decoration:none;transition:all .2s;
+}
+.nav-btn-outline{border:1px solid var(--nero);color:var(--nero);}
+.nav-btn-outline:hover{background:var(--nero);color:var(--bianco);}
+.nav-btn-gold{background:var(--oro);color:var(--nero);}
+.nav-btn-gold:hover{background:var(--oro-scuro);}
 
 /* ── HERO ── */
-.hero{text-align:center;padding:56px 24px 40px;max-width:680px;margin:0 auto}
-.hero-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,44px);font-weight:600;line-height:1.15;color:var(--white);margin-bottom:14px}
-.hero h1 span{color:var(--gold)}
-.hero p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto}
+.hero{
+  padding-top:76px;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:55% 45%;
+  position:relative;
+}
+.hero-left{
+  background:var(--nero);
+  padding:100px 72px 100px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-left::before{
+  content:'RM';
+  position:absolute;right:-40px;bottom:-60px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:320px;font-weight:600;
+  color:rgba(255,255,255,0.03);
+  line-height:1;pointer-events:none;
+  letter-spacing:-0.05em;
+}
+.hero-tag{
+  font-family:'Jost',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--oro);margin-bottom:36px;display:block;
+}
+.hero h1{
+  font-size:clamp(40px,4.5vw,66px);font-weight:300;
+  color:var(--bianco);line-height:1.08;
+  letter-spacing:-0.02em;margin-bottom:28px;
+}
+.hero h1 em{font-style:italic;color:var(--oro);}
+.hero-sub{
+  font-size:17px;color:rgba(255,255,255,0.55);
+  line-height:1.85;max-width:460px;
+  font-weight:300;margin-bottom:52px;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  font-family:'Jost',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:16px 32px;text-decoration:none;
+  transition:all .2s;display:inline-block;
+}
+.btn-gold{background:var(--oro);color:var(--nero);}
+.btn-gold:hover{background:var(--oro-scuro);transform:translateY(-1px);}
+.btn-white-outline{
+  border:1px solid rgba(255,255,255,0.25);
+  color:rgba(255,255,255,0.7);
+}
+.btn-white-outline:hover{border-color:var(--oro);color:var(--oro);}
+.btn-dark{background:var(--nero);color:var(--bianco);}
+.btn-dark:hover{background:var(--grigio-scuro);transform:translateY(-1px);}
+.btn-outline{border:1px solid var(--nero);color:var(--nero);}
+.btn-outline:hover{background:var(--nero);color:var(--bianco);}
 
-/* ── PROGRESS ── */
-.progress-wrap{max-width:520px;margin:0 auto 36px;padding:0 24px}
-.progress-bar{height:2px;background:var(--s2);border-radius:2px;overflow:hidden}
-.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
-.progress-labels{display:flex;justify-content:space-between;margin-top:10px}
-.p-label{font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);transition:color 0.3s}
-.p-label.active{color:var(--gold)}
+.hero-right{
+  background:var(--grigio-chiaro);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px 80px 72px;gap:0;
+}
+.hero-kpi-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--grigio-medio);
+  border:1px solid var(--grigio-medio);
+  margin-bottom:40px;
+}
+.hero-kpi{
+  background:var(--bianco);padding:28px 24px;
+}
+.hero-kpi .num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:300;
+  color:var(--nero);line-height:1;margin-bottom:6px;
+}
+.hero-kpi .num span{font-size:24px;color:var(--oro);}
+.hero-kpi .label{
+  font-size:11px;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--grigio);font-weight:400;
+}
+.hero-case-preview{
+  background:var(--nero);padding:28px;
+  display:flex;align-items:center;gap:20px;
+  cursor:pointer;text-decoration:none;
+  border:1px solid transparent;
+  transition:border-color .2s;
+}
+.hero-case-preview:hover{border-color:var(--oro);}
+.case-badge{
+  background:var(--oro);color:var(--nero);
+  font-size:10px;font-weight:600;letter-spacing:0.15em;
+  text-transform:uppercase;padding:6px 12px;
+  white-space:nowrap;flex-shrink:0;
+}
+.case-info strong{
+  display:block;font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:400;color:var(--bianco);
+  margin-bottom:2px;
+}
+.case-info span{font-size:12px;color:rgba(255,255,255,0.45);}
+.case-arrow{
+  margin-left:auto;color:var(--oro);font-size:20px;flex-shrink:0;
+}
 
-/* ── CARD CONTAINER ── */
-.card{background:var(--s1);border:1px solid var(--gold-border);border-radius:var(--r-lg);padding:36px;max-width:680px;margin:0 auto 32px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+/* ── SEZIONI GENERALI ── */
+.section-wrap{max-width:1280px;margin:0 auto;padding:0 60px;}
+.section-tag{
+  font-family:'Jost',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--oro);display:block;margin-bottom:20px;
+}
+.section-title{
+  font-size:clamp(30px,3.5vw,52px);font-weight:300;
+  color:var(--nero);line-height:1.12;
+  letter-spacing:-0.02em;margin-bottom:16px;
+}
+.section-title em{font-style:italic;color:var(--oro);}
+.section-title.white{color:var(--bianco);}
+.section-lead{
+  font-size:17px;color:var(--grigio);
+  line-height:1.85;font-weight:300;
+}
+.divider{width:56px;height:1px;background:var(--oro);margin:24px 0;}
 
-/* ── FIELD ── */
-.field{margin-bottom:24px}
-.field-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block;font-weight:500}
-.field-sub{font-size:12px;color:var(--muted);margin-top:4px}
-.field input,.field select,.field textarea{width:100%;background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:12px 16px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
-.field input:focus,.field select:focus{border-color:var(--gold)}
-.field input::placeholder{color:var(--muted)}
-.field select option{background:var(--s2);color:var(--text)}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:520px){.field-row{grid-template-columns:1fr}}
+/* ── PROBLEMA ── */
+.problema{padding:100px 0;background:var(--bianco);}
+.problema-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.problema-lista{list-style:none;margin-top:32px;display:flex;flex-direction:column;gap:0;}
+.problema-lista li{
+  display:flex;gap:16px;align-items:flex-start;
+  font-size:16px;color:#333;line-height:1.75;
+  padding:18px 0;border-bottom:1px solid var(--grigio-medio);
+}
+.problema-lista li:first-child{border-top:1px solid var(--grigio-medio);}
+.problema-lista li::before{
+  content:'';display:inline-block;
+  width:20px;height:1px;background:var(--oro);
+  margin-top:13px;flex-shrink:0;
+}
+.problema-quote{
+  background:var(--nero);padding:52px;
+  position:relative;
+}
+.problema-quote::before{
+  content:'"';
+  position:absolute;top:-20px;left:40px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:120px;color:var(--oro);line-height:1;
+  opacity:0.4;
+}
+.problema-quote p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;font-style:italic;
+  color:var(--bianco);line-height:1.55;
+  position:relative;z-index:1;
+}
 
-/* ── FASCIA CARDS ── */
-.fascia-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
-@media(max-width:480px){.fascia-grid{grid-template-columns:1fr}}
-.fascia-card{background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative}
-.fascia-card:hover{border-color:var(--gold-border)}
-.fascia-card.selected{border-color:var(--gold);background:var(--gold-dim)}
-.fascia-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;color:var(--gold);font-size:14px;font-weight:600}
-.fascia-emoji{font-size:20px;margin-bottom:6px}
-.fascia-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
-.fascia-examples{font-size:11px;color:var(--muted);line-height:1.4}
+/* ── SOLUZIONI PROPRIETARI ── */
+.soluzioni{padding:100px 0;background:var(--grigio-chiaro);}
+.soluzioni-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:var(--grigio-medio);
+  margin-top:64px;
+}
+.soluzione-card{
+  background:var(--bianco);
+  padding:52px 44px;
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.soluzione-card.featured{background:var(--nero);}
+.soluzione-card::before{
+  content:attr(data-num);
+  position:absolute;right:-16px;top:-24px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:160px;font-weight:600;
+  color:rgba(0,0,0,0.04);line-height:1;
+  pointer-events:none;
+}
+.soluzione-card.featured::before{color:rgba(255,255,255,0.04);}
+.sol-badge{
+  display:inline-block;
+  font-family:'Jost',sans-serif;font-size:10px;
+  font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  padding:6px 14px;margin-bottom:28px;
+}
+.sol-badge-gold{background:var(--oro);color:var(--nero);}
+.sol-badge-outline{border:1px solid var(--grigio-medio);color:var(--grigio);}
+.sol-badge-outline-white{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);}
+.soluzione-card h3{
+  font-size:clamp(26px,2.5vw,36px);font-weight:300;
+  color:var(--nero);margin-bottom:12px;line-height:1.2;
+}
+.soluzione-card.featured h3{color:var(--bianco);}
+.sol-tagline{
+  font-size:15px;color:var(--grigio);line-height:1.7;
+  margin-bottom:32px;font-weight:300;
+}
+.soluzione-card.featured .sol-tagline{color:rgba(255,255,255,0.5);}
+.sol-pain{
+  background:var(--grigio-chiaro);padding:20px;
+  margin-bottom:28px;border-left:3px solid var(--oro);
+}
+.soluzione-card.featured .sol-pain{background:rgba(255,255,255,0.06);}
+.sol-pain-title{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--oro);font-weight:500;margin-bottom:8px;
+}
+.sol-pain p{font-size:14px;color:#555;line-height:1.65;}
+.soluzione-card.featured .sol-pain p{color:rgba(255,255,255,0.5);}
+.sol-benefici{list-style:none;margin-bottom:36px;display:flex;flex-direction:column;gap:10px;}
+.sol-benefici li{
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:15px;color:#333;line-height:1.6;
+}
+.soluzione-card.featured .sol-benefici li{color:rgba(255,255,255,0.7);}
+.sol-benefici li::before{
+  content:'';display:inline-block;
+  width:14px;height:1px;background:var(--oro);
+  margin-top:11px;flex-shrink:0;
+}
 
-/* ── SLIDER ── */
-.slider-wrap{margin-top:6px}
-.slider{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--s3);outline:none;cursor:pointer}
-.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--black);box-shadow:0 0 0 2px var(--gold-border)}
-.slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--black)}
-.slider-val{text-align:center;color:var(--gold);font-size:22px;font-weight:600;margin-top:10px;font-family:'Cormorant Garamond',serif}
+/* ── REVENUE MANAGEMENT ── */
+.revenue{padding:100px 0;background:var(--bianco);}
+.revenue-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.revenue-lista{list-style:none;margin-top:32px;display:flex;flex-direction:column;gap:0;}
+.revenue-lista li{
+  padding:20px 0;border-bottom:1px solid var(--grigio-medio);
+  display:flex;flex-direction:column;gap:4px;
+}
+.revenue-lista li:first-child{border-top:1px solid var(--grigio-medio);}
+.rev-num{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);font-weight:500;}
+.rev-titolo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--nero);}
+.rev-desc{font-size:14px;color:var(--grigio);line-height:1.65;font-weight:300;}
+.revenue-right{
+  background:var(--grigio-chiaro);padding:52px;
+}
+.rev-price-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grigio);margin-bottom:8px;}
+.rev-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;font-weight:300;color:var(--nero);line-height:1;
+  margin-bottom:4px;
+}
+.rev-price small{font-size:24px;color:var(--oro);vertical-align:super;}
+.rev-price-sub{font-size:13px;color:var(--grigio);margin-bottom:32px;}
+.rev-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+.rev-features li{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:14px;color:#333;line-height:1.55;
+}
+.rev-features li::before{
+  content:'';display:inline-block;
+  width:14px;height:1px;background:var(--oro);
+  margin-top:9px;flex-shrink:0;
+}
 
-/* ── RADIO GESTIONE ── */
-.radio-group{display:flex;flex-wrap:wrap;gap:8px}
-.radio-opt{flex:1;min-width:120px}
-.radio-opt input{display:none}
-.radio-opt label{display:block;text-align:center;padding:10px 12px;background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);font-size:13px;color:var(--muted);cursor:pointer;transition:all 0.2s}
-.radio-opt input:checked+label{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+/* ── PORTFOLIO / CASO STUDIO ── */
+.portfolio{padding:100px 0;background:var(--nero);}
+.portfolio-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:72px;gap:40px;
+}
+.portfolio-header .section-title{color:var(--bianco);}
+.caso-studio{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:rgba(255,255,255,0.06);
+}
+.caso-left{
+  padding:56px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.caso-label{
+  font-size:10px;font-weight:600;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--oro);
+  margin-bottom:8px;display:block;
+}
+.caso-nome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3vw,42px);font-weight:300;
+  color:var(--bianco);line-height:1.2;margin-bottom:6px;
+}
+.caso-luogo{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:36px;}
+.caso-timeline{
+  display:flex;flex-direction:column;gap:0;
+  margin-bottom:40px;
+}
+.caso-year{
+  display:grid;grid-template-columns:80px 1fr;
+  gap:20px;align-items:center;
+  padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.caso-year:first-child{border-top:1px solid rgba(255,255,255,0.06);}
+.caso-year-label{
+  font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);font-weight:400;
+}
+.caso-year-data{display:flex;flex-direction:column;gap:4px;}
+.caso-year-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:300;color:var(--bianco);line-height:1;
+}
+.caso-year-num.gold{color:var(--oro);}
+.caso-year-bar-wrap{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:6px;}
+.caso-year-bar{height:4px;background:var(--oro);border-radius:2px;}
+.caso-year-desc{font-size:12px;color:rgba(255,255,255,0.35);}
+.caso-right{
+  padding:56px;background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.06);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.caso-delta{margin-bottom:40px;}
+.caso-delta-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px;font-weight:300;
+  color:var(--oro);line-height:1;margin-bottom:4px;
+}
+.caso-delta-label{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
+.caso-risultati{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-bottom:40px;
+}
+.caso-ris{
+  background:rgba(255,255,255,0.04);padding:20px;
+}
+.caso-ris .n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:var(--bianco);
+  line-height:1;margin-bottom:4px;
+}
+.caso-ris .l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.caso-testo{
+  font-size:15px;color:rgba(255,255,255,0.5);
+  line-height:1.8;font-weight:300;font-style:italic;
+  border-left:2px solid var(--oro);padding-left:20px;
+}
 
-/* ── CHECKBOX ── */
-.checkbox-field{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);cursor:pointer;transition:border-color 0.2s;margin-bottom:12px}
-.checkbox-field:hover{border-color:var(--gold-border)}
-.checkbox-field input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--gold);cursor:pointer}
-.checkbox-field label{font-size:13px;color:var(--muted);cursor:pointer;line-height:1.5}
-.checkbox-field label a{color:var(--gold);text-decoration:none}
-.checkbox-field label strong{color:var(--text)}
-.checkbox-required .checkbox-field{border-color:var(--red)!important}
+/* ── SERVIZI UNA TANTUM ── */
+.servizi{padding:100px 0;background:var(--grigio-chiaro);}
+.servizi-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;margin-bottom:72px;
+}
+.pack-box{
+  background:var(--nero);padding:44px;
+  border:1px solid transparent;
+  transition:border-color .2s;
+}
+.pack-box:hover{border-color:var(--oro);}
+.pack-prezzo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:72px;font-weight:300;color:var(--bianco);
+  line-height:1;margin-bottom:4px;
+}
+.pack-prezzo sup{font-size:28px;color:var(--oro);vertical-align:super;}
+.pack-tipo{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:28px;}
+.pack-lista{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.pack-lista li{
+  font-size:14px;color:rgba(255,255,255,0.6);line-height:1.5;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.pack-lista li::before{
+  content:'';width:12px;height:1px;background:var(--oro);
+  margin-top:9px;flex-shrink:0;
+}
+.pack-garanzia{
+  font-size:13px;color:rgba(255,255,255,0.3);
+  padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);
+  line-height:1.6;
+}
+.pack-garanzia strong{color:var(--oro);}
 
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:var(--r);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.5px;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;width:100%}
-.btn-primary{background:var(--gold);color:var(--black)}
-.btn-primary:hover{background:var(--gold-l);transform:translateY(-1px)}
-.btn-primary:disabled{background:var(--muted);cursor:not-allowed;transform:none}
-.btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold)}
-.btn-outline:hover{background:var(--gold-dim)}
-.btn-ghost{background:var(--s2);color:var(--muted);border:1px solid var(--s3)}
-.btn-ghost:hover{border-color:var(--gold-border);color:var(--text)}
-.btn-row{display:flex;gap:12px;margin-top:8px}
-@media(max-width:480px){.btn-row{flex-direction:column}}
+.categorie-wrap{display:flex;flex-direction:column;gap:2px;}
+.cat-block{background:var(--bianco);border:1px solid var(--grigio-medio);}
+.cat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 28px;
+}
+.cat-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--nero);}
+.cat-count{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grigio);}
+.cat-items{
+  border-top:1px solid var(--grigio-medio);
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;background:var(--grigio-medio);
+}
+.serv-item{
+  background:var(--bianco);padding:24px;
+  transition:background .15s;
+}
+.serv-item:hover{background:var(--grigio-chiaro);}
+.serv-cod{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--oro);margin-bottom:6px;}
+.serv-nome{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--nero);margin-bottom:4px;}
+.serv-prezzo{font-size:20px;font-weight:500;color:var(--nero);margin-bottom:8px;font-family:'Cormorant Garamond',serif;}
+.serv-desc{font-size:13px;color:var(--grigio);line-height:1.6;margin-bottom:14px;}
+.serv-cta{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--oro);text-decoration:none;
+  display:inline-flex;align-items:center;gap:5px;
+  font-weight:500;transition:opacity .15s;
+}
+.serv-cta:hover{opacity:.7;}
+.serv-cta::after{content:'→';}
 
-/* ── STEP TITLE ── */
-.step-title{margin-bottom:28px}
-.step-num{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.step-title h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--white)}
-.step-title p{font-size:14px;color:var(--muted);margin-top:4px}
-.divider{height:1px;background:var(--s3);margin:24px 0}
+/* ── CHI SIAMO ── */
+.team{padding:100px 0;background:var(--bianco);}
+.team-header{margin-bottom:72px;}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--grigio-medio);}
+.team-card{background:var(--bianco);padding:0;}
+.team-photo{
+  width:100%;aspect-ratio:4/3;
+  background:var(--grigio-chiaro);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.team-photo img{width:100%;height:100%;object-fit:cover;}
+.photo-placeholder{
+  text-align:center;padding:24px;
+}
+.photo-placeholder p{
+  font-size:12px;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--grigio);
+  line-height:1.8;
+}
+.photo-placeholder small{font-size:11px;color:#bbb;}
+.team-info{padding:40px;}
+.team-nome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:var(--nero);
+  margin-bottom:4px;
+}
+.team-ruolo{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--oro);font-weight:500;margin-bottom:20px;
+}
+.team-bio{font-size:15px;color:#444;line-height:1.85;font-weight:300;}
 
-/* ── RISULTATI ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-@media(max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr}}
-.kpi{background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);padding:18px 14px;text-align:center}
-.kpi-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold)}
-.kpi-sub{font-size:10px;color:var(--muted);margin-top:2px}
-
-.comparison{background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
-.comp-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--s3)}
-.comp-row:last-child{border-bottom:none}
-.comp-label{font-size:13px;color:var(--muted)}
-.comp-val{font-size:18px;font-weight:600;font-family:'Cormorant Garamond',serif}
-.comp-val.fdt{color:var(--text)}
-.comp-val.rm{color:var(--gold)}
-
-.delta-box{background:var(--gold-dim);border:1px solid var(--gold);border-radius:var(--r);padding:24px;text-align:center;margin-bottom:20px}
-.delta-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.delta-num{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,8vw,56px);font-weight:700;color:var(--gold);line-height:1}
-.delta-sub{font-size:14px;color:var(--text);margin-top:6px}
-
-.disclaimer{font-size:11px;color:var(--muted);line-height:1.6;padding:14px 16px;background:var(--s2);border-radius:var(--r);margin-bottom:20px;border-left:2px solid var(--gold-border)}
-
-/* ── SUCCESS STATE ── */
-.success-wrap{text-align:center;padding:20px 0}
-.success-icon{width:64px;height:64px;background:var(--gold-dim);border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-.success-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--white);margin-bottom:8px}
-.success-sub{color:var(--muted);font-size:14px;max-width:380px;margin:0 auto 24px}
-
-/* ── LOADING ── */
-.loading-overlay{position:fixed;inset:0;background:rgba(13,13,13,0.85);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px)}
-.loading-spinner{width:44px;height:44px;border:3px solid var(--s3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── ERROR ── */
-.field-error{font-size:12px;color:var(--red);margin-top:4px}
-.input-error{border-color:var(--red)!important}
+/* ── CTA FINALE ── */
+.cta-finale{
+  background:var(--nero);padding:120px 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-finale::before{
+  content:'R&M';
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:400px;font-weight:600;
+  color:rgba(255,255,255,0.02);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:-0.05em;
+}
+.cta-finale h2{
+  font-size:clamp(36px,5vw,64px);font-weight:300;
+  color:var(--bianco);line-height:1.1;
+  margin-bottom:20px;letter-spacing:-0.02em;
+  position:relative;z-index:1;
+}
+.cta-finale h2 em{font-style:italic;color:var(--oro);}
+.cta-finale p{
+  font-size:17px;color:rgba(255,255,255,0.45);
+  line-height:1.8;margin-bottom:48px;
+  font-weight:300;position:relative;z-index:1;
+}
+.cta-group{
+  display:flex;gap:16px;justify-content:center;
+  flex-wrap:wrap;position:relative;z-index:1;
+}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--oro);color:var(--nero);
+  font-family:'Jost',sans-serif;font-weight:600;
+  font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:18px 36px;text-decoration:none;
+  transition:background .2s;
+}
+.btn-wa:hover{background:var(--oro-scuro);}
+.btn-wa svg{width:16px;height:16px;fill:var(--nero);flex-shrink:0;}
 
 /* ── FOOTER ── */
-.page-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--s2);margin-top:16px}
-.page-footer p{font-size:12px;color:var(--muted)}
-.page-footer a{color:var(--gold);text-decoration:none}
+footer{
+  background:#050505;padding:40px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #181818;
+}
+.footer-logo{height:34px;filter:invert(1);opacity:0.6;}
+.footer-nav{display:flex;gap:28px;list-style:none;}
+.footer-nav a{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);text-decoration:none;transition:color .2s;
+}
+.footer-nav a:hover{color:var(--oro);}
+.footer-info{font-size:12px;color:rgba(255,255,255,0.25);text-align:right;line-height:1.8;}
+.footer-info a{color:var(--oro);text-decoration:none;}
 
-/* ── STEP VISIBILITY ── */
-.step{display:none}.step.active{display:block}
-</style>
+/* ── HAMBURGER ── */
+.nav-hamburger{
+  display:none;
+  flex-direction:column;justify-content:center;align-items:center;
+  width:44px;height:44px;cursor:pointer;
+  background:none;border:none;padding:4px;gap:5px;
+  flex-shrink:0;
+}
+.nav-hamburger span{
+  display:block;width:24px;height:1.5px;
+  background:var(--nero);
+  transition:all .3s ease;
+  transform-origin:center;
+}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+/* Mobile nav overlay */
+.nav-mobile-menu{
+  display:none;
+  position:fixed;top:76px;left:0;right:0;bottom:0;
+  background:rgba(255,255,255,0.99);
+  backdrop-filter:blur(12px);
+  z-index:199;
+  flex-direction:column;
+  justify-content:center;align-items:center;
+  gap:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.nav-mobile-menu.open{
+  display:flex;opacity:1;pointer-events:all;
+}
+.nav-mobile-links{
+  list-style:none;text-align:center;
+  display:flex;flex-direction:column;gap:0;width:100%;
+}
+.nav-mobile-links li a{
+  display:block;
+  font-family:'Jost',sans-serif;font-weight:400;font-size:13px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--nero);text-decoration:none;
+  padding:22px 40px;
+  border-bottom:1px solid var(--grigio-medio);
+  transition:color .2s,background .2s;
+}
+.nav-mobile-links li:first-child a{border-top:1px solid var(--grigio-medio);}
+.nav-mobile-links li a:hover{color:var(--oro);background:var(--grigio-chiaro);}
+.nav-mobile-actions{
+  display:flex;flex-direction:column;gap:12px;
+  width:calc(100% - 80px);margin-top:32px;
+}
+.nav-mobile-actions a{
+  display:block;text-align:center;
+  font-family:'Jost',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  padding:16px 24px;text-decoration:none;transition:all .2s;
+}
+.nav-mobile-actions .mob-outline{border:1px solid var(--nero);color:var(--nero);}
+.nav-mobile-actions .mob-gold{background:var(--oro);color:var(--nero);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  nav{padding:0 32px;}
+  .nav-links{gap:24px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-left{padding:80px 32px;}
+  .hero-left::before{display:none;}
+  .hero-right{padding:48px 32px;}
+  .hero-kpi-grid{grid-template-columns:1fr 1fr;}
+  .section-wrap{padding:0 32px;}
+  .problema-inner,.revenue-inner,.servizi-intro,.caso-studio{grid-template-columns:1fr;gap:40px;}
+  .soluzioni-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr;}
+  .portfolio-header{flex-direction:column;align-items:flex-start;}
+  footer{flex-direction:column;gap:20px;padding:32px;}
+  .footer-nav{display:none;}
+  .footer-info{text-align:center;}
+  .caso-studio{grid-template-columns:1fr;}
+  .hero-ctas{flex-direction:column;}
+}
+@media(max-width:600px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .nav-actions{display:none;}
+  .nav-hamburger{display:flex;}
+  .hero-kpi-grid{grid-template-columns:1fr 1fr;}
+  .cat-items{grid-template-columns:1fr;}
+  .caso-risultati{grid-template-columns:1fr 1fr;}
+  .cta-group{flex-direction:column;align-items:center;}
+}
+
+/* ── ANIMAZIONI ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero-tag,.hero h1,.hero-sub,.hero-ctas{animation:fadeUp .8s ease both;}
+.hero h1{animation-delay:.1s;}
+.hero-sub{animation-delay:.2s;}
+.hero-ctas{animation-delay:.3s;}
+@media(max-width:900px){.contatti-grid{grid-template-columns:1fr !important;gap:40px !important;}.nome-tel-grid{grid-template-columns:1fr !important;}#contatti{padding:72px 20px !important;}#contatti .section-wrap{padding:0 !important;}}</style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<nav class="topbar">
-  <a href="https://rmgestioni.it" class="logo">R&amp;<em>M</em> Gestioni Immobiliari</a>
-  <a href="https://rmgestioni.it" class="back-link">← Torna al sito</a>
+<!-- NAV -->
+<nav id="nav">
+  <img src="data:image/png;base64,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" alt="R&M Property Management" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#gestione">Gestione</a></li>
+    <li><a href="#revenue">Revenue</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#servizi" class="nav-btn nav-btn-outline">Servizi &amp; Consulenze</a>
+    <a href="https://wa.me/393485259881" class="nav-btn nav-btn-gold">Contattaci</a>
+  </div>
+  <!-- Hamburger button (mobile only) -->
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <ul class="nav-mobile-links">
+    <li><a href="#gestione" class="nav-mobile-link">Gestione</a></li>
+    <li><a href="#revenue" class="nav-mobile-link">Revenue</a></li>
+    <li><a href="#portfolio" class="nav-mobile-link">Portfolio</a></li>
+    <li><a href="#servizi" class="nav-mobile-link">Servizi</a></li>
+    <li><a href="#chi-siamo" class="nav-mobile-link">Chi siamo</a></li>
+  </ul>
+  <div class="nav-mobile-actions">
+    <a href="#servizi" class="mob-outline">Servizi &amp; Consulenze</a>
+    <a href="https://wa.me/393485259881" class="mob-gold">Contattaci</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">Strumento gratuito</div>
-  <h1>Quanto rende il tuo immobile con la gestione <span>professionale</span>?</h1>
-  <p>Inserisci i dati della tua proprietà e scopri il potenziale inespresso in 2 minuti.</p>
-</div>
-
-<!-- PROGRESS -->
-<div class="progress-wrap">
-  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
-  <div class="progress-labels">
-    <span class="p-label active" id="pl1">Il tuo immobile</span>
-    <span class="p-label" id="pl2">I tuoi dati</span>
-    <span class="p-label" id="pl3">Il tuo risultato</span>
+  <div class="hero-left">
+    <span class="hero-tag">Property &amp; Revenue Management — Maremma, Toscana</span>
+    <h1>La tua proprietà può rendere <em>molto di più.</em></h1>
+    <p class="hero-sub">Gestiamo ville e strutture ricettive in Toscana — dalla strategia di pricing alla gestione operativa completa. Due modelli, un unico obiettivo: massimizzare il tuo rendimento.</p>
+    <div class="hero-ctas">
+      <a href="#gestione" class="btn btn-gold">Scopri come gestiamo</a>
+      <a href="#servizi" class="btn btn-white-outline">Consulenze &amp; Servizi</a>
+    </div>
   </div>
-</div>
-
-<div style="max-width:680px;margin:0 auto;padding:0 16px 60px">
-
-<!-- ══════════════ STEP 1 — DATI IMMOBILE ══════════════ -->
-<div class="step active card" id="step1">
-  <div class="step-title">
-    <div class="step-num">Step 1 di 2</div>
-    <h2>Il tuo immobile</h2>
-    <p>Più dati fornisci, più accurata sarà la stima.</p>
-  </div>
-
-  <!-- FASCIA -->
-  <div class="field">
-    <span class="field-label">Dove si trova l'immobile?</span>
-    <div class="fascia-grid" id="fasciaGrid">
-      <div class="fascia-card" data-value="costa_premium" onclick="selectFascia(this)">
-        <div class="fascia-emoji">🏖</div>
-        <div class="fascia-name">Costa Premium</div>
-        <div class="fascia-examples">Versilia, Costa Smeralda, Amalfi, Portofino, Capri</div>
+  <div class="hero-right">
+    <div class="hero-kpi-grid">
+      <div class="hero-kpi">
+        <div class="num">+117<span>%</span></div>
+        <div class="label">Incremento fatturato caso studio 2025</div>
       </div>
-      <div class="fascia-card" data-value="costa_media" onclick="selectFascia(this)">
-        <div class="fascia-emoji">🌊</div>
-        <div class="fascia-name">Costa Media</div>
-        <div class="fascia-examples">Maremma, Adriatico, Sicilia, Calabria, Puglia costiera</div>
+      <div class="hero-kpi">
+        <div class="num">0<span>€</span></div>
+        <div class="label">Costo attivazione — compenso solo a risultato</div>
       </div>
-      <div class="fascia-card" data-value="montagna_premium" onclick="selectFascia(this)">
-        <div class="fascia-emoji">🏔</div>
-        <div class="fascia-name">Montagna Premium</div>
-        <div class="fascia-examples">Courmayeur, Cortina, Dolomiti, Livigno</div>
+      <div class="hero-kpi">
+        <div class="num">7<span>/7</span></div>
+        <div class="label">Gestione operativa e comunicazione ospiti</div>
       </div>
-      <div class="fascia-card" data-value="montagna_media" onclick="selectFascia(this)">
-        <div class="fascia-emoji">⛷</div>
-        <div class="fascia-name">Montagna Media</div>
-        <div class="fascia-examples">Appennino, altre stazioni sciistiche</div>
-      </div>
-      <div class="fascia-card" data-value="citta_arte" onclick="selectFascia(this)">
-        <div class="fascia-emoji">🏛</div>
-        <div class="fascia-name">Città d'Arte</div>
-        <div class="fascia-examples">Roma, Firenze, Venezia, Milano, Napoli, Bologna</div>
-      </div>
-      <div class="fascia-card" data-value="campagna" onclick="selectFascia(this)">
-        <div class="fascia-emoji">🌄</div>
-        <div class="fascia-name">Campagna / Borghi</div>
-        <div class="fascia-examples">Toscana, Umbria, Puglia interna, Langhe, Sicilia collinare</div>
+      <div class="hero-kpi">
+        <div class="num">2</div>
+        <div class="label">Modelli di gestione — scegli quello che fa per te</div>
       </div>
     </div>
-    <div class="field-error" id="fasciaError" style="display:none">Seleziona la fascia di mercato</div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- TIPOLOGIA -->
-  <div class="field-row">
-    <div class="field">
-      <label class="field-label" for="tipologia">Tipologia immobile</label>
-      <select id="tipologia" onchange="updatePostiLetto()">
-        <option value="">— Seleziona —</option>
-        <option value="monolocale">Monolocale / Bilocale</option>
-        <option value="trilocale">Trilocale / App. grande</option>
-        <option value="villa">Villa / Casa indipendente</option>
-        <option value="agriturismo">Agriturismo / Rustico</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label" for="postiLetto">Posti letto</label>
-      <select id="postiLetto">
-        <option value="">— Prima scegli la tipologia —</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- MESI DISPONIBILI -->
-  <div class="field">
-    <label class="field-label">Mesi disponibili per gli affitti</label>
-    <div class="slider-wrap">
-      <input type="range" class="slider" id="mesiSlider" min="1" max="12" value="6" oninput="updateMesi()">
-      <div class="slider-val" id="mesiVal">6 mesi / anno</div>
-    </div>
-    <div class="field-sub">Quanti mesi all'anno vuoi rendere disponibile la proprietà?</div>
-  </div>
-
-  <!-- GESTIONE ATTUALE -->
-  <div class="field">
-    <span class="field-label">Gestione attuale</span>
-    <div class="radio-group">
-      <div class="radio-opt">
-        <input type="radio" name="gestione" id="g1" value="Mai affittato">
-        <label for="g1">Mai affittato</label>
+    <a href="#portfolio" class="hero-case-preview">
+      <span class="case-badge">Caso studio</span>
+      <div class="case-info">
+        <strong>Agriturismo Turin — Alberese (GR)</strong>
+        <span>Da 30.000€ a 65.000€ in 12 mesi</span>
       </div>
-      <div class="radio-opt">
-        <input type="radio" name="gestione" id="g2" value="Gestisco da solo" checked>
-        <label for="g2">Gestisco da solo</label>
-      </div>
-      <div class="radio-opt">
-        <input type="radio" name="gestione" id="g3" value="Ho già un gestore">
-        <label for="g3">Ho già un gestore</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="btn-row">
-    <button class="btn btn-primary" onclick="goToStep2()">
-      Continua → Inserisci i tuoi dati
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════ STEP 2 — DATI PERSONALI ══════════════ -->
-<div class="step card" id="step2">
-  <div class="step-title">
-    <div class="step-num">Step 2 di 2</div>
-    <h2>I tuoi dati</h2>
-    <p>Riceverai la stima completa via email. Zero spam — solo i tuoi risultati.</p>
-  </div>
-
-  <div class="field-row">
-    <div class="field">
-      <label class="field-label" for="nome">Nome *</label>
-      <input type="text" id="nome" placeholder="Mario">
-    </div>
-    <div class="field">
-      <label class="field-label" for="cognome">Cognome *</label>
-      <input type="text" id="cognome" placeholder="Rossi">
-    </div>
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="email">Email *</label>
-    <input type="email" id="email" placeholder="mario.rossi@email.it">
-    <div class="field-sub">La stima verrà inviata a questo indirizzo</div>
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="telefono">Numero di telefono *</label>
-    <input type="tel" id="telefono" placeholder="+39 333 000 0000">
-  </div>
-
-  <div class="field">
-    <label class="field-label" for="localita">Dove si trova il tuo immobile? *</label>
-    <input type="text" id="localita" placeholder="es. Castiglione della Pescaia (GR)">
-    <div class="field-sub">Città o zona — usato per personalizzare la tua stima</div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- CONSENSI -->
-  <div id="marketingField" class="checkbox-field">
-    <input type="checkbox" id="consensoMarketing">
-    <label for="consensoMarketing">
-      <strong>Voglio ricevere aggiornamenti, offerte e consigli</strong> da R&amp;M Gestioni Immobiliari su affitti brevi, revenue management e opportunità di investimento immobiliare. Potrò cancellarmi in qualsiasi momento.
-    </label>
-  </div>
-
-  <div id="privacyField" class="checkbox-field">
-    <input type="checkbox" id="consensoPrivacy">
-    <label for="consensoPrivacy">
-      * Ho letto e accetto la <a href="https://rmgestioni.it/privacy-policy" target="_blank">Privacy Policy</a> di R&amp;M Gestioni Immobiliari. I miei dati saranno trattati ai sensi del Reg. UE 2016/679 (GDPR) esclusivamente per rispondere alla mia richiesta e, previo consenso, per finalità di marketing.
-    </label>
-  </div>
-  <div class="field-error" id="privacyError" style="display:none">Devi accettare la Privacy Policy per continuare</div>
-
-  <div class="btn-row" style="margin-top:20px">
-    <button class="btn btn-ghost" onclick="goToStep1()" style="width:auto;padding:14px 24px">← Indietro</button>
-    <button class="btn btn-primary" onclick="calcolaEInvia()">
-      Calcola il mio potenziale →
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════ RISULTATI ══════════════ -->
-<div class="step" id="stepResult">
-
-  <!-- INTRO RISULTATO -->
-  <div style="text-align:center;margin-bottom:24px">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">La tua stima</div>
-    <h2 id="resultTitle" style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--white)"></h2>
-    <p id="resultSub" style="color:var(--muted);font-size:14px;margin-top:4px"></p>
-  </div>
-
-  <!-- KPI -->
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-label">ADR stimata</div>
-      <div class="kpi-val" id="kpiAdr">—</div>
-      <div class="kpi-sub">per notte</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Notti generate</div>
-      <div class="kpi-val" id="kpiNotti">—</div>
-      <div class="kpi-sub">stimate / anno</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Occupazione media</div>
-      <div class="kpi-val" id="kpiOcc">—</div>
-      <div class="kpi-sub">su mesi disponibili</div>
-    </div>
-  </div>
-
-  <!-- COMPARISON -->
-  <div class="comparison">
-    <div class="comp-row">
-      <div>
-        <div class="comp-label">Gestione fai-da-te</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Prezzi fissi, no ottimizzazione</div>
-      </div>
-      <div class="comp-val fdt" id="revFDT">—</div>
-    </div>
-    <div class="comp-row" style="background:var(--gold-dim)">
-      <div>
-        <div class="comp-label" style="color:var(--gold)">Gestione professionale R&amp;M</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Dynamic pricing + listing ottimizzato</div>
-      </div>
-      <div class="comp-val rm" id="revRM">—</div>
-    </div>
-  </div>
-
-  <!-- DELTA -->
-  <div class="delta-box">
-    <div class="delta-tag">Potenziale non sfruttato</div>
-    <div class="delta-num" id="deltaEuro">—</div>
-    <div class="delta-sub" id="deltaSub">in più ogni anno con la gestione professionale</div>
-  </div>
-
-  <!-- DISCLAIMER -->
-  <div class="disclaimer">
-    ⚠ Stima orientativa basata su benchmark nazionali per fascia di mercato, tipologia e stagionalità. I risultati reali dipendono dalle specifiche della proprietà, stato degli arredi, recensioni esistenti e ottimizzazione listing. R&amp;M non garantisce i valori indicati.
-  </div>
-
-  <!-- CTA BUTTONS -->
-  <div style="margin-bottom:16px">
-    <a href="https://rmgestioni.it/#contatti" class="btn btn-primary" style="margin-bottom:12px">
-      Richiedi analisi gratuita della tua proprietà →
+      <span class="case-arrow">→</span>
     </a>
-    <button class="btn btn-outline" onclick="scaricaPDF()" id="btnPDF">
-      ↓ Scarica il report in PDF
-    </button>
   </div>
+</div>
 
-  <!-- EMAIL SENT CONFIRMATION -->
-  <div style="text-align:center;padding:16px;background:var(--s2);border-radius:var(--r);margin-bottom:20px">
-    <div style="font-size:13px;color:var(--muted)">
-      📧 Abbiamo inviato la stima completa a <strong id="emailConfirm" style="color:var(--gold)"></strong>
+<!-- PROBLEMA -->
+<div class="problema" id="problema">
+  <div class="section-wrap">
+    <div class="problema-inner">
+      <div>
+        <span class="section-tag">Il problema</span>
+        <h2 class="section-title">Hai una proprietà che vale. La stai <em>sfruttando davvero?</em></h2>
+        <div class="divider"></div>
+        <ul class="problema-lista">
+          <li>Agosto va bene, ma il resto dell'anno è quasi vuoto — e non capisci perché</li>
+          <li>Hai provato a gestire da solo, ma è diventato un lavoro a tempo pieno</li>
+          <li>Hai affidato a un'agenzia che prende il 20-30% senza darti numeri chiari</li>
+          <li>Hai avuto inquilini che non pagavano — e sai quanto è difficile riprendersi la casa</li>
+          <li>Non sai mai con certezza quanto stai guadagnando rispetto a quanto potresti</li>
+        </ul>
+      </div>
+      <div class="problema-quote">
+        <p>Il problema non è la tua proprietà. È che non hai il sistema giusto — né la persona giusta — a gestirla.</p>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- RICOMINCIA -->
-  <div style="text-align:center">
-    <button onclick="resetCalcolatore()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;text-decoration:underline">
-      Calcola per un altro immobile
+<!-- SOLUZIONI PROPRIETARI -->
+<div class="soluzioni" id="gestione">
+  <div class="section-wrap">
+    <span class="section-tag">Due modelli, una scelta</span>
+    <h2 class="section-title">Scegli la soluzione che <em>ti fa dormire meglio.</em></h2>
+    <div class="soluzioni-grid">
+
+      <!-- AFFITTO GARANTITO -->
+      <div class="soluzione-card featured" data-num="01">
+        <span class="sol-badge sol-badge-gold">Affitto Garantito</span>
+        <h3>L'affitto te lo paghiamo noi. Ogni mese. Sempre.</h3>
+        <p class="sol-tagline">Subentro completo nella gestione — tu ricevi un canone fisso mensile, noi gestiamo tutto e rimettiamo la tua proprietà sul mercato degli affitti brevi.</p>
+        <div class="sol-pain">
+          <div class="sol-pain-title">Il pain che risolviamo</div>
+          <p>Inquilini che non pagano. Morosità che dura mesi. Cause di sfratto che durano anni. Casa occupata che non puoi vendere, non puoi ristrutturare, non puoi toccare. Il pensiero fisso ogni primo del mese: "stavolta paga?"</p>
+        </div>
+        <ul class="sol-benefici">
+          <li>Canone fisso garantito ogni mese — indipendentemente dall'occupazione</li>
+          <li>Zero rischio morosità — il problema non è più tuo</li>
+          <li>Nessuna gestione operativa — ti occupi di niente</li>
+          <li>Contratto di sublocazione regolare e tutelante</li>
+          <li>Casa sempre manutenuta e in perfetto stato</li>
+          <li>Rendiconto mensile trasparente</li>
+        </ul>
+        <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sul modello Affitto Garantito" class="btn btn-gold" style="display:block;text-align:center;">Parliamo — è gratuito →</a>
+      </div>
+
+      <!-- GESTIONE A % -->
+      <div class="soluzione-card" data-num="02">
+        <span class="sol-badge sol-badge-outline">Gestione a Percentuale</span>
+        <h3>Massimizza il rendimento. Senza pensarci.</h3>
+        <p class="sol-tagline">Gestiamo la tua villa o struttura ricettiva su Airbnb e Booking.com. Pricing dinamico, gestione operativa completa, report mensile. Il nostro compenso è una percentuale sul fatturato generato.</p>
+        <div class="sol-pain">
+          <div class="sol-pain-title">Il pain che risolviamo</div>
+          <p>Stai lasciando soldi sul tavolo ogni stagione. I tuoi vicini sono al completo ad agosto mentre tu hai ancora settimane vuote. Non hai tempo per gestire ospiti, prezzi, pulizie e burocrazia insieme.</p>
+        </div>
+        <ul class="sol-benefici">
+          <li>Pricing dinamico aggiornato ogni settimana — prezzi sempre ottimizzati</li>
+          <li>Listing ottimizzato su Airbnb e Booking.com</li>
+          <li>Gestione ospiti H24 — check-in, check-out, reclami</li>
+          <li>Coordinamento team pulizie e manutenzione</li>
+          <li>Adempimenti burocratici — Alloggiati Web, tassa soggiorno, CIN</li>
+          <li>Zero costi fissi — paghiamo solo quando guadagni tu</li>
+        </ul>
+        <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sulla Gestione a Percentuale" class="btn btn-dark" style="display:block;text-align:center;">Richiedi una valutazione →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- REVENUE MANAGEMENT -->
+<div class="revenue" id="revenue">
+  <div class="section-wrap">
+    <div class="revenue-inner">
+      <div>
+        <span class="section-tag">Revenue Management</span>
+        <h2 class="section-title">Il pricing giusto vale più di <em>qualsiasi promozione.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Per chi gestisce già la propria struttura ma vuole smettere di lasciare soldi sul tavolo. Gestiamo la strategia di pricing in outsourcing — tu ti occupi degli ospiti, noi dei prezzi.</p>
+        <ul class="revenue-lista">
+          <li>
+            <span class="rev-num">01</span>
+            <span class="rev-titolo">Analisi stagionale e competitor</span>
+            <span class="rev-desc">Studio della domanda nella tua zona, analisi dei competitor e definizione della finestra di prezzo ottimale per ogni periodo.</span>
+          </li>
+          <li>
+            <span class="rev-num">02</span>
+            <span class="rev-titolo">Floor, Target e Ceiling</span>
+            <span class="rev-desc">Definiamo insieme il minimo sotto cui non scendi mai, il target realistico e il massimo per i picchi di domanda.</span>
+          </li>
+          <li>
+            <span class="rev-num">03</span>
+            <span class="rev-titolo">Aggiornamento settimanale</span>
+            <span class="rev-desc">Ogni settimana aggiorniamo i prezzi in base alla domanda, agli eventi locali e al comportamento dei competitor.</span>
+          </li>
+          <li>
+            <span class="rev-num">04</span>
+            <span class="rev-titolo">Report KPI mensile</span>
+            <span class="rev-desc">ADR, RevPAR e occupancy ogni mese — con confronto vs obiettivi e piano di aggiustamento.</span>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="revenue-right">
+          <div class="rev-price-label">A partire da</div>
+          <div class="rev-price"><small>€</small>150</div>
+          <div class="rev-price-sub">/mese — fee sul fatturato incrementale</div>
+          <ul class="rev-features">
+            <li>Nessun costo fisso se non portiamo risultati</li>
+            <li>Monitoring competitor settimanale</li>
+            <li>Aggiornamento prezzi su Airbnb e Booking.com</li>
+            <li>Report mensile con KPI dettagliati</li>
+            <li>Alert su eventi e picchi di domanda locali</li>
+            <li>WhatsApp diretto per aggiornamenti urgenti</li>
+          </ul>
+          <a href="https://wa.me/393485259881?text=Ciao, vorrei informazioni sul servizio Revenue Management mensile" class="btn btn-dark" style="display:block;text-align:center;margin-bottom:12px;">Richiedi un preventivo →</a>
+          <a href="#servizi" class="btn btn-outline" style="display:block;text-align:center;">Preferisci una consulenza una tantum</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="portfolio" id="portfolio">
+  <div class="section-wrap">
+    <div class="portfolio-header">
+      <div>
+        <span class="section-tag" style="color:var(--oro);">Portfolio &amp; Risultati</span>
+        <h2 class="section-title" style="color:var(--bianco);">I numeri parlano <em>meglio di noi.</em></h2>
+      </div>
+      <p class="section-lead" style="color:rgba(255,255,255,0.4);max-width:360px;">Un caso studio reale. Dati verificabili. Nessuna promessa senza fondamento.</p>
+    </div>
+
+    <div class="caso-studio">
+      <div class="caso-left">
+        <span class="caso-label">Caso Studio — Revenue Management</span>
+        <h3 class="caso-nome">Agriturismo Turin</h3>
+        <p class="caso-luogo">Alberese, Grosseto (GR) — Parco della Maremma</p>
+
+        <div class="caso-timeline">
+          <div class="caso-year">
+            <div class="caso-year-label">2024<br><small style="color:rgba(255,255,255,0.2);font-size:10px;">Prima di R&M</small></div>
+            <div class="caso-year-data">
+              <div class="caso-year-num">30.000€</div>
+              <div class="caso-year-bar-wrap"><div class="caso-year-bar" style="width:46%;background:rgba(255,255,255,0.2);"></div></div>
+              <div class="caso-year-desc">Gestione autonoma senza strategia pricing</div>
+            </div>
+          </div>
+          <div class="caso-year">
+            <div class="caso-year-label">2025<br><small style="color:var(--oro);font-size:10px;">Con R&M</small></div>
+            <div class="caso-year-data">
+              <div class="caso-year-num gold">65.000€</div>
+              <div class="caso-year-bar-wrap"><div class="caso-year-bar" style="width:100%;"></div></div>
+              <div class="caso-year-desc">Revenue management + ottimizzazione listing</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.7;">L'agriturismo era già attivo e ben recensito. Il problema non era la struttura — era il pricing e la visibilità OTA. In 12 mesi di gestione abbiamo ridefinito la strategia stagionale, ottimizzato il listing su Airbnb e Booking e introdotto un sistema di revenue management settimanale.</p>
+      </div>
+
+      <div class="caso-right">
+        <div class="caso-delta">
+          <div class="caso-delta-num">+117%</div>
+          <div class="caso-delta-label">di fatturato in 12 mesi<br>da 30.000€ a 65.000€</div>
+        </div>
+
+        <div class="caso-risultati">
+          <div class="caso-ris">
+            <div class="n">+35k€</div>
+            <div class="l">Fatturato aggiuntivo</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">12</div>
+            <div class="l">Mesi di gestione</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">Alberese</div>
+            <div class="l">Parco Maremma, GR</div>
+          </div>
+          <div class="caso-ris">
+            <div class="n">Rev.</div>
+            <div class="l">Servizio applicato</div>
+          </div>
+        </div>
+
+        <p class="caso-testo">Un risultato costruito settimana per settimana, con dati reali e aggiustamenti continui. Non c'è formula magica — c'è un sistema applicato con costanza.</p>
+        <a href="https://wa.me/393485259881?text=Ciao, ho visto il caso studio dell'Agriturismo Turin e vorrei una valutazione per la mia struttura" class="btn btn-gold" style="display:block;text-align:center;margin-top:32px;">Voglio risultati simili →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIZI UNA TANTUM -->
+<div class="servizi" id="servizi">
+  <div class="section-wrap">
+    <div class="servizi-intro">
+      <div>
+        <span class="section-tag">Servizi &amp; Consulenze</span>
+        <h2 class="section-title">Paghi solo quello <em>che ti serve.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Non hai bisogno di una gestione completa? Nessun problema. Offriamo consulenze e servizi una tantum per host e property manager che vogliono migliorare su aspetti specifici.</p>
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://wa.me/393485259881" class="btn btn-dark">Chiedi un preventivo →</a>
+        </div>
+      </div>
+      <div class="pack-box">
+        <span class="section-tag">Pack digitale</span>
+        <div class="pack-prezzo"><sup>€</sup>67</div>
+        <div class="pack-tipo">Pagamento unico — accesso immediato</div>
+        <ul class="pack-lista">
+          <li>Pricing Engine con 283 formule già scritte</li>
+          <li>5 SOP operative complete (Word + PDF)</li>
+          <li>15 Script Messaggi Ospiti pronti</li>
+          <li>Welcome Book Template personalizzabile</li>
+          <li>Regolamento Casa IT + EN con spazio firma</li>
+          <li>Guida al pack con FAQ</li>
+        </ul>
+        <a href="https://rentwise4.gumroad.com/l/gestioneaffittibrevipro" class="btn btn-gold" style="display:block;text-align:center;margin-bottom:10px;">Acquista ora →</a>
+        <div class="pack-garanzia"><strong>Garanzia 14 giorni.</strong> Non ti convince? Ti rimborsiamo.</div>
+      </div>
+    </div>
+
+    <div class="categorie-wrap">
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Pricing &amp; Revenue</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">PR-01</div><div class="serv-nome">Strategia pricing stagionale</div><div class="serv-prezzo">297€</div><div class="serv-desc">Floor, target e ceiling per ogni periodo. Pricing Engine compilato con i dati della tua proprietà. Consegna 48-72h.</div><a href="https://wa.me/393485259881?text=Info su PR-01 Strategia Pricing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-02</div><div class="serv-nome">Audit pricing esistente</div><div class="serv-prezzo">197€</div><div class="serv-desc">Analisi prezzi vs competitor. Report con stima fatturato perso e raccomandazioni prioritizzate. Consegna 24-48h.</div><a href="https://wa.me/393485259881?text=Info su PR-02 Audit Pricing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-03</div><div class="serv-nome">Setup Pricing Engine</div><div class="serv-prezzo">197€</div><div class="serv-desc">Configurazione guidata in call 2-3h. Esci con il foglio pronto e operativo sulla tua proprietà.</div><a href="https://wa.me/393485259881?text=Info su PR-03 Setup Pricing Engine" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">PR-04</div><div class="serv-nome">Proiezioni revenue annuali</div><div class="serv-prezzo">247€</div><div class="serv-desc">Tre scenari (ottimistico/realistico/conservativo) con KPI mensili. Presentabile a commercialisti e banche.</div><a href="https://wa.me/393485259881?text=Info su PR-04 Proiezioni Revenue" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Listing &amp; OTA</span>
+          <span class="cat-count">3 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">LI-01</div><div class="serv-nome">Audit listing Airbnb / Booking</div><div class="serv-prezzo">147€</div><div class="serv-desc">Scoring su titolo, descrizione, foto, pricing e risposte pubbliche. Per ogni elemento: valutazione + raccomandazione.</div><a href="https://wa.me/393485259881?text=Info su LI-01 Audit Listing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">LI-02</div><div class="serv-nome">Ottimizzazione listing completa</div><div class="serv-prezzo">247€</div><div class="serv-desc">Nuovo titolo e descrizione IT+EN con keyword OTA pronti da copiare. Indicazioni ordine foto incluse.</div><a href="https://wa.me/393485259881?text=Info su LI-02 Ottimizzazione Listing" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">LI-03</div><div class="serv-nome">Setup nuovo listing da zero</div><div class="serv-prezzo">297€</div><div class="serv-desc">Listing completamente configurato in call 3-4h. Partenza ottimizzata per il new listing boost.</div><a href="https://wa.me/393485259881?text=Info su LI-03 Setup Listing" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Operatività &amp; Sistemi</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">OP-01</div><div class="serv-nome">SOP personalizzate</div><div class="serv-prezzo">197€</div><div class="serv-desc">5 SOP (Check-in, Check-out, Pulizie, Reclami, Burocrazia) con i dati reali della tua proprietà. Word + PDF.</div><a href="https://wa.me/393485259881?text=Info su OP-01 SOP Personalizzate" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-02</div><div class="serv-nome">Welcome Book su misura</div><div class="serv-prezzo">97€</div><div class="serv-desc">Guida ospiti completa con info locali reali della tua zona. Consegna 24h.</div><a href="https://wa.me/393485259881?text=Info su OP-02 Welcome Book" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-03</div><div class="serv-nome">Regolamento Casa IT+EN</div><div class="serv-prezzo">67€</div><div class="serv-desc">15 regole bilingue personalizzate, codice colore per gravità, spazio firma. Pronto in 12-24h.</div><a href="https://wa.me/393485259881?text=Info su OP-03 Regolamento Casa" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">OP-04</div><div class="serv-nome">Script messaggi personalizzati</div><div class="serv-prezzo">97€</div><div class="serv-desc">15 template per ogni fase del soggiorno, personalizzati sulla tua proprietà. Pronti da copiare in 30 secondi.</div><a href="https://wa.me/393485259881?text=Info su OP-04 Script Messaggi" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Burocrazia &amp; Analisi</span>
+          <span class="cat-count">4 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">BU-01</div><div class="serv-nome">Check conformità normativa</div><div class="serv-prezzo">147€</div><div class="serv-desc">Stato di ogni adempimento con piano d'azione prioritizzato. CIN, Alloggiati Web, tassa soggiorno, SCIA.</div><a href="https://wa.me/393485259881?text=Info su BU-01 Check Conformita" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">BU-02</div><div class="serv-nome">Setup Alloggiati Web</div><div class="serv-prezzo">97€</div><div class="serv-desc">Configurazione in call + tutorial scritto + template per velocizzare la procedura ad ogni arrivo.</div><a href="https://wa.me/393485259881?text=Info su BU-02 Alloggiati Web" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">AN-01</div><div class="serv-nome">Report performance annuale</div><div class="serv-prezzo">197€</div><div class="serv-desc">ADR, RevPAR, occupancy analizzati mese per mese con benchmark di mercato e obiettivi per l'anno successivo.</div><a href="https://wa.me/393485259881?text=Info su AN-01 Report Performance" class="serv-cta">Richiedi</a></div>
+          <div class="serv-item"><div class="serv-cod">AN-02</div><div class="serv-nome">Due diligence investimento</div><div class="serv-prezzo">297€</div><div class="serv-desc">Analisi potenziale affitti brevi con tre scenari di revenue, ROI e break-even. Presentabile a banche.</div><a href="https://wa.me/393485259881?text=Info su AN-02 Due Diligence" class="serv-cta">Richiedi</a></div>
+        </div>
+      </div>
+      <div class="cat-block">
+        <div class="cat-header">
+          <span class="cat-title">Formazione &amp; Consulenze 1:1</span>
+          <span class="cat-count">3 servizi</span>
+        </div>
+        <div class="cat-items">
+          <div class="serv-item"><div class="serv-cod">FO-01</div><div class="serv-nome">Sessione 1:1 revenue (60 min)</div><div class="serv-prezzo">97€</div><div class="serv-desc">Analisi della tua situazione specifica e piano d'azione 30 giorni. Niente teoria — numeri reali della tua proprietà.</div><a href="https://wa.me/393485259881?text=Prenoto FO-01 Sessione Revenue 1:1" class="serv-cta">Prenota</a></div>
+          <div class="serv-item"><div class="serv-cod">FO-02</div><div class="serv-nome">Onboarding pack guidato (60 min)</div><div class="serv-prezzo">97€</div><div class="serv-desc">Setup del Pricing Engine sulla tua proprietà, personalizzazione SOP e piano 30 giorni. Per chi ha già il pack.</div><a href="https://wa.me/393485259881?text=Prenoto FO-02 Onboarding Pack" class="serv-cta">Prenota</a></div>
+          <div class="serv-item"><div class="serv-cod">FO-03</div><div class="serv-nome">Workshop pricing dinamico (2h)</div><div class="serv-prezzo">197€</div><div class="serv-desc">Impara a gestire il pricing in autonomia. Esci con il metodo, il foglio configurato e la routine settimanale.</div><a href="https://wa.me/393485259881?text=Prenoto FO-03 Workshop Pricing" class="serv-cta">Prenota</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHI SIAMO -->
+<div class="team" id="chi-siamo">
+  <div class="section-wrap">
+    <div class="team-header">
+      <span class="section-tag">Il team</span>
+      <h2 class="section-title">Due professionisti. <em>Un unico standard.</em></h2>
+      <p class="section-lead" style="margin-top:12px;">Non teoria, non corsi. Operatività reale, sul campo, ogni giorno.</p>
+    </div>
+        <div class="team-info">
+          <div class="team-nome">Matteo Speroni</div>
+          <div class="team-ruolo">Co-founder — Property &amp; Revenue Manager</div>
+          <p class="team-bio">Non gestisce immobili. Li trasforma in asset che producono.
+Attraverso pricing dinamico, ottimizzazione delle piattaforme e controllo costante dei dati, costruisce sistemi di gestione che aumentano i ricavi in modo misurabile e continuo..</p>
+      </div>
+        <div class="team-info">
+          <div class="team-nome">Raffaele Iazzetta</div>
+          <div class="team-ruolo">Co-founder — Property &amp; Revenue Manager</div>
+          <p class="team-bio">Non si limita a gestire. Ottimizza ogni leva che incide sul rendimento.
+Dalla strategia di prezzo alla qualità operativa, lavora per portare ogni proprietà al massimo potenziale, eliminando inefficienze e aumentando i risultati.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- FORM CONTATTI -->
+<div style="background:var(--grigio-chiaro);padding:100px 0;" id="contatti">
+  <div class="section-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="contatti-grid">
+      <div>
+        <span class="section-tag">Contatti</span>
+        <h2 class="section-title">Scrivici. Ti rispondiamo <em>entro 24 ore.</em></h2>
+        <div class="divider"></div>
+        <p class="section-lead">Compila il modulo indicando il servizio che ti interessa — ti contattiamo noi con tutte le informazioni necessarie. Nessun impegno.</p>
+      </div>
+ 
+      <div>
+        <form action="https://formspree.io/f/xlgoyljo" method="POST" style="display:flex;flex-direction:column;gap:16px;">
+ 
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="nome-tel-grid">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Nome *</label>
+              <input type="text" name="nome" required placeholder="Mario Rossi"
+                style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;width:100%;"
+                onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Telefono *</label>
+              <input type="tel" name="telefono" required placeholder="+39 333 000 0000"
+                style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;width:100%;"
+                onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+            </div>
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Email *</label>
+            <input type="email" name="email" required placeholder="mario@email.it"
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Sono interessato a *</label>
+            <select name="servizio" required
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;appearance:none;cursor:pointer;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%236b6b6b%22 d=%22M6 8L1 3h10z%22/></svg>');background-repeat:no-repeat;background-position:right 16px center;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'">
+              <option value="" disabled selected>Seleziona un servizio...</option>
+              <optgroup label="── Gestione Proprietà ──">
+                <option value="Affitto Garantito">Affitto Garantito — canone fisso mensile</option>
+                <option value="Gestione a Percentuale">Gestione a Percentuale — massimizza il rendimento</option>
+                <option value="Revenue Management Mensile">Revenue Management Mensile — da 150€/mese</option>
+              </optgroup>
+              <optgroup label="── Pack Digitale ──">
+                <option value="Pack Digitale 67€">Pack Digitale — 67€ (9 documenti pronti)</option>
+                <option value="Onboarding Pack Guidato FO-02">Onboarding Pack Guidato 1:1 — 97€</option>
+              </optgroup>
+              <optgroup label="── Pricing & Revenue ──">
+                <option value="PR-01 Strategia Pricing Stagionale">PR-01 — Strategia pricing stagionale — 297€</option>
+                <option value="PR-02 Audit Pricing Esistente">PR-02 — Audit pricing esistente — 197€</option>
+                <option value="PR-03 Setup Pricing Engine">PR-03 — Setup Pricing Engine — 197€</option>
+                <option value="PR-04 Proiezioni Revenue Annuali">PR-04 — Proiezioni revenue annuali — 247€</option>
+              </optgroup>
+              <optgroup label="── Listing & OTA ──">
+                <option value="LI-01 Audit Listing">LI-01 — Audit listing Airbnb/Booking — 147€</option>
+                <option value="LI-02 Ottimizzazione Listing">LI-02 — Ottimizzazione listing completa — 247€</option>
+                <option value="LI-03 Setup Nuovo Listing">LI-03 — Setup nuovo listing da zero — 297€</option>
+              </optgroup>
+              <optgroup label="── Operatività & Sistemi ──">
+                <option value="OP-01 SOP Personalizzate">OP-01 — SOP personalizzate — 197€</option>
+                <option value="OP-02 Welcome Book">OP-02 — Welcome Book su misura — 97€</option>
+                <option value="OP-03 Regolamento Casa">OP-03 — Regolamento Casa IT+EN — 67€</option>
+                <option value="OP-04 Script Messaggi">OP-04 — Script messaggi personalizzati — 97€</option>
+              </optgroup>
+              <optgroup label="── Burocrazia & Analisi ──">
+                <option value="BU-01 Check Conformita">BU-01 — Check conformità normativa — 147€</option>
+                <option value="BU-02 Setup Alloggiati Web">BU-02 — Setup Alloggiati Web — 97€</option>
+                <option value="AN-01 Report Performance">AN-01 — Report performance annuale — 197€</option>
+                <option value="AN-02 Due Diligence Investimento">AN-02 — Due diligence investimento — 297€</option>
+              </optgroup>
+              <optgroup label="── Formazione & Consulenze 1:1 ──">
+                <option value="FO-01 Sessione Revenue 1:1">FO-01 — Sessione revenue 1:1 (60 min) — 97€</option>
+                <option value="FO-03 Workshop Pricing Dinamico">FO-03 — Workshop pricing dinamico (2h) — 197€</option>
+              </optgroup>
+              <optgroup label="── Altro ──">
+                <option value="Informazioni generali">Informazioni generali — non so ancora cosa mi serve</option>
+              </optgroup>
+            </select>
+          </div>
+ 
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <label style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio);">Messaggio</label>
+            <textarea name="messaggio" rows="4" placeholder="Raccontaci brevemente la tua situazione o la tua proprietà..."
+              style="padding:14px 16px;border:1px solid var(--grigio-medio);background:var(--bianco);font-family:'Jost',sans-serif;font-size:15px;color:var(--nero);outline:none;transition:border-color .2s;resize:vertical;"
+              onfocus="this.style.borderColor='#C9A84C'" onblur="this.style.borderColor='#e8e6e1'"></textarea>
+          </div>
+ 
+          <input type="hidden" name="_subject" value="Nuova richiesta — R&M Gestioni Immobiliari">
+          <input type="text" name="_gotcha" style="display:none">
+ 
+          <button type="submit"
+            style="background:var(--nero);color:var(--bianco);border:none;padding:18px 32px;font-family:'Jost',sans-serif;font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;text-align:center;"
+            onmouseover="this.style.background='#C9A84C';this.style.color='#0a0a0a'"
+            onmouseout="this.style.background='#0a0a0a';this.style.color='#ffffff'">
+            Invia richiesta →
+          </button>
+ 
+          <p style="font-size:12px;color:var(--grigio);text-align:center;line-height:1.6;">
+            Ti risponderemo entro 24 ore. I tuoi dati non vengono condivisi con terze parti.
+          </p>
+ 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CTA FINALE -->
+<div class="cta-finale">
+  <div class="section-wrap" style="text-align:center;">
+    <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Inizia adesso</span>
+    <h2>Pronto a smettere di <em>lasciare soldi sul tavolo?</em></h2>
+    <p>Che tu abbia una villa da affidare, una struttura da ottimizzare o voglia semplicemente un consiglio — scrivici. Il primo confronto è sempre gratuito.</p>
+    <div class="cta-group">
+      <a href="https://wa.me/393485259881" class="btn-wa">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Scrivici su WhatsApp — +39 348 525 9881
+      </a>
+      <a href="#gestione" class="btn btn-white-outline">Scopri i modelli di gestione</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAH0AfQDASIAAhEBAxEB/8QAHQABAAMBAQEBAQEAAAAAAAAAAAYHCAkFBAMCAf/EAGAQAAEDAgMCAhQJBgsGAwkAAAABAgMEBQYHEQgSEyEVFxgiMTdBUVJWV2F0lJWWtNLT1QkUFjZVcXWztTI4doGl1CNCSGJyc4KGkcTRJjNDg5KhJGSxJTVTZYSTosHC/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANlgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSW0lmRjDBWIcM2jCa0fC3aOVNyaiSofLLw9NDExu9NE1qKtQuqq7TiQC7QZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBnPk7tUdq1F4jQ+8hyd2qO1ai8RofeQGjAZz5O7VHatReI0PvIcndqjtWovEaH3kBowGc+Tu1R2rUXiND7yHJ3ao7VqLxGh95AaMBlTHWZ20JgizclsT2u3W2lkV8UMklrp5GvmSGSVrF4Kve5EVI3c9uqif8AZdPWKqkrbHQVs27wtRTRyv3U0TVzUVdP8QPtAAAAAAAAAAAAAAAAAAAzbtYdNzK7wtv4lbTSRm3aw6bmV3hbfxK2gaSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUBt2dKO3fazvQKwuzCXzVtHgMP3aFJ7dnSjt32s70CsLswl81bR4DD92gHpgAAAAAAAAAAAAAAAAAAZt2sOm5ld4W38StppIzbtYdNzK7wtv4lbQNJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKA27OlHbvtZ3oFYXZhL5q2jwGH7tCk9uzpR277Wd6BWF2YS+ato8Bh+7QD0wAAAAAAAAAAAAAAAAAAM27WHTcyu8Lb+JW00kZt2sOm5ld4W38StoGkgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAbdnSjt32s70CsLswl81bR4DD92hSe3Z0o7d9rO9ArC7MJfNW0eAw/doB6YAAAAAAAAAAAAAAAAAAGbdrDpuZXeFt/EraaSM27WHTcyu8Lb+JW0DSQAAAEIxhlTgXFtyqLlfLTUS1tQjUkmhuNRA7nWo1NODkaiaIidQCbgyLnXss3mntlReMsMWX2aeJqvWz1tc5yyJ1opdU0XrNdrr2SGN575iSCZ8M14u0Usbla9j6mRHNci6Kioq8SoB2CBx6+UN/+nLn42//AFHyhv8A9OXPxt/+oHYUHHr5Q3/6cufjb/8AU31sw5a4MxTkThm/X+1TV9zq4pnT1ElfUI56pPI1NdHonQaifqA0WCveUtlp2uO8oVPtDzMR5B4Eudvkgtj79h6qVF4Ortt5qWPYvX3XPcxf1p+tALVBzhzflzvyLxnyIlzDxHPRVCLLb6z49K+GpjRdF5x7nI16aojm8emqcaoqKv64S2uM4LLKxLlXWzEECcSsrqJrHad50W4uvfXUDoyDNOV22FgPEcsVDi2iqMK1j1RqTPdw9Iq996Ijmf2m6J1XGj7fWUlwooa6gqoKulmaj4poJEeyRq9BWuTiVO+gH7gAAAAAAAAhOOsq8E41rnV9/t1XJWLGkaT09xqKdyInQ4o3o3q9VDO2c+yvf6S3T3fLLGF8qpImq91pr61yvkROpFKmia9Zrk4+yA1+Dj9UXvEtPPJT1F3u8U0TlZJG+pka5jkXRUVFXVFReofn8ob/APTlz8bf/qB2FBx6+UN/+nLn42//AFPYwVj/ABPhfFtqxDTXevmkt9VHUcFJUvVkqNXVWORV6Dk1Re8oHW0HnYYvNBiLDtuv1rl4WhuNNHUwP67HtRya9ZePjTrnogAAAAAAAAAf49zWMV73I1rU1VVXREQ5s7V2KcR3XMiDE7LtXU1uvdF8atUEczmIyjZNLDE7RF/4iRLL/wAxAOk4OPXyhv8A9OXPxt/+o+UN/wDpy5+Nv/1A7Cg49fKG/wD05c/G3/6k+ySwTmRmxiR9pw9eK+Knp0R9bXT1ciQ0zF6Gui6q5dF0anGui9BEVUDqOCicE7MGCrNSR8n73ibElXoiyPnuk1PEq/zWROaqJ3lc76y58PWe32CzU1ntUDoKKlZuQxulfIrU1Vfynqrl41XoqoH3gACgNuzpR277Wd6BWF2YS+ato8Bh+7QpPbs6Udu+1negVhdmEvmraPAYfu0A9MAAAAAAAAAAAAAAAAAADNu1h03MrvC2/iVtNJGbdrDpuZXeFt/EraBpIAAAAAOdG3phKlw3nnJcaGNscF+omV72tTREm3nRyf4qxHr33qdFzC/wk/z+wov/AMrk+9UDJ4AAHTvY3/Nqwf8A1E/pMpzEOnexv+bVg/8AqJ/SZQLdAAFRbW+X8OP8l7tDFTJLdrVG64W5yJzyPjTV7E/psRzdOvur1DmIdl3ta9qtc1HNcmioqaoqHIjMmyNw1mHiPDzEVGW26VNKzXqtZK5rV/wRAI+WtkBnjivKa8RtpZpLjh6WTWrtUsi7jkXovjX/AIb++nEvVRepVIA6+YDxXY8b4UocTYdrEqrdWx78bug5q9BzHJ1HNXVFTroe4YH+D8zGqLHmDNgCuqHLbL610lKxzudiq2NV2qdbfY1UXrq1hvgAAAAAAAADnRt7YVpMO56PuFDE2KK+0MdfI1qaJw286ORdOuu4jl66uUz8b32vcArj7El0p6WHhLpasIckqFETnnOjq132J195ivRE6+6YIAAADeXweWP+TGBLhgOun3quxycPRo5eN1LK5VVE/oya/qkahqY5VbOmPHZc5vWTEckisoOF+LXBE6C00nOvVevu8T0TrsQ6qRvZIxskbmvY5EVrmrqiovVQD/QAAAAAAAV/njW1U+HqLBVrmfFdMWVSWyN8a89DTK1XVUyf0YWv0XsnMMe/CG0dLbs1cNW+hhbBS0uGIIYImpxMY2edrWp3kREQ11gr/azNfEGMX8/b7GjsP2hV6CyI5H1sqfXIjItU/wDgu65kz4R/pzWP9HovSKgDMQAAHTXY2wnSYWyCw/JDC1tVeIuSdVJpxyOl42f4R7ifqXrnMo6x5DIiZHYD07XLf6PGBNQAAAAFAbdnSjt32s70CsLswl81bR4DD92hSe3Z0o7d9rO9ArC7MJfNW0eAw/doB6YAAAAAAAAAAAAAAAAAAGbdrDpuZXeFt/EraaSM27WHTcyu8Lb+JW0DSQAAAAAYX+En+fuFPsuT71TdBhf4Sf5+4U+y5PvVAyeAAB072N/zasH/ANRP6TKcxDp3sb/m1YP/AKif0mUC3QAAOXW1pTNpdozGcTG7qOrmyad98THr/wB3HUU5gbX8qTbSOMnp1KqJn/TBG3/9AVMAAJHlhdZbFmRhq8wuVr6K6006cfRRsrVVPqVNUOupx9wZRSXLGFlt0Ld6SquEELE66uka1P8A1OwQAAAAAAAAFer+cf8A3Q/zhz72pcALl3nNeLTTw8FbKt/x+3aJo3gJVVd1O8xyPZ/ZOgn8o/8Auh/nCq/hAcAfKLLCnxhRQb1fh2XemVqcbqWRUa/691247vJvgc/QAAOlOxVj/wCW+StDSVc/CXSwKluqtV1c5jU/gX/rZo3XqqxxzWL42H8f/IzOemtlZPwdrxE1LfPqujWzKusD/r3+c+qRQOkAAAAAARPNrElThfAtbXW2NJrvUKyhtUK/8WsmckcKadVEc5HL/NaqksK2q/8Aa/PGno/y7VgqnSpmT+K+5VLFSNF66xQK93eWdvWAlmX+G6bCGC7VhulesraGnbG+V35U0i8ckjv5z3q5y99ymIfhH+nNY/0ei9IqDfZgT4R/pzWP9HovSKgDMQAAHWTIbpH4D/Ry3+jRnJs6yZDdI/Af6OW/0aMCaAAAAAKA27OlHbvtZ3oFYXZhL5q2jwGH7tCk9uzpR277Wd6BWF2YS+ato8Bh+7QD0wAAAAAAAAAAAAAAAAAAM27WHTcyu8Lb+JW00kZt2sOm5ld4W38StoGkgAAAAAwv8JP8/cKfZcn3qm6DC/wk/wA/cKfZcn3qgZPAAA6d7G/5tWD/AOon9JlOYh072N/zasH/ANRP6TKBboAAHJrPK7MvucmMbrG9HxT3mqWJyL0Y0lc1i/8ASiHTXOjF8OA8rcQYqlejZKKjctOir+VO7nIm/re5pyYc5znK5yq5yrqqqvGqgf4Ae/gDB+IMdYppMN4aoH1lfVO0RE4mRt6r3u/isToqq/8ArogFr7D+Bp8XZ3UF1khV1tw6nJCoeqcXCpqkLdeur+e+pjjpEV7kFlbacpsBw4foHtqq2V3DXGt3dFqJlT/s1E4mp1E76qq2EAAAAAAAABXv8o/+6H+cJvebdR3i0VlpuMLZ6OtgfT1ETug+N7Va5P1oqkI/lH/3Q/zhYQHI3NPCNZgPMK94Srt5ZLdVOjY9U04WNeejf/aYrXfrIybM+EZwB/7mzIoYOtbbkrU+t0L1/wDzaq/0EMZgD+4ZZIJmTQyOjkjcjmPauitVF1RUXqKfwAOrmQOOo8xsprHiffatXLBwNe1P4lTHzsnF1NVTeROs5CeGFfg7cf8AIvGFzy+rp9Ka8MWroUcvElTG3n2p33Rpr/ykN1AAAB5WML9Q4Wwrc8RXJytpLdSvqJdOi5Gprup11VdEROqqoeDkzYa6x4IimvTUS/XeaS63detUzrvOZ9TG7sad6NDycyv9qcwMNZfR8/RxPS/XtOotPA9Pi8Tuukk+6unVSFxZIAwJ8I/05rH+j0XpFQb7MCfCP9Oax/o9F6RUAZiAAA6yZDdI/Af6OW/0aM5NnWTIbpH4D/Ry3+jRgTQAAAABQG3Z0o7d9rO9ArC7MJfNW0eAw/doUnt2dKO3fazvQKwuzCXzVtHgMP3aAemAAAAAAAAAAAAAAAAAABm7au483srU/wDNs/E7aaRM3bVvTfyt8MZ+J20DSIAAAp6W837h8Ux2W83Grv1JiRtNb6D/AH0awK2nc5sjVRdyPR8qq9VaqdR3EiFwgCC5lZRZeZj19JX4zw9yUqKSJYYH/HJ4dxirqqaRvai8fXPBzExBPasfXOkde7xRtfYqd9uipWq9vx6WeaKNNFarEVysjaiP0aqr3yy7AtyWxW9by2JtzWlj+OJF+Qk26m/u97e10AqbmXMie0b9rVvthzLmRPaN+1q32xOcW3OsfjTDuFKWqkoorlDVVdVPHokjo4ODTgmKv5KudM1VcnGjWrpoqoqfhR1tfZcz6fDDqyettdztc1bTJO/hJaWSCSNr276885jkmaqbyqqK1ePRURAhvMuZE9o37WrfbFn4Nw1ZMH4ao8N4coviNqomubTwcK+TcRzlcvPPVXLxuVeNV6J65T1mvN+k4ZtovNxuF3ixbNRPpH/w0SULKpWP4Xi/g0bCjnI/VFVyInPa6KFwgFZXKuq5cxsS2iW5X9kKU9uZRpRK5WUslQ6VjpF0TRERUYujuLRq8XRAk+Y2AsK5h2aKzYvtslxoIpknbAlXNA3fRFRFXgntV2iKvEuqcZX/ADLmRPaN+1q32xckLXMhYx7+Ee1qI52mm8vXK9zUvTLJifDctdd7jb7Q+KtfXrSI93OxRI5HKjGqujVVVVdOpx8QEd5lzIntG/a1b7YnuXWXeC8vLfLQYNw/TWqGZ2/M5rnySSL1N6R6ue5E6iKuidQ/fLia+VGD6SfEL1krXvlc17kYj3wcK7gXPRnOo9YtxXacWqr0D0b5b6i4/EmQ3Cpo4oqnhKhIH7jpmcG9EZvdFE3nMdxafkgeiCBZRNutxw/a8QVt6ranhYKqKohmk3mvf8Y0jeidRWtY5vF0d4m9bAtVRy06TzQLIxWpJE7dezXqtXqKB+wK2wPU3y4zwYUulfcGXPDkyrd6tHqnx5FReAci9BWytVXqifkLGrOqilkgADycZzyUuELxVQyyQyQUM0rJI3aOarWK5FRf1AesCpq7FmIY8orvQJWbuMbYlTbZqjcTXhYYnS/GNOgm/CjZE4tN6RqFl4ek4WwW+VZZJd+ljdvyO1c7VqLqq9VQP55C2z5SfKL4t/7U+J/EuH4R3+539/d3dd38rj101756BHcxLjJQ4ZlhpblDba24PSipaqVyIkL366ycfEqsYj36L0dzQ/3LfEPyowTbby/g0qZY1jq2xuRWsqI1VkrUVOoj2u072gH1YywzY8YYbq8OYkt7Lha6xGpPA57mb265HJzzVRyKioi6oqLxFYcy5kT2jftat9sWTmE6rZge8yUFbLQ1bKOR8FTForonomrXIi8S6KicS8S9AjNmxHcLrXWaz3WV9Bf7fdVpbvTwPVsc7fi08kcrU6sUixtcnW0c1eNFAjnMuZE9o37WrfbDmXMie0b9rVvti5ivMx8YyWDFVo4O5UsFBRTQrd4Hvaj5YqlzoY1bx6/wbv4R383QDzMObOuTuHL9Q32y4RfR3GgmbPTTtutYqse1dUXRZVRU7yoqL0FTQtYEPv8AcKyvzEt2EIKyaipeRstzrJIV3ZZmtkZGyJrui1urnOcrdHcTURU1UCYAjGF5oYcU3y0x32sr1p2wPSkqWPV1GjkdxcIreea7TVFVXLxO49E4pLMzhInxq5zd5qt3mroqa9VF6igefQWK1UN+ud9paXcuN0bE2snWRzlkbE1WxtRFVUaiIruJqImqqq8aqp6RWOTlfXXuxYdrqq532StWi+NVr6hruAqt5HN3U1RE1Rytcit7Hj6JZwAgOZGTeW+Yt6gvOMsOck66np0popfjtRDuxI5zkbpHI1F43uXVU14z57TiastGZuIrbe69zrJUNdUWySXoU74IY3VMWvRVNJEe1OojX6cSH35TXC83JMSyX2eV1VDeXRsgfoiUsbqeGVkKInYpLoq9VeMCIcy5kT2jftat9sOZcyJ7Rv2tW+2LXxG57MP3F8Ur4pG0sjmvY7RzVRqqiopDcpqqqu1pslwmuN8fUJZaaet+ONdwVVJOzXebqiIitWNy87xaP+oCNcy5kT2jftat9sWzYbVQWKx0FktUHxe32+mjpaWLfc7g4o2o1jdXKqroiImqqq9c+0rK0Yiu1uudwtOIKyR9uu1VWx2Wu13XQyxSSMWle7slbHvsd1efb/FTULNB5mEnyyYWtUs80k8z6KJ8kki6ue5WIqqq9dVU8PNCG4w4bu97o7vV0aW6zVksUUD91HTozeY93X3d1dE6HPLqigS8HgYNo6yGlZWz3Sqq4aujp3pFO/fWOTdcr3Iq8ejt5vF1N1eue+BQG3Z0o7d9rO9ArC7MJfNW0eAw/doUnt2dKO3fazvQKwuzCXzVtHgMP3aAemAAAAAAAAAAAAAAAAAABm7at6b+VvhjPxO2mkTNu1eumbuVq/8Am2/idtA0kAAPFwzh2Gw1d4qIbhW1S3WtWtlZUcHuxyK1rVRm4xq6brGpoqr+T9evtAARe94HtN6vNzuNzqKyojuVsZbZ6RVYkKRNc57XN0bvo9HPcqO3uJdNOgh71opJKC2U9FLX1VwfCxGLU1SsWWXTquVjWtVe+iIfUZu2uc+cX5RYmslsw3bbFVw19E+eV1wgle5HI/dRG7kjE0066KBfGJMO0d7moKp89RR19umWajrKZWpJCrmq1yc8itc1zV0VrkVF4uqiKi1Yfho7zNeqqrqLhcpYEp0nnRqcFEi73Bsa1ERqK7jXoqqomqqiIiYZ5tXNP6AwZ4nU/vA5tXNP6AwZ4nU/vAG/zxcJYdhw5T1sEFwraxtZWzVr1qeD1bJK9Xv3dxjeLVy8S6mGubVzT+gMGeJ1P7wbFyCxjc8f5RWHF94go4K+4xyumjpGObE1WzPYm6jnOVOJqdFV49QJ0RqTCapiG7XykxDeKKqucUMUqQtp3MY2JHIzcR8TlT8ty8ar0SSgD57XSMt9spaCOWWZlNCyFskrtXvRrUTVy8WqrpxnmXvDVLdsQ2q81FXVNdbGzNjp2JGsMqStRr0ejmKq8SacSofrjKovNJhK7VeHYaae8QUcstDFUMc6OSZrFVjXI1UXRVRE4lTomFubVzU+gMGeJ1P7wBujCVhp8NWaOz0VXWT0cLlSmjqHtctPHrzsTVRqKrGpxN3tVRNE1XQ9Z6K5jmo5WqqaI5NNU7/GYB5tXNP6AwZ4nU/vA5tXNP6AwZ4nU/vAG5sGYegwth6CyUtbWVkECvVklUrFk55yuVF3GtToqvU6p7Jl3ZX2lr7mZj+fCeL7fZKGaaldNbn2+KWPhHs43scj5H6ruauTTTTcd0dUNRAeLa8PQ2/FF2xBHX1ss10ZEyWCTg+CYkSKjdzRiO6q9Fy9H6j2gAB8OIbZHerFXWiaonpoq2nfTySwbvCNa9Fau7vIqa6KvRRT7gBFq3A9qqrldLm+prWV10taWypqGOYjlZoqLIjd3c4RUVqKu7poxqacR7tjt7bTZqO2R1E9QykhbCyWbd33Namib26iJronURD7AB5lfZ462+W+6TVdTpQtkRlKiMWF7nppvu1art5E1RFRycSr0dT58MYbp8P1d4npq6tnZda51dJDNwe5DI5ERyR7rGqjV3U4lVePVeiq6/D8oq3ltfJLgqf4jyC5I8JurwvCcPwemuum7p1NNdeqSkD4MQ2xl6slXapKqopY6qPg3ywbu+jV6Om81ycacXGi9E8+5YTtlfiqyYnlWZtztCSMjmY5G8Ox8bmKyRETRyIr1cnQ0XoaIqovvgARq4YOobhaMR2ysrq6aPEHCJUvckW/E18aRbsf8HoiIxqIm8jl4teNeMzrtNbQmaWU2Zktgo7LheptFRTsqrdUVNJULI+NU0cjlbMiK5HtcnEicWi6cZV/Nq5p/QGDPE6n94A3taqR1DbaeidV1FWsEaR8PUK1ZJNE01crURFX6kQ8vEeGaa8XKgu0dZV26629Htp6ylVu/wAG/Tfjc17XNex261VRU4laioqLxmHebVzT+gMGeJ1P7wObVzT+gMGeJ1P7wBuaw4fitVyuFzfXVVbXXBIkqJZ9xOKNFRqNaxrURE3l66989eVrnxPY2R0bnNVEe3TVq9dNUVNfrRTOWVG0TdMa5P111WgtSY3ZdIrTSUETJEp5pqh2kD1ar1duIiSOdz3QheuqcRo2JJEiYkrmukRqbzmt3UVeqqJquid7VQIthzBMdit1mttNiO9y0Fo04GnlWn3ZURrmokitiRyom9rxKnGifUSsACKXHAlquSaXGqrqpUuyXWNXuY1Y5ETdWNN1qaxuZqxWrrq1VRVPTsGH4bPdL3cIq+tqHXisSsmjm4PciekTIkRm6xFRNyNic8rvydddVXX2DMW1ntB4zylzAtuH8OWywVVLVWplY99fBM96PWWVioislYmmjE6muuvGBpS60iXC2VVC6eWBKiJ0SyRbu+xHJpqm8iprx9VFQ8Sw4SS0Q2amixBeKijs8KRU9NNwCMcjYliar1ZE1ztGqvV0141RdEMSc2rmn9AYM8Tqf3gc2rmn9AYM8Tqf3gDf5Ga/BdsuOFLhhu41NZWUtbUTVKSSOY2WnkkkWVHRuY1u6rHrvNVdVRdONTE3Nq5p/QGDPE6n94NvZaXurxNlzhrEdfHBHV3W00tbOyFqpG18sTXuRqKqqjdXLpqqrp1VA9m20jKC3U1DG5zmU8LImq7oqjUREVf8D5sTWmK/YduNkqKiopoa+mkppZIFakjWParXbu81ya6KvRRT0QB81qo0t9tpqFs8s7aeJsbZJd3fciJoiruoia/UiH0gAUBt2dKO3fazvQKwuzCXzVtHgMP3aFJ7dnSjt32s70CsLswl81bR4DD92gHpgAAAAAAAAAAAAAAAAAAZt2sOm5ld4W38StppIzbtYdNzK7wtv4lbQNJAAAAABhf4Sf5+4U+y5PvVN0GF/hJ/n7hT7Lk+9UDJ4AAHTvY3/Nqwf/UT+kynMQ6d7G/5tWD/AOon9JlAt0AADlrtR4KXAmd+ILTFFwdDUz/H6HRNE4GbVyInea7eZ/YOpRlf4Q7ADrxge3Y9oYN6qscnxetVqca00rk0cv8ARk0/+45eoBg8AAe9l5iWrwdjmy4poteGtlZHUbqL+W1rueZ9Tm6tXvKdcrXW01ztlLcqKVJaWrhZPDInQexzUc1f1oqHG86R7DuMkxVkRb6CaXfrbBI62zIq8fBt56Jfq3HNb/YUC9QAAAAAAAV7/KP/ALof5wsIr3+Uf/dD/OFhAAABnfb0wB8qsovlJRwb9yw1ItTqicbqZ2iTJ+rRr/qYvXOd52Sr6Smr6GooayFk9NUROimjemrXscmjmr3lRVQ5O5zYLqcvczb5hKdHqyiqV+LSO6MkDueid+tit17+qdQCHgH9RRySysiiY58j3I1rWpqrlXoIidcDVfwd2A33XGFzx3WxuWis7fi9Gi/kuqntVFd9bI3OT/mobrIDs+YEjy5yksmGVja2tZDw9e5P41TJz0nH1dFXdRes1CfAAAAMCfCP9Oax/o9F6RUG+zAnwj/Tmsf6PRekVAGYgAAOsmQ3SPwH+jlv9GjOTZ1kyG6R+A/0ct/o0YE0AAAAAUBt2dKO3fazvQKwuzCXzVtHgMP3aFJ7dnSjt32s70CsLswl81bR4DD92gHpgAAAAAAAAAAAAAAAAAAZt2sOm5ld4W38StppIzbtYdNzK7wtv4lbQNJAAAAABhb4SdU+X+FW68aWqRVT/mqbpOcO3Xi+kxTnrUUlBM2amsVIy2q9vQWVrnPk/wAHP3V77AKFAAA6d7GyouzVg9UXX+BqPSZTmIdEtgHEtNd8iIrG2Vq1VirZoJI/4yMle6ZjvqVXvRP6KgaGAAA+HEFpoL9Yq6yXWBtRQ19O+nqInfxmParVT/BT7gByVzhwLcsuMw7phO5I5y0sutPMrdEqIHcccifWnR6yoqdQiJ0o2uMlmZqYPZcLPHGzFNpY51E5dE+Mx9F0Dl768bVXoO6yOVTm7XUlVQ1s9FW08tNUwSOjmhlYrXxvauitci8aKi8WgH4mh9g3H7cJ5u/J2un4O3YljSl55dGtqWqqwr+vVzPrehng/SmnmpamKpppXxTRPR8cjF0cxyLqiovUVFA7KAqjZizboc1svoKqWaNmIaBjYLtTJoipJpxStTsH6ap1l1TqFrgAAAAAFe7yc0ijdU1+R+un/wBYWEZNqs5bPFt1R0y1kSWhtt+TD6jXnEnWThddf67SPXodHqcZrIAAABkH4RjAHxm02fMehg1ko3JbrirU6MTlVYnr9Tlc3X+e3rGvjwswcMUOM8EXjCtyT/w1zpXwOdpqrHKnOvTvtdo5O+iAchC9NiTAHy1zopLhVwcJa8PNS4VGqatdKi6Qs/6+e76RqU3iSz1+HsQ3CxXSFYa631MlNUM6z2OVq/q1TonRXYlwB8islqOvq4ODumIXJcajVNHNjVNIWfqZz2nUV7gLzAAAAADAnwjypy57GmvH8nYvSag32cz9tDGNHjLPm6zW6Zs9Faoo7ZFK1dUese8sip104R70ReqiagUuAAB1jyFVFyOwJouv+zlv9HYcnDpTsT40o8V5FWmgbMxbhYU5H1cWvG1GqqxO06yx7vH12u6wF3gAAAAKA27OlHbvtZ3oFYXZhL5q2jwGH7tCk9uzpR277Wd6BWF2YS+ato8Bh+7QD0wAAAAAAAAAAAAAAAAAAM27WHTcyu8Lb+JW00kZt2sOm5ld4W38StoGkgAAINjLMujwzdKi2vwfjq7zQNaqvtOHqiphfq1HaNlRNxy8ei8fEuqL0CcgDJecmd+dF7tlRZ8vMncdWOKdqsfcquyzrVI1U0XcY1itjd/O3nL1tF4zKD8qc1pHue/LbGrnuXVzlsdSqqvXXnDrGAOTXKnzT7mmM/IVT6g5U+afc0xn5CqfUOsoA5NcqfNPuaYz8hVPqE2ybpM+cq8WNv8AhzLrGDke1IqukmsVUsNVHrruuRGcSp1HJxp9Sqi9LwBS+Es9q64UjPlDk7mdZavd/hGsw9PUw6/zXtajl/WxC27Dco7xaKa5w0tdSsqGb7Ya2mfTzM7z43ojmr3lQ+0AAAAKR2hNnPCuaj3Ximl5BYlRunx6KPeZUaJxJMzi3utvIqOROuiIhdwA5k4z2aM4sNVTo/krLeKdHKjKm1PSoa/v7qc+n62oRF2UuajXKi5aYy1TrWOpX/8Ag6yADl1gDDOe2BMS0+IsL4GxvQV8PFvNsVSrZGL0WParNHNXTjRfr6KIpr/L7P7G89HDT47yNzAo6xE0kqrXYqiWFy9luPRHNTvIrjQwAjeB8X02LIqmSnseJLStMrEc28WmaiV+9r+RwiJv6acemumqa9FCSAAQrHGYtJhW4OoZMJ41vMqRJJvWewz1Ua6686kjU3N7i6GvEZ7zpzrzrxDbKiy5f5P46sNNO1WSXGps1Q6rVqpoqMa1itjX+dq5etovGa5AHJtcqc1Ver1y2xorlXVV5B1Ouv8A0Gpckc5s7cMWunsWPcocdYgo6dqRxV8FmqG1bGImiI9HM3ZfrVWr11U1+AIVgfMWlxXcG0LMJY1s0qxLJvXiwz0saaac6sjk3N7j6GvGTUAAAAMlbQ2Qr8WbTWFbrR0ruQ2IF3r09iaJGtMiK9VXqcJGjWp/ORVNZxRsiibFExrGMRGta1NEaidBEQ/oAAAAIPjbMmkwtcpbe7B+ObzNGxr960Yfnqonapro2RERir1+Pi6pOABj3O/OTO/FVqqbDgXKHHOHqGoasc1dNZqh1W9ipoqNRrN2LXrorl6yoZc5U+anc0xn5CqfUOsoA5NcqfNPuaYz8hVPqDlT5p9zTGfkKp9Q6ygDk1yp80+5pjPyFU+oS/Ke2Z+ZZYpZiDC+AMZRTK3cqIJbDVOhqY9ddyRu5xp300VOoqHTYAUdgrPq9V9JGzFeS2ZVmrNOfdTWGepgVeui7rXp9W6v1lxYdusV7s1NdIaS4UcdQ1XJDXUr6edmiqmj43ojmrxdVOhop94AAACgNuzpR277Wd6BWF2YS+ato8Bh+7QpPbs6Udu+1negVhdmEvmraPAYfu0A9MAAAAAAAAAAAAAAAAAADNu1h03MrvC2/iVtNJGbdrDpuZXeFt/EraBpIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQG3Z0o7d9rO9ArC7MJfNW0eAw/doUnt2dKO3fazvQKwuzCXzVtHgMP3aAemAAAAAAAAAAAAAAAAAABm3aw6bmV3hbfxK2mkjNu1h03MrvC2/iVtA0kAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoDbs6Udu+1negVhdmEvmraPAYfu0KT27OlHbvtZ3oFYXZhL5q2jwGH7tAPTAAAAAAAAAAAAAAAAAAAzbtYdNzK7wtv4lbTSRm3aw6bmV3hbfxK2gaSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUBt2dKO3fazvQKwuzCXzVtHgMP3aFJ7dnSjt32s70CsLswl81bR4DD92gHpgAAAAAAAAAAAAAAAAAAZn2vp/imZeXVe6ComionOqpm08LpXpHHcLe96o1qKq6Naq6Ihpg8HFeDMJYsdTuxPhm0Xp1MjkgWuo2TcEjtN7d3kXTXRNdOsgEE5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oEf5oTLvscTebtZ7Mc0Jl32OJvN2s9mSDlO5T9zbCXkmH1Ryncp+5thLyTD6oFCbVOZuG8e5dU9qw7T32SopqySrmWos9RAxkTaOparle9iJ0Xt6vVNQ4S+ato8Bh+7QjPKdyn7m2EvJMPqk2hijhhZDCxsccbUaxjU0RqJxIiJ1gP7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/9k=" alt="R&M Property Management" class="footer-logo">
+  <ul class="footer-nav">
+    <li><a href="#gestione">Gestione</a></li>
+    <li><a href="#revenue">Revenue</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+  </ul>
+  <div class="footer-info">
+    R&M Gestioni Immobiliari — Maremma, Toscana<br>
+    <a href="https://wa.me/393485259881">+39 348 525 9881</a>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('nav');
+  if (window.scrollY > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+// ── HAMBURGER MENU ──
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var menu = document.getElementById('navMobileMenu');
+  if(!btn || !menu) return;
+
+  function closeMenu(){
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', function(){
+    var isOpen = btn.classList.toggle('open');
+    menu.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Chiudi cliccando un link
+  menu.querySelectorAll('.nav-mobile-link, .nav-mobile-actions a').forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Chiudi su resize desktop
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 600) closeMenu();
+  });
+})();
+</script>
+<!-- ══════════════════════════════════════════════════════
+     R&M CHATBOT WIDGET — snippet da incollare in index.html
+     Prima del tag </body>
+     ══════════════════════════════════════════════════════ -->
+
+<style>
+  :root {
+    --rm-gold: #C9A84C;
+    --rm-gold-light: #E2C97E;
+    --rm-gold-dim: rgba(201,168,76,0.15);
+    --rm-black: #0D0D0D;
+    --rm-surface: #141414;
+    --rm-surface2: #1E1E1E;
+    --rm-border: rgba(201,168,76,0.2);
+    --rm-text: #F0EDE6;
+    --rm-muted: #7A7570;
+    --rm-white: #F7F4EE;
+  }
+
+  #rm-bubble {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 60px; height: 60px;
+    background: var(--rm-gold); border-radius: 50%;
+    cursor: pointer; border: none; outline: none; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.45);
+    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+    font-family: 'Outfit', sans-serif;
+  }
+  #rm-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(201,168,76,0.6); }
+  #rm-bubble svg { transition: opacity 0.2s, transform 0.2s; }
+  #rm-bubble.open .icon-chat { opacity: 0; transform: scale(0.5) rotate(-45deg); }
+  #rm-bubble.open .icon-close { opacity: 1; transform: scale(1) rotate(0deg); }
+  #rm-bubble .icon-close { position: absolute; opacity: 0; transform: scale(0.5) rotate(45deg); }
+  #rm-bubble::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 14px; height: 14px; background: #E63946;
+    border-radius: 50%; border: 2px solid var(--rm-black);
+    animation: rm-ping 2s ease-in-out infinite;
+  }
+  #rm-bubble.open::after { display: none; }
+  @keyframes rm-ping { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
+
+  #rm-chat {
+    position: fixed; bottom: 100px; right: 28px;
+    width: 380px; max-height: 600px;
+    background: var(--rm-surface);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px var(--rm-border);
+    border: 1px solid var(--rm-border);
+    display: flex; flex-direction: column; z-index: 9998; overflow: hidden;
+    transform-origin: bottom right;
+    transform: scale(0.85) translateY(20px); opacity: 0; pointer-events: none;
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.25s;
+    font-family: 'Outfit', sans-serif;
+  }
+  #rm-chat.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+
+  .rm-header {
+    background: var(--rm-black); padding: 16px 20px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--rm-border); flex-shrink: 0;
+  }
+  .rm-avatar {
+    width: 40px; height: 40px; background: var(--rm-gold-dim);
+    border: 1.5px solid var(--rm-gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rm-avatar span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 600; color: var(--rm-gold); letter-spacing: 0.5px;
+  }
+  .rm-header-info { flex: 1; }
+  .rm-header-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 600; color: var(--rm-white); letter-spacing: 0.3px;
+  }
+  .rm-header-sub {
+    font-size: 11px; color: var(--rm-gold); letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 5px; margin-top: 1px;
+  }
+  .rm-status-dot {
+    width: 6px; height: 6px; background: #4CAF50; border-radius: 50%;
+    animation: rm-pulse 2s infinite;
+  }
+  @keyframes rm-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .rm-messages {
+    flex: 1; overflow-y: auto; padding: 20px 16px;
+    display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth;
+  }
+  .rm-messages::-webkit-scrollbar { width: 4px; }
+  .rm-messages::-webkit-scrollbar-thumb { background: var(--rm-border); border-radius: 2px; }
+
+  .rm-msg { display: flex; flex-direction: column; max-width: 85%; animation: rm-fadeUp 0.3s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes rm-fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .rm-msg.bot { align-self: flex-start; }
+  .rm-msg.user { align-self: flex-end; }
+
+  .rm-bubble-msg { padding: 11px 15px; border-radius: 12px; font-size: 13.5px; line-height: 1.55; }
+  .rm-msg.bot .rm-bubble-msg {
+    background: var(--rm-surface2); color: var(--rm-text);
+    border: 1px solid rgba(255,255,255,0.06); border-bottom-left-radius: 4px;
+  }
+  .rm-msg.user .rm-bubble-msg {
+    background: var(--rm-gold); color: var(--rm-black);
+    font-weight: 500; border-bottom-right-radius: 4px;
+  }
+
+  .rm-cta-btn {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+    padding: 8px 14px; background: var(--rm-gold); color: var(--rm-black);
+    border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none;
+    letter-spacing: 0.3px; transition: background 0.2s; border: none; cursor: pointer;
+  }
+  .rm-cta-btn:hover { background: var(--rm-gold-light); }
+
+  .rm-typing { display: flex; align-items: center; gap: 4px; padding: 12px 15px; background: var(--rm-surface2); border-radius: 12px; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.06); width: fit-content; }
+  .rm-typing span { width: 6px; height: 6px; background: var(--rm-gold); border-radius: 50%; animation: rm-typing 1.2s infinite; }
+  .rm-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .rm-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes rm-typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+  .rm-input-area {
+    padding: 14px 16px; border-top: 1px solid var(--rm-border);
+    background: var(--rm-black); display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0;
+  }
+  #rm-input {
+    flex: 1; background: var(--rm-surface2); border: 1px solid var(--rm-border);
+    border-radius: 10px; color: var(--rm-text); font-family: 'Outfit', sans-serif;
+    font-size: 13.5px; padding: 10px 14px; resize: none; outline: none;
+    max-height: 100px; line-height: 1.5; transition: border-color 0.2s;
+  }
+  #rm-input::placeholder { color: var(--rm-muted); }
+  #rm-input:focus { border-color: var(--rm-gold); }
+
+  #rm-send {
+    width: 38px; height: 38px; background: var(--rm-gold);
+    border: none; border-radius: 10px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s; flex-shrink: 0;
+  }
+  #rm-send:hover { background: var(--rm-gold-light); transform: scale(1.05); }
+  #rm-send:disabled { background: var(--rm-muted); cursor: not-allowed; transform: none; }
+
+  .rm-footer {
+    text-align: center; font-size: 10px; color: var(--rm-muted);
+    padding: 6px 0 10px; letter-spacing: 0.3px; background: var(--rm-black); flex-shrink: 0;
+  }
+  .rm-footer a { color: var(--rm-gold); text-decoration: none; }
+
+  .rm-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .rm-qr-btn {
+    padding: 6px 12px; background: transparent; border: 1px solid var(--rm-border);
+    border-radius: 20px; color: var(--rm-gold); font-size: 12px; cursor: pointer;
+    font-family: 'Outfit', sans-serif; transition: background 0.2s, border-color 0.2s;
+  }
+  .rm-qr-btn:hover { background: var(--rm-gold-dim); border-color: var(--rm-gold); }
+
+  @media (max-width: 440px) {
+    #rm-chat { width: calc(100vw - 24px); right: 12px; bottom: 90px; }
+    #rm-bubble { right: 16px; bottom: 16px; }
+  }
+</style>
+
+<!-- HTML -->
+<button id="rm-bubble" aria-label="Apri chat R&M">
+  <svg class="icon-chat" width="26" height="26" viewBox="0 0 24 24" fill="none">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" fill="#0D0D0D" stroke="#0D0D0D" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <path d="M18 6L6 18M6 6l12 12" stroke="#0D0D0D" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+</button>
+
+<div id="rm-chat">
+  <div class="rm-header">
+    <div class="rm-avatar"><span>R&M</span></div>
+    <div class="rm-header-info">
+      <div class="rm-header-name">R&M Gestioni Immobiliari</div>
+      <div class="rm-header-sub"><span class="rm-status-dot"></span> Assistente virtuale · Maremma Toscana</div>
+    </div>
+  </div>
+  <div class="rm-messages" id="rm-messages"></div>
+  <div class="rm-input-area">
+    <textarea id="rm-input" placeholder="Scrivi un messaggio..." rows="1"></textarea>
+    <button id="rm-send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="#0D0D0D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </button>
   </div>
-</div>
-
-</div><!-- end container -->
-
-<!-- PAGE FOOTER -->
-<div class="page-footer">
-  <p>R&amp;M Gestioni Immobiliari · <a href="https://rmgestioni.it">rmgestioni.it</a> · @rmgestioni<br>
-  <a href="https://rmgestioni.it/privacy-policy">Privacy Policy</a> · Trattamento dati ai sensi del Reg. UE 2016/679</p>
-</div>
-
-<!-- LOADING OVERLAY -->
-<div class="loading-overlay" id="loadingOverlay" style="display:none">
-  <div style="text-align:center">
-    <div class="loading-spinner" style="margin:0 auto 16px"></div>
-    <div style="font-size:13px;color:var(--muted)">Elaborazione in corso…</div>
-  </div>
+  <div class="rm-footer">Assistente AI · <a href="https://rmgestioni.it" target="_blank">rmgestioni.it</a></div>
 </div>
 
 <script>
-// ─────────────────────────────────────────
-// EMAILJS INIT
-// ─────────────────────────────────────────
-emailjs.init('XkZDkh5LNgAqD7iXy');
+(function() {
+  var SYSTEM_PROMPT = `Sei l'assistente virtuale di R&M Gestioni Immobiliari, azienda specializzata in property management e revenue management per affitti brevi in Maremma (Grosseto), Toscana. I fondatori sono Matteo e Raffaele Iazzetta.
 
-// ─────────────────────────────────────────
-// MATRICI DI CALCOLO
-// ─────────────────────────────────────────
-const FASCIA_DATA = {
-  costa_premium:    { mult: 1.6, occ: 0.52, label: 'Costa Premium' },
-  costa_media:      { mult: 1.0, occ: 0.44, label: 'Costa Media' },
-  montagna_premium: { mult: 1.5, occ: 0.46, label: 'Montagna Premium' },
-  montagna_media:   { mult: 0.8, occ: 0.37, label: 'Montagna Media' },
-  citta_arte:       { mult: 1.4, occ: 0.60, label: "Città d'Arte" },
-  campagna:         { mult: 0.9, occ: 0.45, label: 'Campagna / Borghi' }
-};
+## LA TUA MISSIONE
+Rispondere alle domande dei potenziali clienti, costruire fiducia, e guidarli verso una consulenza gratuita o il contatto diretto. Sei conversazionale, diretto, concreto. Non sei un chatbot generico: conosci il mercato degli affitti brevi, la Maremma, e i numeri reali.
 
-const ADR_BASE = {
-  monolocale:   { 2: 75,  4: 95  },
-  trilocale:    { 4: 110, 6: 140 },
-  villa:        { 4: 150, 6: 200, 8: 260 },
-  agriturismo:  { 4: 130, 6: 170, 8: 220 }
-};
+## CHI SIAMO
+R&M Gestioni Immobiliari gestisce proprietà in affitto breve su Airbnb e Booking.com in Maremma Toscana (Grosseto e province). Offriamo gestione completa e revenue management professionale. Sito: rmgestioni.it | Instagram: @rmgestioni
 
-const POSTI_OPTIONS = {
-  monolocale:  [2, 4],
-  trilocale:   [4, 6],
-  villa:       [4, 6, 8],
-  agriturismo: [4, 6, 8]
-};
+## SERVIZI PRINCIPALI
 
-// Boost occupazione per pochi mesi (tipicamente alta stagione)
-function occBoost(mesi) {
-  if (mesi <= 2) return 1.35;
-  if (mesi <= 4) return 1.20;
-  if (mesi <= 6) return 1.10;
-  return 1.0;
-}
+**1. Gestione Completa Affitti Brevi**
+- Pubblicazione e ottimizzazione annunci Airbnb e Booking.com
+- Revenue management e dynamic pricing professionale
+- Comunicazione ospiti H24 in italiano e inglese
+- Check-in/out, coordinamento pulizie e biancheria
+- Adempimenti burocratici: Alloggiati Web, ISTAT, tassa di soggiorno, CIR/CIN, SCIA
+- Rendicontazione mensile trasparente
 
-// ─────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────
-let selectedFascia = '';
-let calcResult = {};
+**2. Revenue Management (solo pricing)**
+- Per proprietari che gestiscono già ma vogliono ottimizzare i prezzi
+- Strategia floor/target/ceiling per stagione
+- Integrazione con PriceLabs
 
-// ─────────────────────────────────────────
-// UI HELPERS
-// ─────────────────────────────────────────
-function selectFascia(el) {
-  document.querySelectorAll('.fascia-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedFascia = el.dataset.value;
-  document.getElementById('fasciaError').style.display = 'none';
-}
+**3. Pacchetto Digital**
+- Creazione e ottimizzazione listing Airbnb/Booking
+- Setup pricing dinamico e guida ospite digitale
 
-function updatePostiLetto() {
-  const tipo = document.getElementById('tipologia').value;
-  const sel = document.getElementById('postiLetto');
-  sel.innerHTML = '';
-  if (!tipo) { sel.innerHTML = '<option value="">— Prima scegli la tipologia —</option>'; return; }
-  POSTI_OPTIONS[tipo].forEach(n => {
-    const o = document.createElement('option');
-    o.value = n; o.textContent = n + ' posti letto';
-    sel.appendChild(o);
+**4. Supporto Investitori**
+- Analisi pre-acquisto: stima RevPAR, ROI, stagionalità
+- Target 8-10% di rendimento annuo
+- Due diligence su immobili in Maremma
+
+## CASE STUDY
+Agriturismo Turin (3 appartamenti, Maremma): gestione fai-da-te → gestione R&M → **+117% di fatturato in 12 mesi**. Risultato ottenuto con dynamic pricing, ottimizzazione listing e gestione professionale.
+
+## COMMISSIONI
+Lavoriamo a percentuale sul fatturato generato, senza canoni fissi né costi nascosti. Non dare cifre precise senza conoscere la proprietà specifica.
+
+## GESTIONE OBIEZIONI
+- "Gestisco già da solo" → molti proprietari lasciano 20-40% di revenue sul tavolo per errori di pricing. Proponi analisi gratuita.
+- "È troppo caro" → lavoriamo a percentuale: se non otteniamo risultati, guadagniamo poco anche noi.
+- "Non so se il mio immobile funziona" → proponi valutazione gratuita.
+
+## TONO
+Professionale, diretto, concreto. Parla di numeri e risultati. Risposte brevi (max 3-4 paragrafi). Rispondi in italiano salvo diversa lingua dell'utente.
+
+## CTA (dopo 2-3 scambi con interesse evidente)
+Invita a: valutazione gratuita della proprietà, form su rmgestioni.it/#contatti, oppure WhatsApp.`;
+
+  var isOpen = false, isLoading = false, welcomeShown = false;
+  var history = [];
+
+  var bubbleEl = document.getElementById('rm-bubble');
+  var chatEl = document.getElementById('rm-chat');
+  var messagesEl = document.getElementById('rm-messages');
+  var inputEl = document.getElementById('rm-input');
+  var sendEl = document.getElementById('rm-send');
+
+  bubbleEl.addEventListener('click', function() {
+    isOpen = !isOpen;
+    bubbleEl.classList.toggle('open', isOpen);
+    chatEl.classList.toggle('open', isOpen);
+    if (isOpen && !welcomeShown) { showWelcome(); welcomeShown = true; setTimeout(function(){ inputEl.focus(); }, 400); }
   });
-}
 
-function updateMesi() {
-  const v = document.getElementById('mesiSlider').value;
-  document.getElementById('mesiVal').textContent = v + (v == 1 ? ' mese / anno' : ' mesi / anno');
-}
-
-function setProgress(step) {
-  const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
-  document.getElementById('progressFill').style.width = pct + '%';
-  ['pl1','pl2','pl3'].forEach((id, i) => {
-    document.getElementById(id).classList.toggle('active', i < step);
-  });
-}
-
-function showStep(id) {
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function loading(show) {
-  document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-}
-
-// ─────────────────────────────────────────
-// NAVIGAZIONE
-// ─────────────────────────────────────────
-function goToStep1() {
-  setProgress(1); showStep('step1');
-}
-
-function goToStep2() {
-  // Validate step 1
-  let valid = true;
-  if (!selectedFascia) {
-    document.getElementById('fasciaError').style.display = 'block';
-    valid = false;
-  }
-  if (!document.getElementById('tipologia').value) {
-    document.getElementById('tipologia').classList.add('input-error');
-    valid = false;
-  } else { document.getElementById('tipologia').classList.remove('input-error'); }
-  if (!document.getElementById('postiLetto').value) {
-    document.getElementById('postiLetto').classList.add('input-error');
-    valid = false;
-  } else { document.getElementById('postiLetto').classList.remove('input-error'); }
-  if (!valid) return;
-  setProgress(2); showStep('step2');
-}
-
-// ─────────────────────────────────────────
-// CALCOLO
-// ─────────────────────────────────────────
-function calcolaRendita() {
-  const fascia = FASCIA_DATA[selectedFascia];
-  const tipo = document.getElementById('tipologia').value;
-  const posti = parseInt(document.getElementById('postiLetto').value);
-  const mesi = parseInt(document.getElementById('mesiSlider').value);
-
-  const adrBase = ADR_BASE[tipo][posti];
-  const adr = Math.round(adrBase * fascia.mult);
-
-  const occBase = fascia.occ * occBoost(mesi);
-  const occ = Math.min(occBase, 0.92);
-
-  const giorniDisp = mesi * 30;
-  const nottiRM = Math.round(giorniDisp * occ);
-  const revRM = nottiRM * adr;
-
-  // Fai-da-te: ADR -25%, occupazione -35%
-  const adrFDT = Math.round(adr * 0.75);
-  const nottiFDT = Math.round(giorniDisp * occ * 0.65);
-  const revFDT = nottiFDT * adrFDT;
-
-  const delta = revRM - revFDT;
-  const deltaPerc = Math.round((delta / revFDT) * 100);
-  const occPerc = Math.round(occ * 100);
-
-  return { adr, nottiRM, occ, occPerc, revRM, revFDT, delta, deltaPerc, mesi,
-    fascia: fascia.label, tipo, posti,
-    gestione: document.querySelector('input[name="gestione"]:checked')?.value || 'Gestisco da solo' };
-}
-
-function fmt(n) { return '€' + n.toLocaleString('it-IT'); }
-
-// ─────────────────────────────────────────
-// VALIDATION
-// ─────────────────────────────────────────
-function validateStep2() {
-  let valid = true;
-  const fields = ['nome','cognome','email','telefono','localita'];
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.classList.add('input-error'); valid = false; }
-    else el.classList.remove('input-error');
-  });
-  // Email format
-  const em = document.getElementById('email');
-  if (em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
-    em.classList.add('input-error'); valid = false;
-  }
-  // Privacy
-  if (!document.getElementById('consensoPrivacy').checked) {
-    document.getElementById('privacyError').style.display = 'block';
-    document.getElementById('privacyField').classList.add('checkbox-required');
-    valid = false;
-  } else {
-    document.getElementById('privacyError').style.display = 'none';
-    document.getElementById('privacyField').classList.remove('checkbox-required');
-  }
-  return valid;
-}
-
-// ─────────────────────────────────────────
-// CALCOLA + INVIA
-// ─────────────────────────────────────────
-async function calcolaEInvia() {
-  if (!validateStep2()) return;
-
-  loading(true);
-
-  const r = calcolaRendita();
-  calcResult = r;
-
-  const nome = document.getElementById('nome').value.trim();
-  const cognome = document.getElementById('cognome').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const telefono = document.getElementById('telefono').value.trim();
-  const localita = document.getElementById('localita').value.trim();
-  const marketing = document.getElementById('consensoMarketing').checked ? 'Sì' : 'No';
-
-  const tipologiaLabel = {
-    monolocale: 'Monolocale / Bilocale',
-    trilocale: 'Trilocale / App. grande',
-    villa: 'Villa / Casa indipendente',
-    agriturismo: 'Agriturismo / Rustico'
-  }[r.tipo];
-
-  const params = {
-    to_email: email.trim().toLowerCase(),
-    to_name: nome + ' ' + cognome,
-    prospect_name: nome + ' ' + cognome,
-    prospect_email: email,
-    prospect_phone: telefono,
-    property_location: localita,
-    marketing_consent: marketing,
-    fascia_mercato: r.fascia,
-    tipologia: tipologiaLabel,
-    posti_letto: r.posti,
-    mesi_disponibili: r.mesi,
-    gestione_attuale: r.gestione,
-    adr_stimato: fmt(r.adr),
-    revenue_fai_da_te: fmt(r.revFDT),
-    revenue_rm: fmt(r.revRM),
-    delta_euro: fmt(r.delta),
-    delta_perc: r.deltaPerc,
-    notti_stimate: r.nottiRM,
-    occupazione_media: r.occPerc + '%'
-  };
-
-  let emailOk = true;
-  let emailError = '';
-
-  // ── EMAIL PROSPECT via Web3Forms ──
-  try {
-    const htmlBody = `
-<!DOCTYPE html><html><head><meta charset="UTF-8">
-<style>
-body{margin:0;padding:0;background:#f4f1eb;font-family:Georgia,serif}
-.wrap{max-width:560px;margin:0 auto;background:#0D0D0D}
-.hdr{background:#0D0D0D;padding:32px 36px 20px;border-bottom:1px solid #C9A84C}
-.logo{font-family:Georgia,serif;font-size:18px;color:#C9A84C;letter-spacing:2px;text-transform:uppercase}
-.logo span{color:#fff}
-.body{padding:28px 36px;background:#141414}
-.greeting{color:#F0EDE6;font-size:15px;margin-bottom:22px;line-height:1.6;font-family:Arial,sans-serif}
-.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-family:Arial,sans-serif}
-.lbl{color:#7A7570;font-size:13px}
-.val{color:#F0EDE6;font-size:14px;font-weight:600}
-.box{background:#1E1E1E;border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:20px;margin:16px 0}
-.delta{background:rgba(201,168,76,0.1);border:1px solid #C9A84C;border-radius:8px;padding:20px;text-align:center;margin:16px 0}
-.delta-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#C9A84C;font-family:Arial,sans-serif}
-.delta-num{font-size:32px;font-weight:bold;color:#C9A84C;font-family:Arial,sans-serif}
-.delta-sub{font-size:13px;color:#F0EDE6;margin-top:4px;font-family:Arial,sans-serif}
-.cta{display:block;background:#C9A84C;color:#0D0D0D;text-align:center;padding:14px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:14px;font-family:Arial,sans-serif;margin:20px 0}
-.disc{color:#7A7570;font-size:11px;line-height:1.5;font-family:Arial,sans-serif;margin:14px 0}
-.ftr{padding:20px 36px;background:#0D0D0D;border-top:1px solid rgba(201,168,76,0.15)}
-.ftr p{color:#7A7570;font-size:11px;font-family:Arial,sans-serif;line-height:1.6}
-.ftr a{color:#C9A84C;text-decoration:none}
-</style></head><body>
-<div class="wrap">
-  <div class="hdr"><div class="logo">R&M <span>Gestioni Immobiliari</span></div></div>
-  <div class="body">
-    <div class="greeting">Ciao <strong style="color:#C9A84C">${params.prospect_name}</strong>,<br><br>ecco la stima di rendita per il tuo immobile a <strong style="color:#fff">${params.property_location}</strong>.</div>
-    <div class="box">
-      <div class="row"><span class="lbl">Tipologia</span><span class="val">${params.tipologia} &middot; ${params.posti_letto} posti letto</span></div>
-      <div class="row"><span class="lbl">Fascia di mercato</span><span class="val">${params.fascia_mercato}</span></div>
-      <div class="row"><span class="lbl">Mesi disponibili</span><span class="val">${params.mesi_disponibili} mesi/anno</span></div>
-      <div class="row"><span class="lbl">ADR stimata</span><span class="val">${params.adr_stimato}/notte</span></div>
-      <div class="row"><span class="lbl">Notti stimate</span><span class="val">${params.notti_stimate}/anno</span></div>
-      <div class="row" style="border:none"><span class="lbl">Occupazione media</span><span class="val">${params.occupazione_media}</span></div>
-    </div>
-    <div class="box">
-      <div class="row"><span class="lbl">Gestione fai-da-te</span><span class="val">${params.revenue_fai_da_te}/anno</span></div>
-      <div class="row" style="border:none"><span class="lbl" style="color:#C9A84C">Gestione professionale R&M</span><span class="val" style="color:#C9A84C">${params.revenue_rm}/anno</span></div>
-    </div>
-    <div class="delta">
-      <div class="delta-lbl">Potenziale non sfruttato</div>
-      <div class="delta-num">+${params.delta_euro}/anno</div>
-      <div class="delta-sub">+${params.delta_perc}% rispetto alla gestione autonoma</div>
-    </div>
-    <div class="disc">&#9888; Stima orientativa basata su benchmark nazionali. I risultati reali dipendono dalle caratteristiche specifiche della proprietà. R&M non garantisce i valori indicati.</div>
-    <a href="https://rmgestioni.it/#contatti" class="cta">Richiedi analisi gratuita della tua proprietà &rarr;</a>
-    <div class="disc">Hai ricevuto questa email perché hai utilizzato il calcolatore su rmgestioni.it.</div>
-  </div>
-  <div class="ftr"><p><strong style="color:#C9A84C">R&M Gestioni Immobiliari</strong><br>Maremma Toscana &middot; <a href="https://rmgestioni.it">rmgestioni.it</a> &middot; @rmgestioni<br>Per cancellarti scrivi a info@rmgestioni.it</p></div>
-</div>
-</body></html>`;
-
-    const w3res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        access_key: '071fd063-35d4-48ff-ac5b-57073aafc417',
-        to: email.trim().toLowerCase(),
-        subject: 'La tua stima di rendita — R&M Gestioni Immobiliari',
-        html: htmlBody,
-        from_name: 'R&M Gestioni Immobiliari',
-        botcheck: ''
-      })
+  function showWelcome() {
+    var div = document.createElement('div'); div.className = 'rm-msg bot';
+    var bub = document.createElement('div'); bub.className = 'rm-bubble-msg';
+    bub.innerHTML = 'Ciao! Sono l\'assistente di <strong>R&M Gestioni Immobiliari</strong>. 👋<br><br>Gestiamo proprietà in affitto breve in <strong>Maremma Toscana</strong>. Come posso aiutarti?';
+    var qr = document.createElement('div'); qr.className = 'rm-quick-replies';
+    ['Come funziona la gestione?','Quali commissioni applicate?','Ho una proprietà da valutare','Cosa è il revenue management?'].forEach(function(q) {
+      var btn = document.createElement('button'); btn.className = 'rm-qr-btn'; btn.textContent = q;
+      btn.addEventListener('click', function() { qr.remove(); sendMessage(q); }); qr.appendChild(btn);
     });
-    const w3data = await w3res.json();
-    if (w3data.success) {
-      console.log('Web3Forms prospect OK');
-    } else {
-      throw new Error(w3data.message || 'Web3Forms error');
+    div.appendChild(bub); div.appendChild(qr); messagesEl.appendChild(div);
+  }
+
+  function appendMessage(role, html, cta) {
+    var div = document.createElement('div'); div.className = 'rm-msg ' + role;
+    var bub = document.createElement('div'); bub.className = 'rm-bubble-msg'; bub.innerHTML = html;
+    if (cta && role === 'bot') {
+      var a = document.createElement('a'); a.href = 'https://rmgestioni.it/#contatti'; a.target = '_blank'; a.className = 'rm-cta-btn'; a.style.display = 'inline-flex'; a.style.marginTop = '10px';
+      a.innerHTML = '&#128172; Richiedi valutazione gratuita'; bub.appendChild(a);
     }
-  } catch(e) {
-    emailOk = false;
-    emailError = 'Email prospect — ' + (e?.message || JSON.stringify(e));
-    console.error('Errore Web3Forms:', e);
+    div.appendChild(bub); messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  // ── NOTIFICA LEAD a Matteo via EmailJS ──
-  try {
-    const res2 = await emailjs.send('service_dq5hq8a', 'template_lw0y8qq', params);
-    console.log('Notifica Matteo OK:', res2.status, res2.text);
-  } catch(e) {
-    console.error('Errore notifica Matteo:', e);
+  function showTyping() {
+    var div = document.createElement('div'); div.className = 'rm-msg bot'; div.id = 'rm-typing-indicator';
+    var t = document.createElement('div'); t.className = 'rm-typing'; t.innerHTML = '<span></span><span></span><span></span>';
+    div.appendChild(t); messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+  function hideTyping() { var el = document.getElementById('rm-typing-indicator'); if (el) el.remove(); }
+
+  function fmt(t) {
+    return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
   }
 
-  loading(false);
-  mostraRisultati(r, email, localita, tipologiaLabel, emailOk, emailError);
-}
-
-// ─────────────────────────────────────────
-// MOSTRA RISULTATI
-// ─────────────────────────────────────────
-function mostraRisultati(r, email, localita, tipologiaLabel, emailOk, emailError) {
-  document.getElementById('resultTitle').textContent = tipologiaLabel + ' · ' + r.posti + ' posti letto';
-  document.getElementById('resultSub').textContent = r.fascia + ' — ' + localita;
-  document.getElementById('kpiAdr').textContent = fmt(r.adr);
-  document.getElementById('kpiNotti').textContent = r.nottiRM;
-  document.getElementById('kpiOcc').textContent = r.occPerc + '%';
-  document.getElementById('revFDT').textContent = fmt(r.revFDT) + '/anno';
-  document.getElementById('revRM').textContent = fmt(r.revRM) + '/anno';
-  document.getElementById('deltaEuro').textContent = '+' + fmt(r.delta) + '/anno';
-  document.getElementById('deltaSub').textContent = '+' + r.deltaPerc + '% rispetto alla gestione autonoma';
-  document.getElementById('emailConfirm').textContent = email;
-
-  // Mostra stato invio email
-  const emailStatusEl = document.getElementById('emailStatus');
-  if (emailOk === false) {
-    emailStatusEl.innerHTML = '<span style="color:#E63946">&#9888; Invio email non riuscito: ' + (emailError || 'errore sconosciuto') + '</span><br><span style="font-size:11px;color:var(--muted)">I tuoi risultati sono comunque visibili qui sopra. Contattaci su <a href="https://rmgestioni.it/#contatti" style="color:var(--gold)">rmgestioni.it</a></span>';
-  } else {
-    emailStatusEl.innerHTML = '&#128231; Abbiamo inviato la stima completa a <strong style="color:var(--gold)">' + email + '</strong>';
+  async function sendMessage(text) {
+    text = text.trim(); if (!text || isLoading) return;
+    appendMessage('user', text);
+    inputEl.value = ''; inputEl.style.height = 'auto';
+    isLoading = true; sendEl.disabled = true; showTyping();
+    history.push({ role: 'user', content: text });
+    var showCTA = history.filter(function(m){ return m.role === 'assistant'; }).length >= 1 && /proprietà|immobile|gestione|affitto|casa|villa|agriturismo|interesse|valut/i.test(text);
+    try {
+      var res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 600, system: SYSTEM_PROMPT, messages: history })
+      });
+      var data = await res.json();
+      var reply = data.content && data.content[0] ? data.content[0].text : 'Errore. Riprova o contattaci su rmgestioni.it';
+      history.push({ role: 'assistant', content: reply });
+      hideTyping(); appendMessage('bot', fmt(reply), showCTA);
+    } catch(e) {
+      hideTyping(); appendMessage('bot', 'Connessione interrotta. Contattaci su <a href="https://rmgestioni.it/#contatti" style="color:var(--rm-gold)">rmgestioni.it</a>');
+    }
+    isLoading = false; sendEl.disabled = false; inputEl.focus();
   }
 
-  setProgress(3); showStep('stepResult');
-}
-
-// ─────────────────────────────────────────
-// GENERA PDF
-// ─────────────────────────────────────────
-function scaricaPDF() {
-  const { jsPDF } = window.jspdf;
-  const r = calcResult;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const W = doc.internal.pageSize.getWidth();
-  const M = 20;
-  let y = 0;
-
-  // BG
-  doc.setFillColor(13, 13, 13);
-  doc.rect(0, 0, W, 297, 'F');
-
-  // Header strip
-  doc.setFillColor(20, 20, 20);
-  doc.rect(0, 0, W, 42, 'F');
-  doc.setDrawColor(201, 168, 76);
-  doc.setLineWidth(0.4);
-  doc.line(0, 42, W, 42);
-
-  // Logo
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.setTextColor(201, 168, 76);
-  doc.text('R&M GESTIONI IMMOBILIARI', M, 18);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  doc.setTextColor(122, 117, 112);
-  doc.text('Property & Revenue Management · rmgestioni.it · @rmgestioni', M, 26);
-  doc.setFontSize(8);
-  doc.setTextColor(122, 117, 112);
-  doc.text('Documento generato il ' + new Date().toLocaleDateString('it-IT'), M, 34);
-
-  y = 58;
-
-  // Title
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.setTextColor(240, 237, 230);
-  doc.text('STIMA DI RENDITA — AFFITTI BREVI', M, y);
-  y += 8;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(122, 117, 112);
-  const tipLabel = { monolocale: 'Monolocale / Bilocale', trilocale: 'Trilocale / App. grande', villa: 'Villa / Casa indipendente', agriturismo: 'Agriturismo / Rustico' }[r.tipo];
-  doc.text(tipLabel + ' · ' + r.posti + ' posti letto · ' + r.fascia + ' · ' + r.mesi + ' mesi/anno', M, y);
-  y += 14;
-
-  // KPI row
-  const kpiW = (W - M * 2 - 8) / 3;
-  const kpis = [
-    { label: 'ADR STIMATA', val: fmt(r.adr), sub: 'per notte' },
-    { label: 'NOTTI GENERATE', val: String(r.nottiRM), sub: 'stimate / anno' },
-    { label: 'OCCUPAZIONE MEDIA', val: r.occPerc + '%', sub: 'su mesi disponibili' }
-  ];
-  kpis.forEach((k, i) => {
-    const x = M + i * (kpiW + 4);
-    doc.setFillColor(30, 30, 30);
-    doc.setDrawColor(201, 168, 76);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(x, y, kpiW, 24, 2, 2, 'FD');
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
-    doc.setTextColor(122, 117, 112);
-    doc.text(k.label, x + kpiW/2, y + 7, { align: 'center' });
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);
-    doc.setTextColor(201, 168, 76);
-    doc.text(k.val, x + kpiW/2, y + 16, { align: 'center' });
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
-    doc.setTextColor(122, 117, 112);
-    doc.text(k.sub, x + kpiW/2, y + 21, { align: 'center' });
-  });
-  y += 32;
-
-  // Comparison table
-  const rows = [
-    { label: 'Gestione fai-da-te', sub: 'Prezzi fissi, nessuna ottimizzazione', val: fmt(r.revFDT) + '/anno', gold: false },
-    { label: 'Gestione professionale R&M', sub: 'Dynamic pricing + listing ottimizzato', val: fmt(r.revRM) + '/anno', gold: true }
-  ];
-  rows.forEach(row => {
-    doc.setFillColor(row.gold ? 30 : 26, row.gold ? 28 : 26, row.gold ? 20 : 26);
-    doc.setDrawColor(row.gold ? 201 : 45, row.gold ? 168 : 45, row.gold ? 76 : 45);
-    doc.setLineWidth(row.gold ? 0.4 : 0.2);
-    doc.roundedRect(M, y, W - M * 2, 18, 2, 2, 'FD');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(row.gold ? 201 : 240, row.gold ? 168 : 237, row.gold ? 76 : 230);
-    doc.text(row.label, M + 6, y + 7);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
-    doc.setTextColor(122, 117, 112);
-    doc.text(row.sub, M + 6, y + 13);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(row.gold ? 201 : 240, row.gold ? 168 : 237, row.gold ? 76 : 230);
-    doc.text(row.val, W - M - 4, y + 11, { align: 'right' });
-    y += 22;
-  });
-
-  // Delta box
-  y += 4;
-  doc.setFillColor(201, 168, 76, 0.12);
-  doc.setFillColor(25, 22, 14);
-  doc.setDrawColor(201, 168, 76);
-  doc.setLineWidth(0.6);
-  doc.roundedRect(M, y, W - M * 2, 30, 3, 3, 'FD');
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(201, 168, 76);
-  doc.text('POTENZIALE NON SFRUTTATO', W / 2, y + 7, { align: 'center' });
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.setTextColor(201, 168, 76);
-  doc.text('+' + fmt(r.delta) + '/anno', W / 2, y + 18, { align: 'center' });
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  doc.setTextColor(240, 237, 230);
-  doc.text('+' + r.deltaPerc + '% rispetto alla gestione autonoma', W / 2, y + 26, { align: 'center' });
-  y += 38;
-
-  // Disclaimer
-  doc.setFont('helvetica', 'italic');
-  doc.setFontSize(7.5);
-  doc.setTextColor(90, 85, 80);
-  const disc = '⚠ Stima orientativa basata su benchmark nazionali per fascia di mercato e tipologia. I risultati reali dipendono dalle specifiche della proprietà, stato degli arredi e ottimizzazione listing. R&M non garantisce i valori indicati.';
-  const discLines = doc.splitTextToSize(disc, W - M * 2);
-  doc.text(discLines, M, y);
-  y += discLines.length * 4 + 10;
-
-  // CTA
-  doc.setFillColor(201, 168, 76);
-  doc.roundedRect(M, y, W - M * 2, 14, 2, 2, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10);
-  doc.setTextColor(13, 13, 13);
-  doc.text('Richiedi analisi gratuita della tua proprietà → rmgestioni.it/#contatti', W / 2, y + 9, { align: 'center' });
-
-  // Footer
-  y = 280;
-  doc.setDrawColor(50, 50, 50);
-  doc.setLineWidth(0.2);
-  doc.line(M, y, W - M, y);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7);
-  doc.setTextColor(80, 75, 70);
-  doc.text('R&M Gestioni Immobiliari · rmgestioni.it · @rmgestioni · info@rmgestioni.it', W / 2, y + 5, { align: 'center' });
-  doc.text('Stima generata automaticamente · Non costituisce offerta contrattuale', W / 2, y + 9, { align: 'center' });
-
-  doc.save('RM-Stima-Rendita.pdf');
-}
-
-// ─────────────────────────────────────────
-// RESET
-// ─────────────────────────────────────────
-function resetCalcolatore() {
-  selectedFascia = '';
-  calcResult = {};
-  document.querySelectorAll('.fascia-card').forEach(c => c.classList.remove('selected'));
-  document.getElementById('tipologia').value = '';
-  document.getElementById('postiLetto').innerHTML = '<option value="">— Prima scegli la tipologia —</option>';
-  document.getElementById('mesiSlider').value = 6;
-  document.getElementById('mesiVal').textContent = '6 mesi / anno';
-  document.getElementById('g2').checked = true;
-  ['nome','cognome','email','telefono','localita'].forEach(id => {
-    document.getElementById(id).value = '';
-    document.getElementById(id).classList.remove('input-error');
-  });
-  document.getElementById('consensoMarketing').checked = false;
-  document.getElementById('consensoPrivacy').checked = false;
-  document.getElementById('fasciaError').style.display = 'none';
-  document.getElementById('privacyError').style.display = 'none';
-  setProgress(1); showStep('step1');
-}
-
-// Init
-updateMesi();
+  sendEl.addEventListener('click', function() { sendMessage(inputEl.value); });
+  inputEl.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(inputEl.value); } });
+  inputEl.addEventListener('input', function() { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px'; });
+})();
 </script>
 </body>
 </html>
