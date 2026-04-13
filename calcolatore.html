@@ -655,6 +655,8 @@ async function calcolaEInvia() {
   }[r.tipo];
 
   const params = {
+    to_email: email.trim().toLowerCase(),
+    to_name: nome + ' ' + cognome,
     prospect_name: nome + ' ' + cognome,
     prospect_email: email,
     prospect_phone: telefono,
@@ -674,24 +676,104 @@ async function calcolaEInvia() {
     occupazione_media: r.occPerc + '%'
   };
 
+  let emailOk = true;
+  let emailError = '';
+
+  // ── EMAIL PROSPECT via Web3Forms ──
   try {
-    // Manda email al prospect
-    await emailjs.send('service_dq5hq8a', 'template_tb1qhok', params);
-    // Manda notifica lead a Matteo
-    await emailjs.send('service_dq5hq8a', 'template_lw0y8qq', params);
+    const htmlBody = `
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+body{margin:0;padding:0;background:#f4f1eb;font-family:Georgia,serif}
+.wrap{max-width:560px;margin:0 auto;background:#0D0D0D}
+.hdr{background:#0D0D0D;padding:32px 36px 20px;border-bottom:1px solid #C9A84C}
+.logo{font-family:Georgia,serif;font-size:18px;color:#C9A84C;letter-spacing:2px;text-transform:uppercase}
+.logo span{color:#fff}
+.body{padding:28px 36px;background:#141414}
+.greeting{color:#F0EDE6;font-size:15px;margin-bottom:22px;line-height:1.6;font-family:Arial,sans-serif}
+.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-family:Arial,sans-serif}
+.lbl{color:#7A7570;font-size:13px}
+.val{color:#F0EDE6;font-size:14px;font-weight:600}
+.box{background:#1E1E1E;border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:20px;margin:16px 0}
+.delta{background:rgba(201,168,76,0.1);border:1px solid #C9A84C;border-radius:8px;padding:20px;text-align:center;margin:16px 0}
+.delta-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#C9A84C;font-family:Arial,sans-serif}
+.delta-num{font-size:32px;font-weight:bold;color:#C9A84C;font-family:Arial,sans-serif}
+.delta-sub{font-size:13px;color:#F0EDE6;margin-top:4px;font-family:Arial,sans-serif}
+.cta{display:block;background:#C9A84C;color:#0D0D0D;text-align:center;padding:14px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:14px;font-family:Arial,sans-serif;margin:20px 0}
+.disc{color:#7A7570;font-size:11px;line-height:1.5;font-family:Arial,sans-serif;margin:14px 0}
+.ftr{padding:20px 36px;background:#0D0D0D;border-top:1px solid rgba(201,168,76,0.15)}
+.ftr p{color:#7A7570;font-size:11px;font-family:Arial,sans-serif;line-height:1.6}
+.ftr a{color:#C9A84C;text-decoration:none}
+</style></head><body>
+<div class="wrap">
+  <div class="hdr"><div class="logo">R&M <span>Gestioni Immobiliari</span></div></div>
+  <div class="body">
+    <div class="greeting">Ciao <strong style="color:#C9A84C">${params.prospect_name}</strong>,<br><br>ecco la stima di rendita per il tuo immobile a <strong style="color:#fff">${params.property_location}</strong>.</div>
+    <div class="box">
+      <div class="row"><span class="lbl">Tipologia</span><span class="val">${params.tipologia} &middot; ${params.posti_letto} posti letto</span></div>
+      <div class="row"><span class="lbl">Fascia di mercato</span><span class="val">${params.fascia_mercato}</span></div>
+      <div class="row"><span class="lbl">Mesi disponibili</span><span class="val">${params.mesi_disponibili} mesi/anno</span></div>
+      <div class="row"><span class="lbl">ADR stimata</span><span class="val">${params.adr_stimato}/notte</span></div>
+      <div class="row"><span class="lbl">Notti stimate</span><span class="val">${params.notti_stimate}/anno</span></div>
+      <div class="row" style="border:none"><span class="lbl">Occupazione media</span><span class="val">${params.occupazione_media}</span></div>
+    </div>
+    <div class="box">
+      <div class="row"><span class="lbl">Gestione fai-da-te</span><span class="val">${params.revenue_fai_da_te}/anno</span></div>
+      <div class="row" style="border:none"><span class="lbl" style="color:#C9A84C">Gestione professionale R&M</span><span class="val" style="color:#C9A84C">${params.revenue_rm}/anno</span></div>
+    </div>
+    <div class="delta">
+      <div class="delta-lbl">Potenziale non sfruttato</div>
+      <div class="delta-num">+${params.delta_euro}/anno</div>
+      <div class="delta-sub">+${params.delta_perc}% rispetto alla gestione autonoma</div>
+    </div>
+    <div class="disc">&#9888; Stima orientativa basata su benchmark nazionali. I risultati reali dipendono dalle caratteristiche specifiche della proprietà. R&M non garantisce i valori indicati.</div>
+    <a href="https://rmgestioni.it/#contatti" class="cta">Richiedi analisi gratuita della tua proprietà &rarr;</a>
+    <div class="disc">Hai ricevuto questa email perché hai utilizzato il calcolatore su rmgestioni.it.</div>
+  </div>
+  <div class="ftr"><p><strong style="color:#C9A84C">R&M Gestioni Immobiliari</strong><br>Maremma Toscana &middot; <a href="https://rmgestioni.it">rmgestioni.it</a> &middot; @rmgestioni<br>Per cancellarti scrivi a info@rmgestioni.it</p></div>
+</div>
+</body></html>`;
+
+    const w3res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: '071fd063-35d4-48ff-ac5b-57073aafc417',
+        to: email.trim().toLowerCase(),
+        subject: 'La tua stima di rendita — R&M Gestioni Immobiliari',
+        html: htmlBody,
+        from_name: 'R&M Gestioni Immobiliari',
+        botcheck: ''
+      })
+    });
+    const w3data = await w3res.json();
+    if (w3data.success) {
+      console.log('Web3Forms prospect OK');
+    } else {
+      throw new Error(w3data.message || 'Web3Forms error');
+    }
   } catch(e) {
-    console.warn('EmailJS error:', e);
-    // Continua comunque a mostrare i risultati
+    emailOk = false;
+    emailError = 'Email prospect — ' + (e?.message || JSON.stringify(e));
+    console.error('Errore Web3Forms:', e);
+  }
+
+  // ── NOTIFICA LEAD a Matteo via EmailJS ──
+  try {
+    const res2 = await emailjs.send('service_dq5hq8a', 'template_lw0y8qq', params);
+    console.log('Notifica Matteo OK:', res2.status, res2.text);
+  } catch(e) {
+    console.error('Errore notifica Matteo:', e);
   }
 
   loading(false);
-  mostraRisultati(r, email, localita, tipologiaLabel);
+  mostraRisultati(r, email, localita, tipologiaLabel, emailOk, emailError);
 }
 
 // ─────────────────────────────────────────
 // MOSTRA RISULTATI
 // ─────────────────────────────────────────
-function mostraRisultati(r, email, localita, tipologiaLabel) {
+function mostraRisultati(r, email, localita, tipologiaLabel, emailOk, emailError) {
   document.getElementById('resultTitle').textContent = tipologiaLabel + ' · ' + r.posti + ' posti letto';
   document.getElementById('resultSub').textContent = r.fascia + ' — ' + localita;
   document.getElementById('kpiAdr').textContent = fmt(r.adr);
@@ -702,6 +784,14 @@ function mostraRisultati(r, email, localita, tipologiaLabel) {
   document.getElementById('deltaEuro').textContent = '+' + fmt(r.delta) + '/anno';
   document.getElementById('deltaSub').textContent = '+' + r.deltaPerc + '% rispetto alla gestione autonoma';
   document.getElementById('emailConfirm').textContent = email;
+
+  // Mostra stato invio email
+  const emailStatusEl = document.getElementById('emailStatus');
+  if (emailOk === false) {
+    emailStatusEl.innerHTML = '<span style="color:#E63946">&#9888; Invio email non riuscito: ' + (emailError || 'errore sconosciuto') + '</span><br><span style="font-size:11px;color:var(--muted)">I tuoi risultati sono comunque visibili qui sopra. Contattaci su <a href="https://rmgestioni.it/#contatti" style="color:var(--gold)">rmgestioni.it</a></span>';
+  } else {
+    emailStatusEl.innerHTML = '&#128231; Abbiamo inviato la stima completa a <strong style="color:var(--gold)">' + email + '</strong>';
+  }
 
   setProgress(3); showStep('stepResult');
 }
