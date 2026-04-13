@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcolatore Rendita — R&M Gestioni Immobiliari</title>
+<meta name="description" content="Scopri quanto può rendere il tuo immobile con la gestione professionale degli affitti brevi. Stima gratuita in 2 minuti.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;--gold-l:#E2C97E;--gold-dim:rgba(201,168,76,0.12);--gold-border:rgba(201,168,76,0.25);
+  --black:#0D0D0D;--s1:#141414;--s2:#1E1E1E;--s3:#252525;
+  --text:#F0EDE6;--muted:#7A7570;--white:#F7F4EE;
+  --green:#4CAF50;--red:#E63946;
+  --r:12px;--r-lg:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);min-height:100vh;line-height:1.6}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--black);border-bottom:1px solid var(--gold-border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);letter-spacing:1px;text-decoration:none}
+.logo em{color:var(--white);font-style:normal}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s}
+.back-link:hover{color:var(--gold)}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:56px 24px 40px;max-width:680px;margin:0 auto}
+.hero-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,44px);font-weight:600;line-height:1.15;color:var(--white);margin-bottom:14px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto}
+
+/* ── PROGRESS ── */
+.progress-wrap{max-width:520px;margin:0 auto 36px;padding:0 24px}
+.progress-bar{height:2px;background:var(--s2);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-labels{display:flex;justify-content:space-between;margin-top:10px}
+.p-label{font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);transition:color 0.3s}
+.p-label.active{color:var(--gold)}
+
+/* ── CARD CONTAINER ── */
+.card{background:var(--s1);border:1px solid var(--gold-border);border-radius:var(--r-lg);padding:36px;max-width:680px;margin:0 auto 32px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+
+/* ── FIELD ── */
+.field{margin-bottom:24px}
+.field-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block;font-weight:500}
+.field-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.field input,.field select,.field textarea{width:100%;background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:12px 16px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field input::placeholder{color:var(--muted)}
+.field select option{background:var(--s2);color:var(--text)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:520px){.field-row{grid-template-columns:1fr}}
+
+/* ── FASCIA CARDS ── */
+.fascia-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
+@media(max-width:480px){.fascia-grid{grid-template-columns:1fr}}
+.fascia-card{background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative}
+.fascia-card:hover{border-color:var(--gold-border)}
+.fascia-card.selected{border-color:var(--gold);background:var(--gold-dim)}
+.fascia-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;color:var(--gold);font-size:14px;font-weight:600}
+.fascia-emoji{font-size:20px;margin-bottom:6px}
+.fascia-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
+.fascia-examples{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* ── SLIDER ── */
+.slider-wrap{margin-top:6px}
+.slider{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--s3);outline:none;cursor:pointer}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--black);box-shadow:0 0 0 2px var(--gold-border)}
+.slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--black)}
+.slider-val{text-align:center;color:var(--gold);font-size:22px;font-weight:600;margin-top:10px;font-family:'Cormorant Garamond',serif}
+
+/* ── RADIO GESTIONE ── */
+.radio-group{display:flex;flex-wrap:wrap;gap:8px}
+.radio-opt{flex:1;min-width:120px}
+.radio-opt input{display:none}
+.radio-opt label{display:block;text-align:center;padding:10px 12px;background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);font-size:13px;color:var(--muted);cursor:pointer;transition:all 0.2s}
+.radio-opt input:checked+label{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+
+/* ── CHECKBOX ── */
+.checkbox-field{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--s2);border:1px solid var(--s3);border-radius:var(--r);cursor:pointer;transition:border-color 0.2s;margin-bottom:12px}
+.checkbox-field:hover{border-color:var(--gold-border)}
+.checkbox-field input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--gold);cursor:pointer}
+.checkbox-field label{font-size:13px;color:var(--muted);cursor:pointer;line-height:1.5}
+.checkbox-field label a{color:var(--gold);text-decoration:none}
+.checkbox-field label strong{color:var(--text)}
+.checkbox-required .checkbox-field{border-color:var(--red)!important}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:var(--r);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.5px;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;width:100%}
+.btn-primary{background:var(--gold);color:var(--black)}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-1px)}
+.btn-primary:disabled{background:var(--muted);cursor:not-allowed;transform:none}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-outline:hover{background:var(--gold-dim)}
+.btn-ghost{background:var(--s2);color:var(--muted);border:1px solid var(--s3)}
+.btn-ghost:hover{border-color:var(--gold-border);color:var(--text)}
+.btn-row{display:flex;gap:12px;margin-top:8px}
+@media(max-width:480px){.btn-row{flex-direction:column}}
+
+/* ── STEP TITLE ── */
+.step-title{margin-bottom:28px}
+.step-num{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.step-title h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--white)}
+.step-title p{font-size:14px;color:var(--muted);margin-top:4px}
+.divider{height:1px;background:var(--s3);margin:24px 0}
+
+/* ── RISULTATI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);padding:18px 14px;text-align:center}
+.kpi-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold)}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:2px}
+
+.comparison{background:var(--s2);border:1px solid var(--gold-border);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.comp-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--s3)}
+.comp-row:last-child{border-bottom:none}
+.comp-label{font-size:13px;color:var(--muted)}
+.comp-val{font-size:18px;font-weight:600;font-family:'Cormorant Garamond',serif}
+.comp-val.fdt{color:var(--text)}
+.comp-val.rm{color:var(--gold)}
+
+.delta-box{background:var(--gold-dim);border:1px solid var(--gold);border-radius:var(--r);padding:24px;text-align:center;margin-bottom:20px}
+.delta-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.delta-num{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,8vw,56px);font-weight:700;color:var(--gold);line-height:1}
+.delta-sub{font-size:14px;color:var(--text);margin-top:6px}
+
+.disclaimer{font-size:11px;color:var(--muted);line-height:1.6;padding:14px 16px;background:var(--s2);border-radius:var(--r);margin-bottom:20px;border-left:2px solid var(--gold-border)}
+
+/* ── SUCCESS STATE ── */
+.success-wrap{text-align:center;padding:20px 0}
+.success-icon{width:64px;height:64px;background:var(--gold-dim);border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--white);margin-bottom:8px}
+.success-sub{color:var(--muted);font-size:14px;max-width:380px;margin:0 auto 24px}
+
+/* ── LOADING ── */
+.loading-overlay{position:fixed;inset:0;background:rgba(13,13,13,0.85);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px)}
+.loading-spinner{width:44px;height:44px;border:3px solid var(--s3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── ERROR ── */
+.field-error{font-size:12px;color:var(--red);margin-top:4px}
+.input-error{border-color:var(--red)!important}
+
+/* ── FOOTER ── */
+.page-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--s2);margin-top:16px}
+.page-footer p{font-size:12px;color:var(--muted)}
+.page-footer a{color:var(--gold);text-decoration:none}
+
+/* ── STEP VISIBILITY ── */
+.step{display:none}.step.active{display:block}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <a href="https://rmgestioni.it" class="logo">R&amp;<em>M</em> Gestioni Immobiliari</a>
+  <a href="https://rmgestioni.it" class="back-link">← Torna al sito</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Strumento gratuito</div>
+  <h1>Quanto rende il tuo immobile con la gestione <span>professionale</span>?</h1>
+  <p>Inserisci i dati della tua proprietà e scopri il potenziale inespresso in 2 minuti.</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
+  <div class="progress-labels">
+    <span class="p-label active" id="pl1">Il tuo immobile</span>
+    <span class="p-label" id="pl2">I tuoi dati</span>
+    <span class="p-label" id="pl3">Il tuo risultato</span>
+  </div>
+</div>
+
+<div style="max-width:680px;margin:0 auto;padding:0 16px 60px">
+
+<!-- ══════════════ STEP 1 — DATI IMMOBILE ══════════════ -->
+<div class="step active card" id="step1">
+  <div class="step-title">
+    <div class="step-num">Step 1 di 2</div>
+    <h2>Il tuo immobile</h2>
+    <p>Più dati fornisci, più accurata sarà la stima.</p>
+  </div>
+
+  <!-- FASCIA -->
+  <div class="field">
+    <span class="field-label">Dove si trova l'immobile?</span>
+    <div class="fascia-grid" id="fasciaGrid">
+      <div class="fascia-card" data-value="costa_premium" onclick="selectFascia(this)">
+        <div class="fascia-emoji">🏖</div>
+        <div class="fascia-name">Costa Premium</div>
+        <div class="fascia-examples">Versilia, Costa Smeralda, Amalfi, Portofino, Capri</div>
+      </div>
+      <div class="fascia-card" data-value="costa_media" onclick="selectFascia(this)">
+        <div class="fascia-emoji">🌊</div>
+        <div class="fascia-name">Costa Media</div>
+        <div class="fascia-examples">Maremma, Adriatico, Sicilia, Calabria, Puglia costiera</div>
+      </div>
+      <div class="fascia-card" data-value="montagna_premium" onclick="selectFascia(this)">
+        <div class="fascia-emoji">🏔</div>
+        <div class="fascia-name">Montagna Premium</div>
+        <div class="fascia-examples">Courmayeur, Cortina, Dolomiti, Livigno</div>
+      </div>
+      <div class="fascia-card" data-value="montagna_media" onclick="selectFascia(this)">
+        <div class="fascia-emoji">⛷</div>
+        <div class="fascia-name">Montagna Media</div>
+        <div class="fascia-examples">Appennino, altre stazioni sciistiche</div>
+      </div>
+      <div class="fascia-card" data-value="citta_arte" onclick="selectFascia(this)">
+        <div class="fascia-emoji">🏛</div>
+        <div class="fascia-name">Città d'Arte</div>
+        <div class="fascia-examples">Roma, Firenze, Venezia, Milano, Napoli, Bologna</div>
+      </div>
+      <div class="fascia-card" data-value="campagna" onclick="selectFascia(this)">
+        <div class="fascia-emoji">🌄</div>
+        <div class="fascia-name">Campagna / Borghi</div>
+        <div class="fascia-examples">Toscana, Umbria, Puglia interna, Langhe, Sicilia collinare</div>
+      </div>
+    </div>
+    <div class="field-error" id="fasciaError" style="display:none">Seleziona la fascia di mercato</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TIPOLOGIA -->
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="tipologia">Tipologia immobile</label>
+      <select id="tipologia" onchange="updatePostiLetto()">
+        <option value="">— Seleziona —</option>
+        <option value="monolocale">Monolocale / Bilocale</option>
+        <option value="trilocale">Trilocale / App. grande</option>
+        <option value="villa">Villa / Casa indipendente</option>
+        <option value="agriturismo">Agriturismo / Rustico</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label" for="postiLetto">Posti letto</label>
+      <select id="postiLetto">
+        <option value="">— Prima scegli la tipologia —</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- MESI DISPONIBILI -->
+  <div class="field">
+    <label class="field-label">Mesi disponibili per gli affitti</label>
+    <div class="slider-wrap">
+      <input type="range" class="slider" id="mesiSlider" min="1" max="12" value="6" oninput="updateMesi()">
+      <div class="slider-val" id="mesiVal">6 mesi / anno</div>
+    </div>
+    <div class="field-sub">Quanti mesi all'anno vuoi rendere disponibile la proprietà?</div>
+  </div>
+
+  <!-- GESTIONE ATTUALE -->
+  <div class="field">
+    <span class="field-label">Gestione attuale</span>
+    <div class="radio-group">
+      <div class="radio-opt">
+        <input type="radio" name="gestione" id="g1" value="Mai affittato">
+        <label for="g1">Mai affittato</label>
+      </div>
+      <div class="radio-opt">
+        <input type="radio" name="gestione" id="g2" value="Gestisco da solo" checked>
+        <label for="g2">Gestisco da solo</label>
+      </div>
+      <div class="radio-opt">
+        <input type="radio" name="gestione" id="g3" value="Ho già un gestore">
+        <label for="g3">Ho già un gestore</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="goToStep2()">
+      Continua → Inserisci i tuoi dati
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ STEP 2 — DATI PERSONALI ══════════════ -->
+<div class="step card" id="step2">
+  <div class="step-title">
+    <div class="step-num">Step 2 di 2</div>
+    <h2>I tuoi dati</h2>
+    <p>Riceverai la stima completa via email. Zero spam — solo i tuoi risultati.</p>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="nome">Nome *</label>
+      <input type="text" id="nome" placeholder="Mario">
+    </div>
+    <div class="field">
+      <label class="field-label" for="cognome">Cognome *</label>
+      <input type="text" id="cognome" placeholder="Rossi">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="email">Email *</label>
+    <input type="email" id="email" placeholder="mario.rossi@email.it">
+    <div class="field-sub">La stima verrà inviata a questo indirizzo</div>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="telefono">Numero di telefono *</label>
+    <input type="tel" id="telefono" placeholder="+39 333 000 0000">
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="localita">Dove si trova il tuo immobile? *</label>
+    <input type="text" id="localita" placeholder="es. Castiglione della Pescaia (GR)">
+    <div class="field-sub">Città o zona — usato per personalizzare la tua stima</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONSENSI -->
+  <div id="marketingField" class="checkbox-field">
+    <input type="checkbox" id="consensoMarketing">
+    <label for="consensoMarketing">
+      <strong>Voglio ricevere aggiornamenti, offerte e consigli</strong> da R&amp;M Gestioni Immobiliari su affitti brevi, revenue management e opportunità di investimento immobiliare. Potrò cancellarmi in qualsiasi momento.
+    </label>
+  </div>
+
+  <div id="privacyField" class="checkbox-field">
+    <input type="checkbox" id="consensoPrivacy">
+    <label for="consensoPrivacy">
+      * Ho letto e accetto la <a href="https://rmgestioni.it/privacy-policy" target="_blank">Privacy Policy</a> di R&amp;M Gestioni Immobiliari. I miei dati saranno trattati ai sensi del Reg. UE 2016/679 (GDPR) esclusivamente per rispondere alla mia richiesta e, previo consenso, per finalità di marketing.
+    </label>
+  </div>
+  <div class="field-error" id="privacyError" style="display:none">Devi accettare la Privacy Policy per continuare</div>
+
+  <div class="btn-row" style="margin-top:20px">
+    <button class="btn btn-ghost" onclick="goToStep1()" style="width:auto;padding:14px 24px">← Indietro</button>
+    <button class="btn btn-primary" onclick="calcolaEInvia()">
+      Calcola il mio potenziale →
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ RISULTATI ══════════════ -->
+<div class="step" id="stepResult">
+
+  <!-- INTRO RISULTATO -->
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">La tua stima</div>
+    <h2 id="resultTitle" style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--white)"></h2>
+    <p id="resultSub" style="color:var(--muted);font-size:14px;margin-top:4px"></p>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">ADR stimata</div>
+      <div class="kpi-val" id="kpiAdr">—</div>
+      <div class="kpi-sub">per notte</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Notti generate</div>
+      <div class="kpi-val" id="kpiNotti">—</div>
+      <div class="kpi-sub">stimate / anno</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Occupazione media</div>
+      <div class="kpi-val" id="kpiOcc">—</div>
+      <div class="kpi-sub">su mesi disponibili</div>
+    </div>
+  </div>
+
+  <!-- COMPARISON -->
+  <div class="comparison">
+    <div class="comp-row">
+      <div>
+        <div class="comp-label">Gestione fai-da-te</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Prezzi fissi, no ottimizzazione</div>
+      </div>
+      <div class="comp-val fdt" id="revFDT">—</div>
+    </div>
+    <div class="comp-row" style="background:var(--gold-dim)">
+      <div>
+        <div class="comp-label" style="color:var(--gold)">Gestione professionale R&amp;M</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Dynamic pricing + listing ottimizzato</div>
+      </div>
+      <div class="comp-val rm" id="revRM">—</div>
+    </div>
+  </div>
+
+  <!-- DELTA -->
+  <div class="delta-box">
+    <div class="delta-tag">Potenziale non sfruttato</div>
+    <div class="delta-num" id="deltaEuro">—</div>
+    <div class="delta-sub" id="deltaSub">in più ogni anno con la gestione professionale</div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    ⚠ Stima orientativa basata su benchmark nazionali per fascia di mercato, tipologia e stagionalità. I risultati reali dipendono dalle specifiche della proprietà, stato degli arredi, recensioni esistenti e ottimizzazione listing. R&amp;M non garantisce i valori indicati.
+  </div>
+
+  <!-- CTA BUTTONS -->
+  <div style="margin-bottom:16px">
+    <a href="https://rmgestioni.it/#contatti" class="btn btn-primary" style="margin-bottom:12px">
+      Richiedi analisi gratuita della tua proprietà →
+    </a>
+    <button class="btn btn-outline" onclick="scaricaPDF()" id="btnPDF">
+      ↓ Scarica il report in PDF
+    </button>
+  </div>
+
+  <!-- EMAIL SENT CONFIRMATION -->
+  <div style="text-align:center;padding:16px;background:var(--s2);border-radius:var(--r);margin-bottom:20px">
+    <div style="font-size:13px;color:var(--muted)">
+      📧 Abbiamo inviato la stima completa a <strong id="emailConfirm" style="color:var(--gold)"></strong>
+    </div>
+  </div>
+
+  <!-- RICOMINCIA -->
+  <div style="text-align:center">
+    <button onclick="resetCalcolatore()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;text-decoration:underline">
+      Calcola per un altro immobile
+    </button>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<!-- PAGE FOOTER -->
+<div class="page-footer">
+  <p>R&amp;M Gestioni Immobiliari · <a href="https://rmgestioni.it">rmgestioni.it</a> · @rmgestioni<br>
+  <a href="https://rmgestioni.it/privacy-policy">Privacy Policy</a> · Trattamento dati ai sensi del Reg. UE 2016/679</p>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay" style="display:none">
+  <div style="text-align:center">
+    <div class="loading-spinner" style="margin:0 auto 16px"></div>
+    <div style="font-size:13px;color:var(--muted)">Elaborazione in corso…</div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// EMAILJS INIT
+// ─────────────────────────────────────────
+emailjs.init('XkZDkh5LNgAqD7iXy');
+
+// ─────────────────────────────────────────
+// MATRICI DI CALCOLO
+// ─────────────────────────────────────────
+const FASCIA_DATA = {
+  costa_premium:    { mult: 1.6, occ: 0.52, label: 'Costa Premium' },
+  costa_media:      { mult: 1.0, occ: 0.44, label: 'Costa Media' },
+  montagna_premium: { mult: 1.5, occ: 0.46, label: 'Montagna Premium' },
+  montagna_media:   { mult: 0.8, occ: 0.37, label: 'Montagna Media' },
+  citta_arte:       { mult: 1.4, occ: 0.60, label: "Città d'Arte" },
+  campagna:         { mult: 0.9, occ: 0.45, label: 'Campagna / Borghi' }
+};
+
+const ADR_BASE = {
+  monolocale:   { 2: 75,  4: 95  },
+  trilocale:    { 4: 110, 6: 140 },
+  villa:        { 4: 150, 6: 200, 8: 260 },
+  agriturismo:  { 4: 130, 6: 170, 8: 220 }
+};
+
+const POSTI_OPTIONS = {
+  monolocale:  [2, 4],
+  trilocale:   [4, 6],
+  villa:       [4, 6, 8],
+  agriturismo: [4, 6, 8]
+};
+
+// Boost occupazione per pochi mesi (tipicamente alta stagione)
+function occBoost(mesi) {
+  if (mesi <= 2) return 1.35;
+  if (mesi <= 4) return 1.20;
+  if (mesi <= 6) return 1.10;
+  return 1.0;
+}
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let selectedFascia = '';
+let calcResult = {};
+
+// ─────────────────────────────────────────
+// UI HELPERS
+// ─────────────────────────────────────────
+function selectFascia(el) {
+  document.querySelectorAll('.fascia-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedFascia = el.dataset.value;
+  document.getElementById('fasciaError').style.display = 'none';
+}
+
+function updatePostiLetto() {
+  const tipo = document.getElementById('tipologia').value;
+  const sel = document.getElementById('postiLetto');
+  sel.innerHTML = '';
+  if (!tipo) { sel.innerHTML = '<option value="">— Prima scegli la tipologia —</option>'; return; }
+  POSTI_OPTIONS[tipo].forEach(n => {
+    const o = document.createElement('option');
+    o.value = n; o.textContent = n + ' posti letto';
+    sel.appendChild(o);
+  });
+}
+
+function updateMesi() {
+  const v = document.getElementById('mesiSlider').value;
+  document.getElementById('mesiVal').textContent = v + (v == 1 ? ' mese / anno' : ' mesi / anno');
+}
+
+function setProgress(step) {
+  const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  ['pl1','pl2','pl3'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', i < step);
+  });
+}
+
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function loading(show) {
+  document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+}
+
+// ─────────────────────────────────────────
+// NAVIGAZIONE
+// ─────────────────────────────────────────
+function goToStep1() {
+  setProgress(1); showStep('step1');
+}
+
+function goToStep2() {
+  // Validate step 1
+  let valid = true;
+  if (!selectedFascia) {
+    document.getElementById('fasciaError').style.display = 'block';
+    valid = false;
+  }
+  if (!document.getElementById('tipologia').value) {
+    document.getElementById('tipologia').classList.add('input-error');
+    valid = false;
+  } else { document.getElementById('tipologia').classList.remove('input-error'); }
+  if (!document.getElementById('postiLetto').value) {
+    document.getElementById('postiLetto').classList.add('input-error');
+    valid = false;
+  } else { document.getElementById('postiLetto').classList.remove('input-error'); }
+  if (!valid) return;
+  setProgress(2); showStep('step2');
+}
+
+// ─────────────────────────────────────────
+// CALCOLO
+// ─────────────────────────────────────────
+function calcolaRendita() {
+  const fascia = FASCIA_DATA[selectedFascia];
+  const tipo = document.getElementById('tipologia').value;
+  const posti = parseInt(document.getElementById('postiLetto').value);
+  const mesi = parseInt(document.getElementById('mesiSlider').value);
+
+  const adrBase = ADR_BASE[tipo][posti];
+  const adr = Math.round(adrBase * fascia.mult);
+
+  const occBase = fascia.occ * occBoost(mesi);
+  const occ = Math.min(occBase, 0.92);
+
+  const giorniDisp = mesi * 30;
+  const nottiRM = Math.round(giorniDisp * occ);
+  const revRM = nottiRM * adr;
+
+  // Fai-da-te: ADR -25%, occupazione -35%
+  const adrFDT = Math.round(adr * 0.75);
+  const nottiFDT = Math.round(giorniDisp * occ * 0.65);
+  const revFDT = nottiFDT * adrFDT;
+
+  const delta = revRM - revFDT;
+  const deltaPerc = Math.round((delta / revFDT) * 100);
+  const occPerc = Math.round(occ * 100);
+
+  return { adr, nottiRM, occ, occPerc, revRM, revFDT, delta, deltaPerc, mesi,
+    fascia: fascia.label, tipo, posti,
+    gestione: document.querySelector('input[name="gestione"]:checked')?.value || 'Gestisco da solo' };
+}
+
+function fmt(n) { return '€' + n.toLocaleString('it-IT'); }
+
+// ─────────────────────────────────────────
+// VALIDATION
+// ─────────────────────────────────────────
+function validateStep2() {
+  let valid = true;
+  const fields = ['nome','cognome','email','telefono','localita'];
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.classList.add('input-error'); valid = false; }
+    else el.classList.remove('input-error');
+  });
+  // Email format
+  const em = document.getElementById('email');
+  if (em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
+    em.classList.add('input-error'); valid = false;
+  }
+  // Privacy
+  if (!document.getElementById('consensoPrivacy').checked) {
+    document.getElementById('privacyError').style.display = 'block';
+    document.getElementById('privacyField').classList.add('checkbox-required');
+    valid = false;
+  } else {
+    document.getElementById('privacyError').style.display = 'none';
+    document.getElementById('privacyField').classList.remove('checkbox-required');
+  }
+  return valid;
+}
+
+// ─────────────────────────────────────────
+// CALCOLA + INVIA
+// ─────────────────────────────────────────
+async function calcolaEInvia() {
+  if (!validateStep2()) return;
+
+  loading(true);
+
+  const r = calcolaRendita();
+  calcResult = r;
+
+  const nome = document.getElementById('nome').value.trim();
+  const cognome = document.getElementById('cognome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  const localita = document.getElementById('localita').value.trim();
+  const marketing = document.getElementById('consensoMarketing').checked ? 'Sì' : 'No';
+
+  const tipologiaLabel = {
+    monolocale: 'Monolocale / Bilocale',
+    trilocale: 'Trilocale / App. grande',
+    villa: 'Villa / Casa indipendente',
+    agriturismo: 'Agriturismo / Rustico'
+  }[r.tipo];
+
+  const params = {
+    prospect_name: nome + ' ' + cognome,
+    prospect_email: email,
+    prospect_phone: telefono,
+    property_location: localita,
+    marketing_consent: marketing,
+    fascia_mercato: r.fascia,
+    tipologia: tipologiaLabel,
+    posti_letto: r.posti,
+    mesi_disponibili: r.mesi,
+    gestione_attuale: r.gestione,
+    adr_stimato: fmt(r.adr),
+    revenue_fai_da_te: fmt(r.revFDT),
+    revenue_rm: fmt(r.revRM),
+    delta_euro: fmt(r.delta),
+    delta_perc: r.deltaPerc,
+    notti_stimate: r.nottiRM,
+    occupazione_media: r.occPerc + '%'
+  };
+
+  try {
+    // Manda email al prospect
+    await emailjs.send('service_dq5hq8a', 'template_tb1qhok', params);
+    // Manda notifica lead a Matteo
+    await emailjs.send('service_dq5hq8a', 'template_lw0y8qq', params);
+  } catch(e) {
+    console.warn('EmailJS error:', e);
+    // Continua comunque a mostrare i risultati
+  }
+
+  loading(false);
+  mostraRisultati(r, email, localita, tipologiaLabel);
+}
+
+// ─────────────────────────────────────────
+// MOSTRA RISULTATI
+// ─────────────────────────────────────────
+function mostraRisultati(r, email, localita, tipologiaLabel) {
+  document.getElementById('resultTitle').textContent = tipologiaLabel + ' · ' + r.posti + ' posti letto';
+  document.getElementById('resultSub').textContent = r.fascia + ' — ' + localita;
+  document.getElementById('kpiAdr').textContent = fmt(r.adr);
+  document.getElementById('kpiNotti').textContent = r.nottiRM;
+  document.getElementById('kpiOcc').textContent = r.occPerc + '%';
+  document.getElementById('revFDT').textContent = fmt(r.revFDT) + '/anno';
+  document.getElementById('revRM').textContent = fmt(r.revRM) + '/anno';
+  document.getElementById('deltaEuro').textContent = '+' + fmt(r.delta) + '/anno';
+  document.getElementById('deltaSub').textContent = '+' + r.deltaPerc + '% rispetto alla gestione autonoma';
+  document.getElementById('emailConfirm').textContent = email;
+
+  setProgress(3); showStep('stepResult');
+}
+
+// ─────────────────────────────────────────
+// GENERA PDF
+// ─────────────────────────────────────────
+function scaricaPDF() {
+  const { jsPDF } = window.jspdf;
+  const r = calcResult;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  const M = 20;
+  let y = 0;
+
+  // BG
+  doc.setFillColor(13, 13, 13);
+  doc.rect(0, 0, W, 297, 'F');
+
+  // Header strip
+  doc.setFillColor(20, 20, 20);
+  doc.rect(0, 0, W, 42, 'F');
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.4);
+  doc.line(0, 42, W, 42);
+
+  // Logo
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(201, 168, 76);
+  doc.text('R&M GESTIONI IMMOBILIARI', M, 18);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(122, 117, 112);
+  doc.text('Property & Revenue Management · rmgestioni.it · @rmgestioni', M, 26);
+  doc.setFontSize(8);
+  doc.setTextColor(122, 117, 112);
+  doc.text('Documento generato il ' + new Date().toLocaleDateString('it-IT'), M, 34);
+
+  y = 58;
+
+  // Title
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.setTextColor(240, 237, 230);
+  doc.text('STIMA DI RENDITA — AFFITTI BREVI', M, y);
+  y += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(122, 117, 112);
+  const tipLabel = { monolocale: 'Monolocale / Bilocale', trilocale: 'Trilocale / App. grande', villa: 'Villa / Casa indipendente', agriturismo: 'Agriturismo / Rustico' }[r.tipo];
+  doc.text(tipLabel + ' · ' + r.posti + ' posti letto · ' + r.fascia + ' · ' + r.mesi + ' mesi/anno', M, y);
+  y += 14;
+
+  // KPI row
+  const kpiW = (W - M * 2 - 8) / 3;
+  const kpis = [
+    { label: 'ADR STIMATA', val: fmt(r.adr), sub: 'per notte' },
+    { label: 'NOTTI GENERATE', val: String(r.nottiRM), sub: 'stimate / anno' },
+    { label: 'OCCUPAZIONE MEDIA', val: r.occPerc + '%', sub: 'su mesi disponibili' }
+  ];
+  kpis.forEach((k, i) => {
+    const x = M + i * (kpiW + 4);
+    doc.setFillColor(30, 30, 30);
+    doc.setDrawColor(201, 168, 76);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(x, y, kpiW, 24, 2, 2, 'FD');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(122, 117, 112);
+    doc.text(k.label, x + kpiW/2, y + 7, { align: 'center' });
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(201, 168, 76);
+    doc.text(k.val, x + kpiW/2, y + 16, { align: 'center' });
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(122, 117, 112);
+    doc.text(k.sub, x + kpiW/2, y + 21, { align: 'center' });
+  });
+  y += 32;
+
+  // Comparison table
+  const rows = [
+    { label: 'Gestione fai-da-te', sub: 'Prezzi fissi, nessuna ottimizzazione', val: fmt(r.revFDT) + '/anno', gold: false },
+    { label: 'Gestione professionale R&M', sub: 'Dynamic pricing + listing ottimizzato', val: fmt(r.revRM) + '/anno', gold: true }
+  ];
+  rows.forEach(row => {
+    doc.setFillColor(row.gold ? 30 : 26, row.gold ? 28 : 26, row.gold ? 20 : 26);
+    doc.setDrawColor(row.gold ? 201 : 45, row.gold ? 168 : 45, row.gold ? 76 : 45);
+    doc.setLineWidth(row.gold ? 0.4 : 0.2);
+    doc.roundedRect(M, y, W - M * 2, 18, 2, 2, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(row.gold ? 201 : 240, row.gold ? 168 : 237, row.gold ? 76 : 230);
+    doc.text(row.label, M + 6, y + 7);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(122, 117, 112);
+    doc.text(row.sub, M + 6, y + 13);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(row.gold ? 201 : 240, row.gold ? 168 : 237, row.gold ? 76 : 230);
+    doc.text(row.val, W - M - 4, y + 11, { align: 'right' });
+    y += 22;
+  });
+
+  // Delta box
+  y += 4;
+  doc.setFillColor(201, 168, 76, 0.12);
+  doc.setFillColor(25, 22, 14);
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.6);
+  doc.roundedRect(M, y, W - M * 2, 30, 3, 3, 'FD');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(201, 168, 76);
+  doc.text('POTENZIALE NON SFRUTTATO', W / 2, y + 7, { align: 'center' });
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.setTextColor(201, 168, 76);
+  doc.text('+' + fmt(r.delta) + '/anno', W / 2, y + 18, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(240, 237, 230);
+  doc.text('+' + r.deltaPerc + '% rispetto alla gestione autonoma', W / 2, y + 26, { align: 'center' });
+  y += 38;
+
+  // Disclaimer
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(7.5);
+  doc.setTextColor(90, 85, 80);
+  const disc = '⚠ Stima orientativa basata su benchmark nazionali per fascia di mercato e tipologia. I risultati reali dipendono dalle specifiche della proprietà, stato degli arredi e ottimizzazione listing. R&M non garantisce i valori indicati.';
+  const discLines = doc.splitTextToSize(disc, W - M * 2);
+  doc.text(discLines, M, y);
+  y += discLines.length * 4 + 10;
+
+  // CTA
+  doc.setFillColor(201, 168, 76);
+  doc.roundedRect(M, y, W - M * 2, 14, 2, 2, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(13, 13, 13);
+  doc.text('Richiedi analisi gratuita della tua proprietà → rmgestioni.it/#contatti', W / 2, y + 9, { align: 'center' });
+
+  // Footer
+  y = 280;
+  doc.setDrawColor(50, 50, 50);
+  doc.setLineWidth(0.2);
+  doc.line(M, y, W - M, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(80, 75, 70);
+  doc.text('R&M Gestioni Immobiliari · rmgestioni.it · @rmgestioni · info@rmgestioni.it', W / 2, y + 5, { align: 'center' });
+  doc.text('Stima generata automaticamente · Non costituisce offerta contrattuale', W / 2, y + 9, { align: 'center' });
+
+  doc.save('RM-Stima-Rendita.pdf');
+}
+
+// ─────────────────────────────────────────
+// RESET
+// ─────────────────────────────────────────
+function resetCalcolatore() {
+  selectedFascia = '';
+  calcResult = {};
+  document.querySelectorAll('.fascia-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('tipologia').value = '';
+  document.getElementById('postiLetto').innerHTML = '<option value="">— Prima scegli la tipologia —</option>';
+  document.getElementById('mesiSlider').value = 6;
+  document.getElementById('mesiVal').textContent = '6 mesi / anno';
+  document.getElementById('g2').checked = true;
+  ['nome','cognome','email','telefono','localita'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('input-error');
+  });
+  document.getElementById('consensoMarketing').checked = false;
+  document.getElementById('consensoPrivacy').checked = false;
+  document.getElementById('fasciaError').style.display = 'none';
+  document.getElementById('privacyError').style.display = 'none';
+  setProgress(1); showStep('step1');
+}
+
+// Init
+updateMesi();
+</script>
+</body>
+</html>
