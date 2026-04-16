@@ -6,7 +6,7 @@
 <title>Calcolatore Rendita — R&M Gestioni Immobiliari</title>
 <meta name="description" content="Scopri quanto può rendere il tuo immobile con la gestione professionale degli affitti brevi. Stima gratuita in 2 minuti.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -195,32 +195,32 @@ body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);m
   <div class="field">
     <span class="field-label">Dove si trova l'immobile?</span>
     <div class="fascia-grid" id="fasciaGrid">
-      <div class="fascia-card" data-value="costa_premium" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="costa_premium">
         <div class="fascia-emoji">🏖</div>
         <div class="fascia-name">Costa Premium</div>
         <div class="fascia-examples">Versilia, Costa Smeralda, Amalfi, Portofino, Capri</div>
       </div>
-      <div class="fascia-card" data-value="costa_media" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="costa_media">
         <div class="fascia-emoji">🌊</div>
         <div class="fascia-name">Costa Media</div>
         <div class="fascia-examples">Maremma, Adriatico, Sicilia, Calabria, Puglia costiera</div>
       </div>
-      <div class="fascia-card" data-value="montagna_premium" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="montagna_premium">
         <div class="fascia-emoji">🏔</div>
         <div class="fascia-name">Montagna Premium</div>
         <div class="fascia-examples">Courmayeur, Cortina, Dolomiti, Livigno</div>
       </div>
-      <div class="fascia-card" data-value="montagna_media" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="montagna_media">
         <div class="fascia-emoji">⛷</div>
         <div class="fascia-name">Montagna Media</div>
         <div class="fascia-examples">Appennino, altre stazioni sciistiche</div>
       </div>
-      <div class="fascia-card" data-value="citta_arte" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="citta_arte">
         <div class="fascia-emoji">🏛</div>
         <div class="fascia-name">Città d'Arte</div>
         <div class="fascia-examples">Roma, Firenze, Venezia, Milano, Napoli, Bologna</div>
       </div>
-      <div class="fascia-card" data-value="campagna" onclick="selectFascia(this)">
+      <div class="fascia-card" data-value="campagna">
         <div class="fascia-emoji">🌄</div>
         <div class="fascia-name">Campagna / Borghi</div>
         <div class="fascia-examples">Toscana, Umbria, Puglia interna, Langhe, Sicilia collinare</div>
@@ -235,7 +235,7 @@ body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);m
   <div class="field-row">
     <div class="field">
       <label class="field-label" for="tipologia">Tipologia immobile</label>
-      <select id="tipologia" onchange="updatePostiLetto()">
+      <select id="tipologia">
         <option value="">— Seleziona —</option>
         <option value="monolocale">Monolocale / Bilocale</option>
         <option value="trilocale">Trilocale / App. grande</option>
@@ -255,7 +255,7 @@ body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);m
   <div class="field">
     <label class="field-label">Mesi disponibili per gli affitti</label>
     <div class="slider-wrap">
-      <input type="range" class="slider" id="mesiSlider" min="1" max="12" value="6" oninput="updateMesi()">
+      <input type="range" class="slider" id="mesiSlider" min="1" max="12" value="6">
       <div class="slider-val" id="mesiVal">6 mesi / anno</div>
     </div>
     <div class="field-sub">Quanti mesi all'anno vuoi rendere disponibile la proprietà?</div>
@@ -451,7 +451,7 @@ body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--text);m
 // ─────────────────────────────────────────
 // EMAILJS INIT
 // ─────────────────────────────────────────
-emailjs.init('XkZDkh5LNgAqD7iXy');
+// Email via FormSubmit — zero config
 
 // ─────────────────────────────────────────
 // MATRICI DI CALCOLO
@@ -674,12 +674,33 @@ async function calcolaEInvia() {
     occupazione_media: r.occPerc + '%'
   };
 
-  // ── NOTIFICA LEAD a Matteo via EmailJS ──
+  // ── NOTIFICA LEAD a Matteo via FormSubmit ──
   try {
-    const res2 = await emailjs.send('service_dq5hq8a', 'template_lw0y8qq', params);
-    console.log('Notifica Matteo OK:', res2.status, res2.text);
+    await fetch('https://formsubmit.co/ajax/matteo@rmgestioni.it', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: '🏠 Nuovo lead calcolatore — ' + params.prospect_name + ' · ' + params.property_location,
+        _template: 'table',
+        Nome: params.prospect_name,
+        Email: params.prospect_email,
+        Telefono: params.prospect_phone,
+        Localita: params.property_location,
+        Fascia: params.fascia_mercato,
+        Tipologia: params.tipologia,
+        Posti: params.posti_letto,
+        Mesi: params.mesi_disponibili,
+        Gestione_attuale: params.gestione_attuale,
+        ADR_stimato: params.adr_stimato,
+        Revenue_fai_da_te: params.revenue_fai_da_te,
+        Revenue_RM: params.revenue_rm,
+        Potenziale_extra: params.delta_euro + ' (+' + params.delta_perc + '%)',
+        Marketing: params.marketing_consent,
+      })
+    });
+    console.log('Lead inviato a Matteo OK');
   } catch(e) {
-    console.error('Errore notifica Matteo:', e);
+    console.error('Errore invio lead:', e);
   }
 
   loading(false);
@@ -702,7 +723,7 @@ function mostraRisultati(r, email, localita, tipologiaLabel) {
   // Conferma in pagina
   const emailConfirmEl = document.getElementById('emailConfirm');
   if (emailConfirmEl) {
-    emailConfirmEl.innerHTML = 'I tuoi risultati sono visibili qui sotto. Scarica il PDF o <a href="https://rmgestioni.it/#contatti" style="color:var(--gold)">contattaci</a> per un'analisi completa.';
+    emailConfirmEl.innerHTML = 'I tuoi risultati sono visibili qui sotto. Scarica il PDF o <a href="https://rmgestioni.it/#contatti" style="color:var(--gold)">contattaci</a> per un&#39;analisi completa.';
   }
 
   setProgress(3); showStep('stepResult');
@@ -888,6 +909,22 @@ function resetCalcolatore() {
 
 // Init
 updateMesi();
+
+// Event listeners — evita problemi con scope inline
+document.addEventListener('DOMContentLoaded', function() {
+  // Tipologia → posti letto
+  const tipEl = document.getElementById('tipologia');
+  if (tipEl) tipEl.addEventListener('change', updatePostiLetto);
+
+  // Slider mesi
+  const sliderEl = document.getElementById('mesiSlider');
+  if (sliderEl) sliderEl.addEventListener('input', updateMesi);
+
+  // Fascia cards
+  document.querySelectorAll('.fascia-card').forEach(function(card) {
+    card.addEventListener('click', function() { selectFascia(this); });
+  });
+});
 </script>
 </body>
 </html>
