@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RM·Check — Check-in e schedine alloggiati automatici</title>
+<meta name="description" content="RM·Check automatizza check-in ospiti, invio schedine alla Questura e tassa di soggiorno. €9,90/mese, proprietà illimitate.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #1a1a1a;
+  --gold: #c9a84c;
+  --white: #ffffff;
+  --gray-light: #f5f3ef;
+  --gray-mid: #e0ddd8;
+  --text-muted: #888;
+  --text-body: #444;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(26,26,26,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #2a2a2a;
+  padding: 0 40px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.nav-logo-img { width: 48px; height: 48px; object-fit: contain; border-radius: 4px; }
+.nav-sep { width: 1px; height: 20px; background: #444; }
+.nav-product { font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; color: var(--gold); font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { color: #aaa; font-size: 11px; letter-spacing: 0.1em; text-decoration: none; transition: color 0.2s; padding: 6px 0; display: inline-block; }
+.nav-link:hover { color: #fff; }
+.nav-cta { background: var(--gold); color: var(--black); font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 24px; text-decoration: none; white-space: nowrap; }
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: #fff; margin: 5px 0; transition: all 0.3s; }
+
+/* ── SHARED ── */
+.label { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.divider { width: 40px; height: 1px; background: var(--gold); margin: 16px 0 28px; }
+.section-inner { max-width: 780px; margin: 0 auto; }
+.section-inner-wide { max-width: 960px; margin: 0 auto; }
+h2.serif { font-family: var(--serif); font-weight: 300; line-height: 1.25; }
+
+/* ── BTNS ── */
+.btn-gold { display: inline-block; background: var(--gold); color: var(--black); font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 16px 36px; text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s; }
+.btn-gold:hover { opacity: 0.85; }
+.btn-outline-white { display: inline-block; background: transparent; color: var(--white); font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 15px 36px; border: 1px solid #555; text-decoration: none; transition: all 0.2s; }
+.btn-outline-white:hover { border-color: var(--gold); color: var(--gold); }
+.btn-outline-dark { display: inline-block; background: transparent; color: var(--black); font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 15px 36px; border: 1.5px solid var(--black); text-decoration: none; transition: all 0.2s; }
+.btn-outline-dark:hover { background: var(--black); color: #fff; }
+
+/* ── HERO ── */
+#hero {
+  background: var(--black);
+  padding: 140px 40px 80px;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 50%; height: 100%;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px);
+}
+.hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-title { font-family: var(--serif); font-size: 58px; font-weight: 300; color: #fff; line-height: 1.15; margin-bottom: 24px; }
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 14px; font-weight: 300; color: #aaa; line-height: 1.9; max-width: 520px; margin-bottom: 40px; }
+.hero-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.hero-note { font-size: 11px; color: #555; letter-spacing: 0.06em; }
+
+/* ── STATS ── */
+.stats-bar { background: var(--gray-light); border-top: 1px solid var(--gray-mid); border-bottom: 1px solid var(--gray-mid); }
+.stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat { padding: 28px 20px; border-right: 1px solid var(--gray-mid); text-align: center; }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: var(--serif); font-size: 38px; font-weight: 300; color: var(--black); line-height: 1; margin-bottom: 6px; }
+.stat-num span { color: var(--gold); }
+.stat-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ── PROBLEMA ── */
+#problema { padding: 80px 40px; background: var(--white); }
+.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-mid); margin-top: 40px; }
+.problema-col { padding: 36px 28px; }
+.problema-col.dark { background: var(--black); }
+.problema-col.light { background: var(--gray-light); }
+.problema-col-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+.problema-col.dark .problema-col-label { color: var(--gold); }
+.problema-col.light .problema-col-label { color: var(--text-muted); }
+.problema-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.problema-list li { font-size: 13px; line-height: 1.6; display: flex; gap: 10px; align-items: flex-start; }
+.problema-col.dark .problema-list li { color: #ddd; }
+.problema-col.light .problema-list li { color: var(--text-body); }
+.problema-list li::before { content: '—'; flex-shrink: 0; }
+.problema-col.dark .problema-list li::before { color: var(--gold); }
+.problema-col.light .problema-list li::before { color: #bbb; }
+
+/* ── COME FUNZIONA ── */
+#come-funziona { padding: 80px 40px; background: var(--gray-light); }
+.steps { display: flex; flex-direction: column; margin-top: 40px; }
+.step { display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: start; padding: 36px 0; border-top: 1px solid var(--gray-mid); }
+.step:last-child { border-bottom: 1px solid var(--gray-mid); }
+.step-num { font-family: var(--serif); font-size: 44px; font-weight: 300; color: var(--gold); line-height: 1; }
+.step-title { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--black); margin-bottom: 10px; }
+.step-body { font-size: 14px; color: var(--text-body); line-height: 1.8; }
+
+/* ── FEATURES ── */
+#features { padding: 80px 40px; background: var(--white); }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-mid); margin-top: 40px; }
+.feature { background: var(--white); padding: 32px 24px; }
+.feature-icon { font-size: 18px; margin-bottom: 14px; display: block; }
+.feature-title { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); margin-bottom: 8px; }
+.feature-body { font-size: 13px; color: #666; line-height: 1.7; }
+
+/* ── PREZZI ── */
+#prezzi { padding: 80px 40px; background: var(--black); }
+.prezzi-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #444; margin: 40px 0; }
+.prezzo-item { padding: 36px 24px; text-align: center; background: #2a2a2a; }
+.prezzo-item.highlight { background: #1f1d17; border-top: 2px solid var(--gold); }
+.prezzo-competitor-num { font-family: var(--serif); font-size: 40px; font-weight: 300; color: #ccc; margin-bottom: 6px; }
+.prezzo-competitor-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 12px; }
+.prezzo-competitor-note { font-size: 12px; color: #999; line-height: 1.6; }
+.prezzo-main { font-family: var(--serif); font-size: 52px; font-weight: 300; color: var(--gold); margin-bottom: 4px; }
+.prezzo-main span { font-size: 18px; color: #888; font-family: var(--sans); font-weight: 300; }
+.prezzo-main-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #bbb; }
+.prezzo-box { background: #111; border: 1px solid #2a2a2a; padding: 40px; max-width: 520px; }
+.prezzo-features { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; }
+.prezzo-feature { font-size: 13px; color: #ccc; display: flex; gap: 10px; align-items: flex-start; }
+.prezzo-feature::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+/* ── FAQ ── */
+#faq { padding: 80px 40px; background: var(--gray-light); }
+.faq-list { margin-top: 40px; }
+.faq-item { padding: 24px 0; border-bottom: 1px solid var(--gray-mid); }
+.faq-item:first-child { border-top: 1px solid var(--gray-mid); }
+.faq-q { font-size: 13px; font-weight: 500; color: var(--black); margin-bottom: 8px; }
+.faq-a { font-size: 13px; color: var(--text-body); line-height: 1.8; }
+
+/* ── FORM ── */
+#signup { padding: 80px 40px; background: var(--black); }
+.form-box { background: #111; border: 1px solid #2a2a2a; padding: 48px; max-width: 520px; }
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.form-input { width: 100%; background: #1a1a1a; border: 1px solid #333; color: #fff; font-family: var(--sans); font-size: 14px; padding: 14px 16px; outline: none; transition: border-color 0.2s; }
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: #555; }
+.form-note { font-size: 11px; color: #555; line-height: 1.6; margin-top: 20px; }
+.form-success { display: none; background: #0a2a14; border: 1px solid #1a5c2a; padding: 24px; margin-top: 24px; }
+.form-success p { font-size: 13px; color: #6fcf97; line-height: 1.7; }
+
+/* ── CTA FINALE ── */
+#cta-finale { padding: 100px 40px; background: var(--black); text-align: center; }
+.cta-title { font-family: var(--serif); font-size: 48px; font-weight: 300; color: #fff; line-height: 1.2; margin: 20px 0 16px; }
+.cta-title em { color: var(--gold); font-style: italic; }
+.cta-sub { font-size: 13px; color: #888; line-height: 1.9; margin-bottom: 40px; }
+.cta-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer { background: #111; border-top: 1px solid #222; padding: 32px 40px; text-align: center; }
+footer p { font-size: 11px; color: #555; letter-spacing: 0.06em; }
+footer a { color: #555; text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: #1a1a1a; padding: 20px; gap: 20px; border-bottom: 1px solid #2a2a2a; }
+  .nav-links.open { display: flex; }
+  .hamburger { display: block; }
+  .nav-cta { display: none; }
+
+  #hero { padding: 100px 24px 60px; }
+  .hero-title { font-size: 32px; line-height: 1.2; }
+  .hero-sub { font-size: 13px; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; }
+  .btn-gold, .btn-outline-white, .btn-outline-dark { width: 100%; text-align: center; padding: 18px 24px; font-size: 12px; }
+  .form-input { font-size: 16px !important; padding: 16px !important; }
+
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat { border-bottom: 1px solid var(--gray-mid); padding: 20px 12px; }
+  .stat-num { font-size: 30px; }
+
+  #problema, #come-funziona, #features, #prezzi, #faq, #signup, #cta-finale { padding: 60px 24px; }
+  h2.serif { font-size: 28px !important; }
+  .problema-grid { grid-template-columns: 1fr; }
+  .problema-col { padding: 28px 20px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .prezzi-compare { grid-template-columns: 1fr; gap: 2px; }
+  .prezzo-item:not(.highlight) { display: none; }
+  .prezzo-box { padding: 28px 20px; }
+  .form-box { padding: 28px 20px; }
+  .step { grid-template-columns: 44px 1fr; gap: 16px; padding: 28px 0; }
+  .step-num { font-size: 36px; }
+  .step-body { font-size: 13px; }
+  .cta-title { font-size: 32px; }
+  footer { padding: 24px 20px; }
+}
+
+@media (max-width: 480px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 28px; }
+  .stat-num { font-size: 26px; }
+  #hero { padding: 90px 16px 48px; }
+  #problema, #come-funziona, #features, #prezzi, #faq, #signup, #cta-finale { padding: 48px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://rmgestioni.it" class="nav-brand">
+    <img src="data:image/png;base64,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" alt="RM Gestioni" class="nav-logo-img">
+    <div class="nav-sep"></div>
+    <span class="nav-product">RM·CHECK</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#come-funziona" class="nav-link">Come funziona</a>
+    <a href="#prezzi" class="nav-link">Prezzi</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+  </div>
+  <a href="#signup" class="nav-cta" id="navCtaDesk">Inizia gratis</a>
+  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="label">Per property manager italiani</p>
+    <div class="divider" style="background:#333;margin-top:12px"></div>
+    <h1 class="hero-title">
+      Smetti di perdere tempo<br>con le schedine alloggiati.<br>
+      <em>Ci pensa RM·Check.</em>
+    </h1>
+    <p class="hero-sub">
+      L'ospite fotografa il documento, i dati si compilano da soli. Tu premi invia.
+      La Questura riceve le schedine. Tassa di soggiorno calcolata. ISTAT pronto a fine mese.
+      €9,90 al mese, proprietà illimitate.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#signup" class="btn-gold">Inizia gratis — 30 giorni</a>
+      <a href="#come-funziona" class="btn-outline-white">Come funziona →</a>
+    </div>
+    <p class="hero-note">Nessuna carta di credito · Nessun vincolo · Cancelli quando vuoi</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner section-inner-wide">
+    <div class="stat">
+      <p class="stat-num"><span>0</span> €</p>
+      <p class="stat-label">Costo attivazione</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num">30</p>
+      <p class="stat-label">Giorni gratis</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num">∞</p>
+      <p class="stat-label">Proprietà incluse</p>
+    </div>
+    <div class="stat">
+      <p class="stat-num">15<span style="font-size:20px;color:#888;font-family:var(--sans);font-weight:300"> lg</span></p>
+      <p class="stat-label">Lingue check-in</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="section-inner">
+    <p class="label">Il problema</p>
+    <div class="divider"></div>
+    <h2 class="serif" style="font-size:36px;margin-bottom:16px">
+      Ogni ospite ti costa 15 minuti<br>di portale. Ogni giorno dell'anno.
+    </h2>
+    <p style="font-size:14px;color:#666;line-height:1.9;max-width:560px">
+      Accedi al portale PS, inserisci i dati uno per uno, cerchi i codici. Poi calcoli la TSE. Poi l'ISTAT.
+      I gestionali completi costano €33–150/mese e hanno mille funzioni che non usi.
+      RM·Check risolve solo questo problema, e lo fa bene.
+    </p>
+    <div class="problema-grid">
+      <div class="problema-col light">
+        <span class="problema-col-label">Senza RM·Check</span>
+        <ul class="problema-list">
+          <li>15 minuti per ospite sul portale Alloggiati Web</li>
+          <li>Calcolo manuale della tassa di soggiorno</li>
+          <li>Export ISTAT da compilare a mano ogni mese</li>
+          <li>Rischio dimenticanze e sanzioni dalla Questura</li>
+          <li>Gestionali da €33 a €150+/mese</li>
+          <li>Nessun avviso se l'ospite non fa il check-in</li>
+        </ul>
+      </div>
+      <div class="problema-col dark">
+        <span class="problema-col-label">Con RM·Check</span>
+        <ul class="problema-list">
+          <li>1 click — schedine inviate direttamente alla Questura</li>
+          <li>TSE calcolata automaticamente per ogni prenotazione</li>
+          <li>Export ISTAT mensile sempre pronto</li>
+          <li>Storico invii con data e risposta della Questura</li>
+          <li>€9,90/mese flat — proprietà e ospiti illimitati</li>
+          <li>Notifica email ad ogni check-in completato</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona">
+  <div class="section-inner">
+    <p class="label">Come funziona</p>
+    <div class="divider"></div>
+    <h2 class="serif" style="font-size:36px">Tre passi. Zero burocrazia.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <p class="step-title">Crei la prenotazione</p>
+          <p class="step-body">Accedi alla dashboard, seleziona la proprietà, inserisci le date e il numero di ospiti. In 30 secondi il sistema genera un QR univoco e un link da mandare all'ospite via WhatsApp o email. Ogni prenotazione ha il suo link dedicato.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <p class="step-title">L'ospite compila dal telefono</p>
+          <p class="step-body">L'ospite apre il link e fotografa il passaporto o la carta d'identità — i dati si compilano automaticamente tramite lettura OCR. Form disponibile in 15 lingue con rilevamento automatico del browser. Nessuna app, nessuna registrazione.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <p class="step-title">Un click — tutto inviato</p>
+          <p class="step-body">Ricevi una notifica email non appena l'ospite completa il check-in. Dalla dashboard premi "Invia alla Questura" — le schedine vengono trasmesse via web service ufficiale della Polizia di Stato. TSE calcolata. ISTAT aggiornato.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNZIONALITÀ -->
+<section id="features">
+  <div class="section-inner">
+    <p class="label">Funzionalità</p>
+    <div class="divider"></div>
+    <h2 class="serif" style="font-size:36px;margin-bottom:8px">Tutto quello che serve.<br>Niente di superfluo.</h2>
+    <p style="font-size:13px;color:#666;max-width:480px;line-height:1.8;margin-bottom:0">Strumento verticale sulla compliance, perfetto da affiancare a qualsiasi PMS già in uso.</p>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="feature-icon">📷</span>
+        <p class="feature-title">Scansione documenti</p>
+        <p class="feature-body">L'ospite fotografa passaporto o carta d'identità. Cognome, nome, data di nascita, nazionalità e numero documento vengono estratti automaticamente.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🚔</span>
+        <p class="feature-title">Invio diretto Questura</p>
+        <p class="feature-body">Trasmissione via web service ufficiale della Polizia di Stato. Nessun portale da aprire, nessun file da caricare. Storico completo degli invii.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">💰</span>
+        <p class="feature-title">Tassa di soggiorno</p>
+        <p class="feature-body">Calcolata automaticamente per ogni prenotazione in base all'aliquota del comune, al numero di ospiti e alle notti tassabili. Export mensile incluso.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📊</span>
+        <p class="feature-title">Export ISTAT mensile</p>
+        <p class="feature-body">Presenze e pernottamenti per proprietà e nazionalità, pronti per la comunicazione mensile. Un download, nessun lavoro manuale.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🌍</span>
+        <p class="feature-title">15 lingue</p>
+        <p class="feature-body">Form check-in in italiano, inglese, tedesco, francese, spagnolo, olandese, polacco, russo, portoghese, ceco, svedese, danese, giapponese, cinese, arabo.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📧</span>
+        <p class="feature-title">Notifiche email</p>
+        <p class="feature-body">Ricevi una notifica istantanea ogni volta che un ospite completa il check-in. Sei sempre aggiornato senza dover controllare la dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREZZI -->
+<section id="prezzi">
+  <div class="section-inner">
+    <p class="label">Il prezzo</p>
+    <div class="divider" style="background:#333;margin-top:12px"></div>
+    <h2 class="serif" style="font-size:36px;color:#fff">
+      I gestionali ti costano troppo.<br>
+      <em style="color:var(--gold);font-style:italic">RM·Check no.</em>
+    </h2>
+    <p style="font-size:13px;color:#bbb;line-height:1.9;max-width:520px;margin-top:16px">
+      Lodgify parte da €33/mese. Guesty prende fino al 5% su ogni prenotazione.
+      Krossbooking richiede preventivo personalizzato.
+      RM·Check: un solo prezzo, trasparente, per sempre.
+    </p>
+    <div class="prezzi-compare">
+      <div class="prezzo-item">
+        <p class="prezzo-competitor-num">€33+</p>
+        <p class="prezzo-competitor-label">Lodgify / mese</p>
+        <p class="prezzo-competitor-note">Piano base. Le funzioni compliance non sono incluse nel piano starter.</p>
+      </div>
+      <div class="prezzo-item">
+        <p class="prezzo-competitor-num">5%</p>
+        <p class="prezzo-competitor-label">Guesty per prenotazione</p>
+        <p class="prezzo-competitor-note">Su ogni prenotazione ricevuta. In alta stagione diventa molto costoso.</p>
+      </div>
+      <div class="prezzo-item highlight">
+        <p class="label" style="margin-bottom:12px">RM·Check</p>
+        <p class="prezzo-main">€9,90<span>/mese</span></p>
+        <p class="prezzo-main-label">Proprietà illimitate · Tutto incluso</p>
+      </div>
+    </div>
+    <div class="prezzo-box">
+      <p class="label" style="margin-bottom:20px">Piano unico — tutto incluso</p>
+      <div class="prezzo-features">
+        <div class="prezzo-feature">Check-in digitale con QR e scansione documento</div>
+        <div class="prezzo-feature">Invio diretto alla Questura via WS ufficiale PS</div>
+        <div class="prezzo-feature">Tassa di soggiorno calcolata automaticamente</div>
+        <div class="prezzo-feature">Export ISTAT mensile</div>
+        <div class="prezzo-feature">Storico invii con data e risposta Questura</div>
+        <div class="prezzo-feature">Notifiche email ad ogni check-in</div>
+        <div class="prezzo-feature">Form ospiti in 15 lingue</div>
+        <div class="prezzo-feature">Proprietà e ospiti illimitati</div>
+      </div>
+      <div style="margin-top:32px">
+        <a href="#signup" class="btn-gold">Inizia gratis 30 giorni</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <p class="label">FAQ</p>
+    <div class="divider"></div>
+    <h2 class="serif" style="font-size:36px">Domande frequenti.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <p class="faq-q">Funziona per qualsiasi Questura italiana?</p>
+        <p class="faq-a">Sì. Si connette al portale nazionale Alloggiati Web della Polizia di Stato, valido su tutto il territorio italiano.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Devo avere le credenziali del portale Alloggiati Web?</p>
+        <p class="faq-a">Sì, le stesse che usi per accedere manualmente. Le inserisci una volta nella configurazione della proprietà e non devi più accedere al sito PS.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Cosa succede se l'ospite non ha il telefono?</p>
+        <p class="faq-a">Puoi inserire i dati manualmente dalla dashboard. Il form digitale è un'alternativa comoda, non un obbligo.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Sostituisce i gestionali come Lodgify o Krossbooking?</p>
+        <p class="faq-a">No — si affianca. RM·Check è verticale sulla compliance: schedine, TSE, ISTAT. Se già usi un PMS per le prenotazioni, RM·Check risolve solo la parte burocratica.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Funziona per B&B, affittacamere e ville?</p>
+        <p class="faq-a">Sì, per qualsiasi struttura soggetta all'obbligo di comunicazione alla Questura: appartamenti, ville, B&B, affittacamere, agriturismi.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Posso cancellare quando voglio?</p>
+        <p class="faq-a">Sì, nessun vincolo. Pagamento mensile, cancellazione in qualsiasi momento dalla dashboard senza penali.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM RICHIESTA ACCESSO -->
+<section id="signup">
+  <div class="section-inner">
+    <p class="label">Inizia gratis</p>
+    <div class="divider" style="background:#333;margin-top:12px"></div>
+    <h2 class="serif" style="font-size:36px;color:#fff;margin-bottom:12px">
+      30 giorni gratis.<br>
+      <em style="color:var(--gold);font-style:italic">Nessuna carta di credito.</em>
+    </h2>
+    <p style="font-size:13px;color:#aaa;line-height:1.8;max-width:480px;margin-bottom:40px">
+      Invia la richiesta — riceverai le credenziali di accesso entro pochi minuti.
+    </p>
+
+    <div class="form-box">
+      <form id="signupForm" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label class="form-label" for="f-nome">Nome e cognome</label>
+          <input class="form-input" type="text" id="f-nome" name="nome" placeholder="Mario Rossi" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-email">Email</label>
+          <input class="form-input" type="email" id="f-email" name="email" placeholder="mario@esempio.it" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-tel">Numero di cellulare</label>
+          <input class="form-input" type="tel" id="f-tel" name="telefono" placeholder="+39 333 1234567" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-pw">Password che vuoi usare</label>
+          <input class="form-input" type="password" id="f-pw" name="password" placeholder="Minimo 8 caratteri" minlength="8" required>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label" for="f-prop">Quante proprietà gestisci?</label>
+          <input class="form-input" type="text" id="f-prop" name="proprieta" placeholder="es. 3 appartamenti a Grosseto">
+        </div>
+        <div style="margin-top:28px">
+          <button type="submit" class="btn-gold" id="submitBtn" style="width:100%;text-align:center">
+            Richiedi accesso gratuito
+          </button>
+        </div>
+        <p class="form-note">
+          I tuoi dati vengono usati esclusivamente per creare il tuo account RM·Check.
+          Riceverai le credenziali di accesso all'indirizzo email indicato entro 30 minuti.
+          Nessuno spam, promesso.
+        </p>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <p>
+          <strong style="color:#6fcf97;display:block;margin-bottom:8px">✓ Richiesta ricevuta!</strong>
+          Grazie — riceverai le credenziali di accesso all'indirizzo email indicato entro 30 minuti.
+          Se non le trovi, controlla la cartella spam.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    RM·Check è un prodotto <a href="https://rmgestioni.it">RM Gestioni</a> — Maremma, Toscana &nbsp;·&nbsp;
+    <a href="https://app.rmgestioni.it">Accedi</a> &nbsp;·&nbsp;
+    <a href="mailto:info@rmgestioni.it">info@rmgestioni.it</a>
+  </p>
+</footer>
+
+<script>
+async function handleSignup(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Invio in corso...';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+
+  const data = {
+    nome: document.getElementById('f-nome').value,
+    email: document.getElementById('f-email').value,
+    telefono: document.getElementById('f-tel').value,
+    password: document.getElementById('f-pw').value,
+    proprieta: document.getElementById('f-prop').value,
+  };
+
+  try {
+    // Invia via EmailJS o FormSubmit — usiamo FormSubmit (zero config)
+    const resp = await fetch('https://formsubmit.co/ajax/matteo@rmgestioni.it', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Nuova richiesta RM·Check — ' + data.nome,
+        _template: 'table',
+        Nome: data.nome,
+        Email: data.email,
+        Telefono: data.telefono,
+        Password_richiesta: data.password,
+        Proprieta: data.proprieta || 'Non specificato',
+      })
+    });
+
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  } catch(err) {
+    btn.textContent = 'Richiedi accesso gratuito';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    alert('Errore di rete. Scrivi direttamente a info@rmgestioni.it');
+  }
+}
+</script>
+
+</body>
+</html>
