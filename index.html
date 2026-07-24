@@ -661,6 +661,107 @@ footer{
 .hero-sub{animation-delay:.2s;}
 .hero-ctas{animation-delay:.3s;}
 @media(max-width:900px){.contatti-grid{grid-template-columns:1fr !important;gap:40px !important;}.nome-tel-grid{grid-template-columns:1fr !important;}#contatti{padding:72px 20px !important;}#contatti .section-wrap{padding:0 !important;}}</style>
+<!-- ============================================================
+  SNIPPET ANALYTICS + GDPR CONSENT MODE V2 — rmgestioni.it
+  Incolla tutto questo blocco prima di </head> in ogni pagina
+  (oppure in un file separato "analytics.html" e includilo via JS
+  in tutte le pagine se vuoi evitare duplicazioni)
+  ============================================================ -->
+
+<!-- 1) CONSENT MODE V2 — deve stare PRIMA del tag gtag.js -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+
+  // Default: tutto negato finché l'utente non sceglie
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+</script>
+
+<!-- 2) GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5EC9J28KRD"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-5EC9J28KRD', { 'anonymize_ip': true });
+</script>
+
+<!-- 3) BANNER COOKIE MINIMALE -->
+<style>
+  #rm-cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: #1a1a1a; color: #fff; padding: 16px 20px;
+    font-family: system-ui, sans-serif; font-size: 14px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.2);
+  }
+  #rm-cookie-banner p { margin: 0; flex: 1 1 260px; line-height: 1.4; }
+  #rm-cookie-banner a { color: #9ecbff; text-decoration: underline; }
+  #rm-cookie-banner button {
+    border: none; border-radius: 6px; padding: 9px 16px;
+    font-size: 14px; cursor: pointer; font-weight: 600;
+  }
+  #rm-cookie-accept { background: #2ecc71; color: #06240f; }
+  #rm-cookie-reject { background: transparent; color: #ddd; border: 1px solid #666 !important; }
+</style>
+
+<div id="rm-cookie-banner" style="display:none">
+  <p>Usiamo cookie tecnici e di analisi per capire il traffico del sito.
+     Leggi la <a href="/privacy.html">Privacy Policy</a>.</p>
+  <button id="rm-cookie-reject">Rifiuta</button>
+  <button id="rm-cookie-accept">Accetta</button>
+</div>
+
+<script>
+  (function () {
+    var CONSENT_KEY = 'rm_cookie_consent';
+    var saved = localStorage.getItem(CONSENT_KEY);
+    var banner = document.getElementById('rm-cookie-banner');
+
+    function applyConsent(granted) {
+      gtag('consent', 'update', {
+        'ad_storage': granted ? 'granted' : 'denied',
+        'ad_user_data': granted ? 'granted' : 'denied',
+        'ad_personalization': granted ? 'granted' : 'denied',
+        'analytics_storage': granted ? 'granted' : 'denied'
+      });
+    }
+
+    if (saved === 'granted' || saved === 'denied') {
+      applyConsent(saved === 'granted');
+    } else {
+      banner.style.display = 'flex';
+    }
+
+    document.getElementById('rm-cookie-accept').addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      applyConsent(true);
+      banner.style.display = 'none';
+    });
+
+    document.getElementById('rm-cookie-reject').addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      applyConsent(false);
+      banner.style.display = 'none';
+    });
+  })();
+</script>
+
+<!-- ============================================================
+  4) TRACKING EVENTO — invio form calcolatore revenue
+  Aggiungi questa riga nel punto del tuo JS dove gestisci
+  il submit del form (dopo l'invio riuscito a EmailJS/Formsubmit)
+  ============================================================ -->
+<script>
+  // Esempio d'uso, da chiamare dopo submit riuscito:
+  // gtag('event', 'lead_calcolatore_revenue', {
+  //   'event_category': 'lead',
+  //   'event_label': 'revenue_calculator'
+  // });
+</script>
 </head>
 <body>
 
