@@ -1787,5 +1787,65 @@ Invita a: valutazione gratuita della proprietà, form su rmgestioni.it/#contatti
   inputEl.addEventListener('input', function() { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px'; });
 })();
 </script>
+  <script>
+(function () {
+ 
+  // --- 1) Tracking click su qualsiasi link WhatsApp del sito ---
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href^="https://wa.me/"]');
+    if (!link) return;
+    var label = link.textContent.trim().slice(0, 80) || 'whatsapp_cta';
+    if (typeof gtag === 'function') {
+      gtag('event', 'click_whatsapp', {
+        'event_category': 'engagement',
+        'event_label': label
+      });
+    }
+  });
+ 
+  // --- 2) Invio form contatti via AJAX + evento di conversione ---
+  var form = document.querySelector('#contatti form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+ 
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Invio in corso...';
+ 
+      var data = new FormData(form);
+      var servizio = data.get('servizio') || 'non specificato';
+ 
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error('Errore invio form');
+ 
+          if (typeof gtag === 'function') {
+            gtag('event', 'invio_form_contatti', {
+              'event_category': 'lead',
+              'event_label': servizio
+            });
+          }
+ 
+          form.innerHTML =
+            '<p style="font-family:\'Cormorant Garamond\',serif;font-size:22px;' +
+            'color:#0a0a0a;text-align:center;padding:40px 0;">' +
+            'Grazie! Ti risponderemo entro 24 ore.</p>';
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          alert('Si è verificato un errore nell\'invio. Riprova o scrivici su WhatsApp.');
+        });
+    });
+  }
+ 
+})();
+</script>
 </body>
 </html>
