@@ -269,6 +269,10 @@
     .btn{font-size:11.5px;padding:7px 12px;}
     .hero h1{font-size:24px;}
   }
+  a.blog-card{display:block;text-decoration:none;color:inherit;transition:transform .18s ease, box-shadow .18s ease;}
+  a.blog-card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(30,25,18,0.08), 0 22px 40px -20px rgba(30,25,18,0.38);}
+  .blog-card h3{color:var(--ink);}
+  .blog-more{display:inline-block;margin-top:16px;font-size:12.8px;font-weight:600;color:var(--gold-strong);}
 </style>
 </head>
 <body>
@@ -282,7 +286,7 @@
       <a href="agriturismi.html">Agriturismi</a>
       <a href="ville.html">Ville</a>
       <a href="case-vacanze.html">Case Vacanze</a>
-      <a href="#blog">Blog</a>
+      <a href="blog/">Blog</a>
     </nav>
     <div class="header-cta">
       <a class="btn btn-solid" href="https://wa.me/393485259881?text=Ciao%21%20Vorrei%20richiedere%20una%20valutazione%20per%20il%20mio%20immobile." target="_blank" rel="noopener">Richiedi una valutazione</a>
@@ -357,24 +361,27 @@
         <span class="eyebrow">Dal blog</span>
         <h2>Letture per proprietari e gestori</h2>
       </div>
-      <a class="blog-all" href="#">Vedi tutti gli articoli</a>
+      <a class="blog-all" href="blog/">Vedi tutti gli articoli</a>
     </div>
     <div class="blog-grid">
-      <div class="blog-card">
-        <span class="blog-tag">Case Vacanze</span>
-        <h3>Cedolare secca 2026: cosa cambia per chi affitta case vacanze</h3>
-        <p>Le novità fiscali spiegate senza tecnicismi, con un esempio di calcolo reale.</p>
-      </div>
-      <div class="blog-card">
-        <span class="blog-tag">Agriturismi</span>
-        <h3>Schedine alloggiati: cosa rischia chi le inserisce in ritardo</h3>
-        <p>Le regole, i tempi previsti dalla legge e come evitare l'errore più comune a fine giornata.</p>
-      </div>
-      <div class="blog-card">
-        <span class="blog-tag">Ville</span>
-        <h3>Floor, target, ceiling: la logica del pricing dinamico</h3>
-        <p>Come si costruisce una griglia tariffaria che protegge i margini in bassa stagione.</p>
-      </div>
+      <a class="blog-card" href="blog/quanto-costa-property-manager-affitti-brevi/">
+        <span class="blog-tag">Gestione e norme</span>
+        <h3>Quanto costa un property manager per affitti brevi? Guida</h3>
+        <p>Quanto costa un property manager per affitti brevi: commissione percentuale o fee fissa, servizi inclusi e 10 domande da fare prima di firmare.</p>
+        <span class="blog-more">Leggi l’articolo →</span>
+      </a>
+      <a class="blog-card" href="blog/come-stabilire-prezzo-affitto-breve/">
+        <span class="blog-tag">Prezzi e rendimento</span>
+        <h3>Come stabilire il prezzo di un affitto breve: guida al pricing</h3>
+        <p>Come fissare il prezzo di un affitto breve: prezzo minimo, target e massimo, stagionalità, eventi e last minute. Guida pratica al pricing dinamico.</p>
+        <span class="blog-more">Leggi l’articolo →</span>
+      </a>
+      <a class="blog-card" href="blog/annuncio-airbnb-senza-prenotazioni/">
+        <span class="blog-tag">Prenotazioni e recensioni</span>
+        <h3>Annuncio Airbnb senza prenotazioni: 9 cause e come risolverle</h3>
+        <p>Il tuo annuncio Airbnb non riceve prenotazioni? Scopri le 9 cause più comuni (foto, prezzo, calendario, recensioni) e come correggerle subito.</p>
+        <span class="blog-more">Leggi l’articolo →</span>
+      </a>
     </div>
   </div>
 </section>
@@ -394,7 +401,7 @@
       </div>
       <div class="foot-col">
         <h4>Risorse</h4>
-        <a href="#blog">Blog</a>
+        <a href="blog/">Blog</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="#">Chi siamo</a>
       </div>

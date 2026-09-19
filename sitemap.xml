@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://rmgestioni.it/blog/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://rmgestioni.it/agriturismi.html</loc>
     <lastmod>2026-09-19</lastmod>
     <priority>0.8</priority>
@@ -19,6 +24,56 @@
     <loc>https://rmgestioni.it/case-vacanze.html</loc>
     <lastmod>2026-09-19</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/annuncio-airbnb-senza-prenotazioni/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/come-stabilire-prezzo-affitto-breve/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/quanto-costa-property-manager-affitti-brevi/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/quanto-si-guadagna-affitto-breve/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/affitto-breve-o-affitto-lungo/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/affitto-garantito-come-funziona/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/obblighi-affitti-brevi-cin-alloggiati-web/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/poche-prenotazioni-alta-stagione/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/investire-casa-affitti-brevi-roi/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rmgestioni.it/blog/recensioni-negative-airbnb-booking/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://rmgestioni.it/privacy.html</loc>
