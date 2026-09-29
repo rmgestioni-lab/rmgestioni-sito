@@ -648,7 +648,7 @@ details[open] summary:after{transform:rotate(180deg)}
     });
   } else { els.forEach(function(el){ el.classList.add('in'); }); }
 
-  var SOGLIA = 8000; // fatturato potenziale minimo per il check-up video (€)
+  var SOGLIA = 6000; // fatturato potenziale minimo per il check-up video (€)
   var f = document.getElementById('lead'), err = document.getElementById('err'), btn = document.getElementById('submit');
   var p = new URLSearchParams(location.search), utm = [];
   ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){ if(p.get(k)) utm.push(k+'='+p.get(k)); });
