@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="it" class="no-js">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.className="js";</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check-up gratuito del tuo annuncio | R&amp;M Gestioni Immobiliari</title>
+<meta name="description" content="Il tuo annuncio ha visite ma poche prenotazioni? In 48 ore ricevi un video di 3 minuti sul tuo annuncio con il problema principale e cosa cambiare. Gratis, più la guida ai 10 errori.">
+<meta property="og:title" content="Il tuo annuncio ha visite ma poche prenotazioni?">
+<meta property="og:description" content="Check-up video gratuito del tuo annuncio in 48 ore + guida ai 10 errori. 20 check-up a settimana.">
+<meta property="og:url" content="https://rmgestioni.it/check-up">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://rmgestioni.it/logo-rm.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  PRIMA DI PUBBLICARE
+  1. Incolla qui lo stesso snippet GA4 + Consent Mode e lo stesso banner cookie delle altre pagine di rmgestioni.it.
+  2. Se usi Meta Ads, incolla qui il codice base del Meta Pixel (soggetto al consenso del banner).
+  3. Sostituisci N8N_WEBHOOK_URL nel form con l'URL di produzione del Webhook n8n (workflow "Check-up Lead").
+  4. Carica nella root del sito: guida-10-errori.pdf (il logo è già incluso nella pagina).
+  5. Il prezzo di lancio (149€ fino al 31 ottobre, primi 5 clienti) va tolto o aggiornato dopo la scadenza: cerca "LANCIO" in questo file.
+-->
+<style>
+:root{--ink:#141414;--ink2:#1D1B18;--ivory:#F6F1E7;--paper:#FBF8F2;--gold:#B08D4A;--gold-l:#C9A45E;--gold-soft:#E9DDC4;--muted:#5E574C;--muted-d:#D8D0C2;--rule:#D9CFBC;--err:#9B2226}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Jost",system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.08;font-variant-numeric:lining-nums}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.narrow{max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
+.dark .eyebrow{color:var(--gold-l)}
+.btn{display:inline-block;background:var(--gold-l);color:var(--ink);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:14px;padding:18px 32px;border-radius:2px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,background .15s;text-align:center}
+.btn:hover{background:#d4b06b;transform:translateY(-1px)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn small{display:block;font-size:11px;letter-spacing:.08em;text-transform:none;font-weight:500;margin-top:3px;opacity:.8}
+section{padding:92px 0}
+.dark{background:var(--ink);color:var(--ivory)}
+.ivory{background:var(--ivory)}
+.sec-head{margin-bottom:44px}
+.sec-head h2{font-size:clamp(34px,4.4vw,50px)}
+.sec-head p{margin-top:14px;font-size:19px;color:var(--muted);max-width:720px}
+.dark .sec-head p{color:var(--muted-d)}
+em.g{font-style:italic;color:var(--gold)}
+.dark em.g{color:var(--gold-l)}
+
+/* header */
+header{background:var(--ink);color:var(--ivory);border-bottom:1px solid #2a2723}
+.nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+.nav img{height:62px;width:auto}
+.nav a.wa{font-size:14px;color:var(--gold-soft);text-decoration:none;border-bottom:1px solid var(--gold-l);padding-bottom:2px}
+
+/* hero */
+.hero{background:var(--ink);color:var(--ivory);padding:64px 0 96px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero h1{font-size:clamp(42px,6.2vw,72px);margin-bottom:22px}
+.hero .sub{font-size:20px;color:var(--muted-d);max-width:560px;margin-bottom:30px}
+.hero .sub b{color:var(--ivory);font-weight:500}
+.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:14px;color:#BDB4A5;list-style:none}
+.trust li{display:flex;align-items:center;gap:8px}
+.trust svg{flex:none}
+.visual{position:relative;height:440px}
+.cover{position:absolute;right:190px;top:10px;width:260px;aspect-ratio:210/297;background:var(--paper);color:var(--ink);padding:26px 22px;box-shadow:0 30px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:space-between;transform:rotate(-4deg)}
+.cover .k{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.cover h3{font-size:27px;line-height:1.05}
+.cover .f{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--rule);padding-top:8px}
+.phone{position:absolute;right:0;top:60px;width:200px;height:390px;border-radius:32px;background:#0b0b0b;border:3px solid #3a3630;padding:10px;box-shadow:0 30px 60px rgba(0,0,0,.55);transform:rotate(3deg)}
+.phone .scr{height:100%;border-radius:24px;background:#2a2723;display:flex;flex-direction:column;justify-content:space-between;padding:20px 14px}
+.phone .t{font-size:12px;color:var(--gold-soft);font-weight:500}
+.phone .play{align-self:center;width:66px;height:66px;border-radius:50%;background:var(--gold-l);display:grid;place-items:center}
+.phone .bar{height:3px;background:#4a443b;border-radius:2px}
+.phone .bar i{display:block;width:35%;height:3px;background:var(--gold-l)}
+.phone .tm{display:flex;justify-content:space-between;font-size:10px;color:#a89f90;margin-top:6px}
+
+/* video */
+.vid{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:center}
+.vid h2{font-size:clamp(34px,4.4vw,50px);margin-bottom:16px}
+.vid p{color:var(--muted);font-size:18px;margin-bottom:18px;max-width:520px}
+.vid ul{list-style:none;margin-bottom:26px}
+.vid li{padding:10px 0 10px 28px;border-bottom:1px solid var(--rule);position:relative}
+.vid li:before{content:"";position:absolute;left:2px;top:17px;width:13px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.player{position:relative;width:340px;aspect-ratio:var(--ratio,9/16);background:var(--ink);border-radius:18px;overflow:hidden;box-shadow:0 30px 60px rgba(20,20,20,.25)}
+.player video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--ink)}
+.player .ph{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--gold-soft);text-align:center;padding:24px}
+.player.empty .ph{display:flex}
+.player.empty video{display:none}
+.player .ph .pl{width:78px;height:78px;border-radius:50%;background:var(--gold-l);display:grid;place-items:center}
+.player.wide{--ratio:16/9;width:100%}
+.vid:has(.player.wide){grid-template-columns:.8fr 1.2fr;gap:56px}
+@media (max-width:900px){.vid,.vid:has(.player.wide){grid-template-columns:1fr;gap:32px}.player{width:100%;max-width:360px;margin:0 auto;order:-1}.player.wide{max-width:100%}}
+
+/* pain */
+.pains{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pains li{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:22px 24px 22px 60px;position:relative;font-size:18px}
+.pains li:before{content:"";position:absolute;left:22px;top:26px;width:20px;height:20px;border:2px solid var(--gold);border-radius:2px}
+.pains li b{display:block;font-family:"Cormorant Garamond",serif;font-size:25px;font-weight:600;line-height:1.15;margin-bottom:4px}
+.pains li span{color:var(--muted);font-size:16px}
+.verdict{margin-top:40px;padding:30px 34px;background:var(--ink);color:var(--ivory);border-radius:3px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+.verdict .big{font-family:"Cormorant Garamond",serif;font-size:30px;line-height:1.15;color:var(--ivory)}
+.verdict .big em{color:var(--gold-l)}
+.verdict p{color:var(--muted-d);font-size:17px}
+
+/* offer stack */
+.stack{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:start}
+.items{list-style:none;border-top:1px solid #3a3630}
+.items li{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid #3a3630}
+.items .n{font-family:"Cormorant Garamond",serif;font-size:38px;color:var(--gold-l);line-height:1}
+.items h3{font-size:26px;color:var(--ivory);margin-bottom:4px}
+.items p{color:var(--muted-d);font-size:16px}
+.items .tag{display:inline-block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);background:var(--gold-l);padding:3px 8px;border-radius:2px;margin-left:8px;vertical-align:middle;font-family:"Jost",sans-serif;font-weight:600}
+.pricebox{border:1px solid var(--gold-l);border-radius:3px;padding:32px;position:sticky;top:24px;background:var(--ink2)}
+.pricebox .lbl{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);font-weight:600}
+.pricebox .price{font-family:"Cormorant Garamond",serif;font-size:84px;line-height:1;margin:10px 0 4px;color:var(--ivory)}
+.pricebox .price s{font-size:36px;color:#8f877a;margin-right:10px}
+.pricebox p{color:var(--muted-d);font-size:15px;margin-bottom:22px}
+.pricebox .btn{width:100%}
+.pricebox .seats{margin-top:16px;font-size:14px;color:#BDB4A5;text-align:center}
+
+/* guarantee */
+.guarantee{display:grid;grid-template-columns:200px 1fr;gap:44px;align-items:center;background:#fff;border:1px solid var(--rule);border-radius:3px;padding:44px}
+.seal{width:190px;height:190px;border-radius:50%;border:2px solid var(--gold);outline:1px solid var(--gold);outline-offset:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.seal b{font-family:"Cormorant Garamond",serif;font-size:52px;line-height:1;color:var(--ink)}
+.seal span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-top:6px}
+.guarantee h2{font-size:clamp(30px,3.6vw,42px);margin-bottom:14px}
+.guarantee p{color:var(--muted);margin-bottom:10px;max-width:640px}
+.guarantee ul{list-style:none;margin-top:16px;display:grid;gap:8px}
+.guarantee li{padding-left:28px;position:relative}
+.guarantee li:before{content:"";position:absolute;left:0;top:7px;width:14px;height:8px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
+.step{border-top:2px solid var(--gold);padding-top:20px}
+.step:before{counter-increment:s;content:"0" counter(s);font-family:"Cormorant Garamond",serif;font-size:46px;color:var(--gold);display:block;line-height:1;margin-bottom:10px}
+.step h3{font-size:26px;margin-bottom:8px}
+.step p{color:var(--muted)}
+
+/* areas */
+.areas{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.areas div{background:var(--paper);padding:22px}
+.areas b{display:block;font-family:"Cormorant Garamond",serif;font-size:23px;font-weight:600;margin-bottom:4px}
+.areas span{font-size:15px;color:var(--muted)}
+
+/* audit tiers */
+.tiers{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.tier{border:1px solid #3d3830;padding:34px;border-radius:3px;position:relative}
+.tier.hi{border-color:var(--gold-l)}
+.tier .badge{position:absolute;top:-13px;left:34px;background:var(--gold-l);color:var(--ink);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:4px 10px;border-radius:2px}
+.tier h3{font-size:30px;color:var(--ivory)}
+.tier .price{font-family:"Cormorant Garamond",serif;font-size:50px;color:var(--gold-l);margin:4px 0 12px;line-height:1}
+.tier .price s{font-size:26px;color:#8f877a;margin-left:10px}
+.tier ul{list-style:none;color:var(--muted-d);font-size:16px}
+.tier li{padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #2c2925}
+.tier li:last-child{border-bottom:0}
+.tier li:before{content:"";position:absolute;left:0;top:18px;width:10px;height:1px;background:var(--gold-l)}
+.launch{margin-top:24px;padding:18px 24px;border-left:2px solid var(--gold-l);background:var(--ink2);color:var(--gold-soft);font-size:16px}
+
+/* about */
+.about{display:block}
+.about img{width:100%;max-width:300px;background:var(--ink);padding:18px;border-radius:3px}
+.about p{color:var(--muted);margin-bottom:14px;font-size:18px}
+.about p b{color:var(--ink);font-weight:500}
+
+/* faq */
+details{border-bottom:1px solid var(--rule);padding:20px 0}
+summary{cursor:pointer;font-family:"Cormorant Garamond",serif;font-size:25px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--gold);font-size:28px;line-height:1}
+details[open] summary:after{content:"\2212"}
+details p{margin-top:10px;color:var(--muted);max-width:760px}
+
+/* form */
+.form-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.form-wrap .intro p{color:var(--muted);margin:14px 0}
+.recap{list-style:none;margin-top:22px;border-top:1px solid var(--rule)}
+.recap li{padding:11px 0 11px 28px;border-bottom:1px solid var(--rule);position:relative;font-size:16px}
+.recap li:before{content:"";position:absolute;left:2px;top:17px;width:13px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.recap li b{font-weight:500}
+form{background:#fff;border:1px solid var(--rule);padding:32px;border-radius:3px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-size:13px;font-weight:500;letter-spacing:.04em;margin:0 0 6px}
+.field{margin-bottom:18px}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=number],select{width:100%;padding:13px 14px;border:1px solid #CFC4AE;border-radius:2px;font:inherit;font-size:16px;background:var(--paper);color:var(--ink)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-bottom:12px;color:var(--muted)}
+.check input{margin-top:4px;accent-color:var(--gold);width:17px;height:17px;flex:none}
+.check.big{background:var(--ivory);padding:14px;border-radius:2px;color:var(--ink);font-size:15px}
+form .btn{width:100%;margin-top:8px}
+.formnote{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
+.error{color:var(--err);font-size:14px;margin-top:10px;display:none}
+.ok{display:none}
+.ok h3{font-size:34px;margin-bottom:12px}
+.ok p{color:var(--muted);margin-bottom:14px}
+.card{background:#fff;border:1px solid var(--rule);padding:32px;border-radius:3px}
+.card .tag{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
+
+/* final cta */
+.final{text-align:center}
+.final h2{font-size:clamp(34px,4.6vw,54px);margin-bottom:16px}
+.final p{color:var(--muted-d);max-width:620px;margin:0 auto 30px;font-size:19px}
+
+footer{background:var(--ink);color:#A89F90;font-size:14px;padding:40px 0;border-top:1px solid #2a2723}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer img{height:44px;width:auto}
+footer a{color:var(--gold-soft)}
+.sticky{display:none}
+
+@media (max-width:900px){
+  body{font-size:16px}
+  section{padding:64px 0}
+  .hero{padding:36px 0 64px}
+  .hero-grid,.stack,.form-wrap,.tiers,.about,.pains{grid-template-columns:1fr}
+  .visual{display:none}
+  .verdict{grid-template-columns:1fr;gap:10px}
+  .pricebox{position:static}
+  .guarantee{grid-template-columns:1fr;padding:28px;gap:24px;justify-items:start}
+  .seal{width:150px;height:150px}
+  .seal b{font-size:42px}
+  .steps{grid-template-columns:1fr}
+  .areas{grid-template-columns:1fr 1fr}
+  form{padding:22px}
+  .row{grid-template-columns:1fr;gap:0}
+  .nav img{height:44px}
+  .about img{max-width:240px}
+  .sticky{display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+}
+/* ===== DINAMICA ===== */
+header{position:sticky;top:0;z-index:20;transition:background .3s,box-shadow .3s}
+.nav{transition:height .3s}
+.nav img{transition:height .3s}
+header.scrolled{background:rgba(20,20,20,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+header.scrolled .nav{height:62px}
+header.scrolled .nav img{height:46px}
+.eyebrow{display:flex;align-items:center;gap:12px}
+.eyebrow:before{content:"";width:28px;height:1px;background:currentColor;flex:none}
+.final .eyebrow{justify-content:center}
+.hero{position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;right:-180px;top:-160px;width:620px;height:620px;border:1px solid rgba(201,164,94,.14);border-radius:50%;pointer-events:none}
+.hero:after{content:"";position:absolute;right:-60px;top:-40px;width:380px;height:380px;border:1px solid rgba(201,164,94,.10);border-radius:50%;pointer-events:none}
+.hero h1 em.g{background-image:linear-gradient(var(--gold-l),var(--gold-l));background-repeat:no-repeat;background-position:0 92%;background-size:0 2px;animation:underline 1.2s .9s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes underline{to{background-size:100% 2px}}
+.btn{position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 4.5s 2s infinite}
+@keyframes shine{0%{left:-60%}18%,100%{left:130%}}
+.cover{animation:floatA 7s ease-in-out infinite}
+.phone{animation:floatB 6s ease-in-out infinite}
+@keyframes floatA{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-3deg) translateY(-12px)}}
+@keyframes floatB{0%,100%{transform:rotate(3deg) translateY(0)}50%{transform:rotate(4deg) translateY(-16px)}}
+.phone .play{animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,164,94,.55)}80%,100%{box-shadow:0 0 0 22px rgba(201,164,94,0)}}
+.phone .bar i{animation:progress 9s linear infinite}
+@keyframes progress{from{width:0}to{width:100%}}
+/* nastro errori */
+.ticker{background:var(--gold-l);color:var(--ink);overflow:hidden;white-space:nowrap;padding:16px 0;border-top:1px solid #a88a4f;border-bottom:1px solid #a88a4f}
+.ticker .track{display:inline-flex;gap:0;animation:ticker 45s linear infinite}
+.ticker span{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:600;padding:0 26px;display:inline-flex;align-items:center;gap:26px}
+.ticker span:after{content:"";width:7px;height:7px;background:var(--ink);transform:rotate(45deg)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker:hover .track{animation-play-state:paused}
+/* card interattive */
+.pains li,.areas div,.tier,.items li,.step{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s,background .35s}
+.pains li:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(20,20,20,.08);border-color:var(--gold)}
+.pains li:after{content:"";position:absolute;left:28px;top:30px;width:9px;height:5px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg) scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.pains li.in:after{transform:rotate(-45deg) scale(1);transition-delay:.35s}
+.areas div:hover{background:#fff;transform:scale(1.03);box-shadow:0 14px 30px rgba(20,20,20,.08);position:relative;z-index:1}
+.areas b{transition:color .3s}
+.areas div:hover b{color:var(--gold)}
+.tier:hover{transform:translateY(-6px);border-color:var(--gold-l)}
+.items li:hover{background:rgba(201,164,94,.05)}
+.items li:hover .n{transform:translateX(4px)}
+.items .n{transition:transform .3s}
+.step:hover{transform:translateY(-4px)}
+/* sigillo rotante */
+.seal{position:relative;outline:none}
+.seal svg.ring{position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px);animation:spin 26s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* passi con linea che si disegna */
+.steps{position:relative}
+.step{border-top:0;position:relative}
+.step:after{content:"";position:absolute;left:0;top:0;height:2px;width:0;background:var(--gold);transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.step.in:after{width:100%}
+.step{padding-top:20px}
+/* player */
+.player{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.player:hover{transform:translateY(-6px) rotate(-.5deg)}
+.player .ph .pl{animation:pulse 2.4s ease-out infinite}
+/* faq */
+details{transition:background .3s}
+details[open]{background:rgba(255,255,255,.5)}
+details p{animation:faq .4s ease}
+@keyframes faq{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+summary:after{transition:transform .3s}
+details[open] summary:after{transform:rotate(180deg)}
+/* comparsa allo scroll */
+.js .reveal{transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s,background .35s}
+.js .reveal:not(.in){opacity:0;transform:translateY(28px)}
+/* barra di avanzamento lettura */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold-l);z-index:30}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .hero h1 em.g{background-size:100% 2px}
+  .step:after{width:100%}
+  .pains li:after{transform:rotate(-45deg) scale(1)}
+}
+@media (max-width:900px){.ticker span{font-size:18px;padding:0 18px;gap:18px}.hero:before,.hero:after{display:none}}
+.tier{display:flex;flex-direction:column}
+.tier ul{flex-grow:1;margin-bottom:26px}
+.tier-cta{width:100%}
+.btn-o{background:transparent;color:var(--gold-l);border:1px solid var(--gold-l)}
+.btn-o:hover{background:var(--gold-l);color:var(--ink)}
+.tier-note{font-size:12.5px;color:#8f877a;text-align:center;margin-top:10px}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header id="top">
+  <div class="wrap nav">
+    <a href="https://rmgestioni.it" aria-label="R&amp;M Gestioni Immobiliari, home"><img src="data:image/png;base64,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" alt="R&amp;M Gestioni Immobiliari, Property Management" width="409" height="282"></a>
+    <a class="wa" href="https://wa.me/393485259881" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+  </div>
+</header>
+
+<!-- HERO: il pain in prima riga -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Per host di case vacanza e appartamenti</div>
+      <h1>Il tuo annuncio ha visite ma <em class="g">poche prenotazioni?</em></h1>
+      <p class="sub">Mandaci il link. In 48 ore ricevi <b>un video di 3 minuti registrato sul tuo annuncio</b>: il problema principale, cosa cambiare oggi e quanto il tuo prezzo di alta stagione si discosta da quello dei concorrenti. <b>Gratis.</b></p>
+      <a class="btn" href="#form">Voglio il check-up gratuito<small>+ guida ai 10 errori in regalo</small></a>
+      <ul class="trust">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A45E" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Nessuna carta richiesta</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A45E" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Nessun accesso al tuo account</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A45E" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Solo 20 check-up a settimana</li>
+      </ul>
+    </div>
+    <div class="visual" aria-hidden="true">
+      <div class="cover">
+        <div class="k">Guida gratuita per host</div>
+        <h3>I 10 errori che fanno <em class="g">perdere prenotazioni</em> su Airbnb e Booking</h3>
+        <div class="f">R&amp;M Gestioni Immobiliari</div>
+      </div>
+      <div class="phone"><div class="scr">
+        <div class="t">Check-up del tuo annuncio</div>
+        <div class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="#141414"><path d="M8 5v14l11-7z"/></svg></div>
+        <div><div class="bar"><i></i></div><div class="tm"><span>1:02</span><span>3:00</span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div class="track"><span>La prima foto non fa cliccare</span><span>Il titolo non dice perché scegliere te</span><span>Prezzi uguali tutto l'anno</span><span>Pulizie che pesano sui soggiorni brevi</span><span>Soggiorno minimo sempre uguale</span><span>Servizi che hai ma non dichiari</span><span>Calendario aperto troppo poco</span><span>Prenotazione immediata spenta</span><span>Descrizione senza un ospite ideale</span><span>Recensioni critiche senza risposta</span><span>La prima foto non fa cliccare</span><span>Il titolo non dice perché scegliere te</span><span>Prezzi uguali tutto l'anno</span><span>Pulizie che pesano sui soggiorni brevi</span><span>Soggiorno minimo sempre uguale</span><span>Servizi che hai ma non dichiari</span><span>Calendario aperto troppo poco</span><span>Prenotazione immediata spenta</span><span>Descrizione senza un ospite ideale</span><span>Recensioni critiche senza risposta</span></div></div>
+
+<!-- VIDEO DI PRESENTAZIONE
+  Carica il video nella root del sito come video-checkup.mp4 (orizzontale 16:9, 1920x1080, max circa 30 MB).
+  Copertina facoltativa: video-cover.jpg (1920x1080).
+  Video verticale? Togli la classe "wide" dal div .player.
+  Preferisci YouTube? Sostituisci <video>...</video> con l'iframe di YouTube e togli la classe "empty". -->
+<section id="video">
+  <div class="wrap vid">
+    <div>
+      <div class="eyebrow">In 90 secondi</div>
+      <h2>Guarda come funziona <em class="g">il check-up</em></h2>
+      <p>Ti spiego cosa guardiamo nel tuo annuncio, cosa ricevi e perché è gratis.</p>
+      <ul>
+        <li>Cosa c'è nel video che ricevi</li>
+        <li>Come lavoriamo sul tuo annuncio, senza accedere al tuo account</li>
+        <li>Cosa succede dopo, se vuoi andare oltre</li>
+      </ul>
+      <a class="btn" href="#form">Voglio il check-up gratuito</a>
+    </div>
+    <div class="player wide empty" id="player">
+      <video controls playsinline preload="metadata" poster="/video-cover.jpg">
+        <source src="/video-checkup.mp4" type="video/mp4">
+      </video>
+      <div class="ph" aria-hidden="true">
+        <div class="pl"><svg width="30" height="30" viewBox="0 0 24 24" fill="#141414"><path d="M8 5v14l11-7z"/></svg></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--ivory)">Il video di Matteo</div>
+        <div style="font-size:13px;color:#a89f90">In arrivo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="ivory">
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">Ti riconosci?</div><h2>Se almeno una di queste è vera, <em class="g">stai perdendo soldi</em></h2></div>
+    <ul class="pains">
+      <li><b>Il vicino è pieno, tu no</b><span>Stessa zona, casa simile, ma il suo calendario si riempie e il tuo resta a buchi.</span></li>
+      <li><b>Pieno ad agosto, vuoto il resto dell'anno</b><span>Tutto l'incasso si concentra in poche settimane, e il resto dell'anno la casa costa e basta.</span></li>
+      <li><b>Tante visite, poche prenotazioni</b><span>La gente apre l'annuncio, lo guarda, poi prenota da un'altra parte.</span></li>
+      <li><b>Prezzi a sensazione o lasciati all'automatico</b><span>Stesso prezzo tutto l'anno, o prezzi smart che scendono proprio quando la domanda è alta.</span></li>
+      <li><b>Commissioni, pulizie, tasse: alla fine resta poco</b><span>Lavori tutta l'estate e a fine anno il guadagno netto ti delude.</span></li>
+      <li><b>Non sai cosa cambiare</b><span>Hai letto consigli ovunque, ma nessuno ti ha detto cosa sistemare nel tuo annuncio, in che ordine.</span></li>
+    </ul>
+    <div class="verdict">
+      <div class="big">Il problema quasi mai è la zona. <em>È l'annuncio.</em></div>
+      <p>Prima foto, prezzi per periodo, impostazioni, recensioni: sono dettagli che l'ospite nota in un secondo e che si correggono in pochi giorni. Il check-up ti dice quali, sul tuo annuncio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER STACK -->
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">L'offerta</div><h2>Tutto questo, <em class="g">gratis</em>, sul tuo annuncio</h2><p>Non una guida generica: un'analisi fatta da chi gestisce prezzi e annunci ogni giorno, registrata sul tuo annuncio.</p></div>
+    <div class="stack">
+      <ul class="items">
+        <li><div class="n">01</div><div><h3>Il video check-up del tuo annuncio</h3><p>3 minuti registrati a schermo sul tuo annuncio, consegnati su WhatsApp entro 48 ore.</p></div></li>
+        <li><div class="n">02</div><div><h3>Il problema numero uno, mostrato</h3><p>Ti facciamo vedere cosa frena le prenotazioni, confrontando il tuo annuncio con quelli che nella tua zona prenotano di più.</p></div></li>
+        <li><div class="n">03</div><div><h3>Una modifica da fare oggi, da solo</h3><p>Un intervento concreto che puoi applicare subito, senza spendere nulla.</p></div></li>
+        <li><div class="n">04</div><div><h3>Il tuo prezzo di alta stagione a confronto</h3><p>Quanto sei sopra o sotto i concorrenti diretti nelle settimane che contano di più.</p></div></li>
+        <li><div class="n">05</div><div><h3>La guida "I 10 errori" <span class="tag">Bonus</span></h3><p>Il PDF con i 10 errori più comuni, come riconoscerli e come correggerli, più la checklist da 10 domande. Arriva subito via email.</p></div></li>
+      </ul>
+      <div class="pricebox">
+        <div class="lbl">Il tuo costo</div>
+        <div class="price">0€</div>
+        <p>Nessuna carta, nessun abbonamento, nessun accesso al tuo account. Ci serve solo il link pubblico del tuo annuncio.</p>
+        <a class="btn" href="#form">Richiedi il check-up</a>
+        <div class="seats">Registriamo solo 20 check-up a settimana, in ordine di arrivo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section>
+  <div class="wrap">
+    <div class="guarantee">
+      <div class="seal"><svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circ" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/></defs><text font-family="Jost,sans-serif" font-size="10.5" letter-spacing="3.2" fill="#B08D4A" font-weight="600"><textPath href="#circ">GARANZIA R&amp;M · RISCHIO ZERO · RIMBORSO TOTALE · GARANZIA R&amp;M · RISCHIO ZERO · </textPath></text></svg><b>100%</b><span>Rimborso garantito</span></div>
+      <div>
+        <div class="eyebrow">La garanzia</div>
+        <h2>Il rischio è tutto nostro</h2>
+        <p>Il check-up è gratuito: non hai niente da perdere. E se dopo il video decidi di passare all'analisi completa, anche quella è coperta.</p>
+        <ul>
+          <li><b>Check-up gratuito:</b> niente carta, niente impegno. Se non ti è utile, non ci devi niente.</li>
+          <li><b>Audit completo:</b> se non troviamo almeno 10 interventi concreti per migliorare il tuo annuncio, ti rimborsiamo tutto.</li>
+          <li><b>Audit + Applicazione:</b> se dopo 30 giorni le visualizzazioni non sono aumentate rispetto allo stesso periodo dell'anno prima, correggiamo gratis finché non migliorano.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="ivory">
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">Come funziona</div><h2>Tre passaggi, due minuti del tuo tempo</h2></div>
+    <div class="steps">
+      <div class="step"><h3>Mandaci il link</h3><p>Compila il modulo con il link del tuo annuncio e due numeri del 2026: prezzo medio e notti prenotate.</p></div>
+      <div class="step"><h3>Ricevi subito la guida</h3><p>Arriva via email. Puoi iniziare a correggere gli errori più semplici già oggi.</p></div>
+      <div class="step"><h3>Ricevi il video in 48 ore</h3><p>Su WhatsApp, registrato sul tuo annuncio. Lo guardi quando vuoi, anche dal telefono.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE ANALYZE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">Cosa guardiamo</div><h2>Gli stessi controlli che facciamo sugli immobili che gestiamo</h2><p>Ogni annuncio passa per la stessa checklist, con criteri fissi. Nel check-up ti mostriamo il punto più critico; nell'audit completo, tutti.</p></div>
+    <div class="areas">
+      <div><b>Concorrenza</b><span>5 annunci simili nella tua zona</span></div>
+      <div><b>Foto</b><span>Copertina, ordine, foto mancanti</span></div>
+      <div><b>Titolo</b><span>Dice perché scegliere te?</span></div>
+      <div><b>Descrizione</b><span>Per chi è la casa, in due righe</span></div>
+      <div><b>Servizi</b><span>Quelli che hai ma non dichiari</span></div>
+      <div><b>Impostazioni</b><span>Soggiorno minimo, sconti, calendario</span></div>
+      <div><b>Prezzi</b><span>Periodo per periodo, contro il mercato</span></div>
+      <div><b>Recensioni</b><span>Critiche ricorrenti e risposte</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT -->
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head"><div class="eyebrow">Dopo il check-up, se vuoi</div><h2>L'analisi completa: <em class="g">Audit Annuncio 2027</em></h2><p>Il check-up ti mostra il problema principale. L'audit li risolve tutti e ti prepara i prezzi della prossima stagione, prima che arrivino le prenotazioni.</p></div>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Audit</h3>
+        <!-- LANCIO: dopo il 31 ottobre mostra solo 249€ -->
+        <div class="price">149€<s>249€</s></div>
+        <ul>
+          <li>Confronto con 5 concorrenti diretti</li>
+          <li>Titolo e descrizione riscritti, in italiano e inglese</li>
+          <li>Listino prezzi 2027 periodo per periodo, con regole per aggiustarlo</li>
+          <li>Le 10 modifiche in ordine di impatto</li>
+          <li>Video di 15 minuti che spiega tutto</li>
+          <li>Consegna in 5 giorni lavorativi</li>
+        </ul>
+        <!-- CTA: sostituisci il link WhatsApp con il link di pagamento Stripe da 149€ (dopo il LANCIO: 249€) -->
+        <a class="btn btn-o tier-cta" href="https://wa.me/393485259881?text=Ciao%20Matteo%2C%20vorrei%20l%27Audit%20Annuncio%202027%20a%20149%E2%82%AC.%20Ecco%20il%20link%20del%20mio%20annuncio%3A%20" target="_blank" rel="noopener">Voglio l'Audit a 149€</a>
+        <p class="tier-note">Si apre WhatsApp con il messaggio già scritto</p>
+      </div>
+      <div class="tier hi">
+        <span class="badge">Lo facciamo noi</span>
+        <h3>Audit + Applicazione</h3>
+        <div class="price">399€</div>
+        <ul>
+          <li>Tutto l'audit</li>
+          <li>Applichiamo noi le modifiche come co-host, senza la tua password</li>
+          <li>Controllo dei risultati a 30 giorni</li>
+          <li>Correzione dei prezzi dopo il controllo</li>
+          <li>Garanzia sulle visualizzazioni</li>
+        </ul>
+        <!-- CTA: sostituisci il link WhatsApp con il link di pagamento Stripe da 399€ -->
+        <a class="btn tier-cta" href="https://wa.me/393485259881?text=Ciao%20Matteo%2C%20vorrei%20l%27Audit%20%2B%20Applicazione%20a%20399%E2%82%AC.%20Ecco%20il%20link%20del%20mio%20annuncio%3A%20" target="_blank" rel="noopener">Voglio Audit + Applicazione</a>
+        <p class="tier-note">Si apre WhatsApp con il messaggio già scritto</p>
+      </div>
+    </div>
+    <!-- LANCIO -->
+    <div class="launch"><b>Prezzo di lancio:</b> Audit a 149€ invece di 249€ per i primi 5 clienti, fino al 31 ottobre. Il prezzo te lo confermiamo nel video del check-up.</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="ivory">
+  <div class="wrap about narrow">
+    <div>
+      <div class="eyebrow">Chi siamo</div>
+      <h2 style="font-size:clamp(32px,4vw,44px);margin-bottom:18px">Non vendiamo corsi. <em class="g">Gestiamo immobili.</em></h2>
+      <p><b>R&amp;M Gestioni Immobiliari</b> si occupa di property management e revenue management per affitti brevi: ogni giorno decidiamo prezzi, scriviamo annunci e gestiamo ospiti di ville e appartamenti.</p>
+      <p>Il check-up usa lo stesso metodo che applichiamo agli immobili che gestiamo noi. Per questo ti diciamo cosa funziona, non cosa suona bene.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="form">
+  <div class="wrap form-wrap">
+    <div class="intro">
+      <div class="eyebrow">Richiedi il check-up</div>
+      <h2 style="font-size:clamp(34px,4.2vw,46px)">Mandaci il link del tuo annuncio</h2>
+      <p>Prezzo medio e notti prenotate ci servono per preparare un check-up utile: indicali anche in modo approssimativo.</p>
+      <ul class="recap">
+        <li><b>Subito:</b> la guida "I 10 errori" via email</li>
+        <li><b>Entro 48 ore:</b> il video check-up su WhatsApp</li>
+        <li><b>Costo:</b> zero, senza carta e senza impegno</li>
+      </ul>
+    </div>
+
+    <div>
+      <form id="lead" action="https://matteo22.app.n8n.cloud/webhook-test/checkup-lead" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Nuova richiesta check-up annuncio">
+        <input type="hidden" name="fonte" value="landing check-up">
+        <input type="hidden" name="fatturato_potenziale" id="fatturato">
+        <input type="hidden" name="qualificato" id="qualificato">
+        <input type="hidden" name="utm" id="utm">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="row">
+          <div class="field"><label for="nome">Nome e cognome</label><input type="text" id="nome" name="nome" autocomplete="name" required></div>
+          <div class="field"><label for="tel">WhatsApp</label><input type="tel" id="tel" name="whatsapp" autocomplete="tel" placeholder="+39" required><div class="hint">Qui ti mandiamo il video.</div></div>
+        </div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required><div class="hint">Qui ti mandiamo la guida.</div></div>
+        <div class="field"><label for="link">Link del tuo annuncio Airbnb o Booking</label><input type="url" id="link" name="link_annuncio" placeholder="https://" required></div>
+        <div class="row">
+          <div class="field"><label for="zona">Comune</label><input type="text" id="zona" name="comune" required></div>
+          <div class="field"><label for="tipo">Tipo di immobile</label>
+            <select id="tipo" name="tipo" required><option value="">Seleziona</option><option>Appartamento</option><option>Casa indipendente</option><option>Villa</option><option>Camere o B&amp;B</option><option>Agriturismo</option></select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="prezzo">Prezzo medio a notte nel 2026 (€)</label><input type="number" id="prezzo" name="prezzo_medio" min="0" step="1" inputmode="numeric" required></div>
+          <div class="field"><label for="notti">Notti prenotate nel 2026</label><input type="number" id="notti" name="notti_2026" min="0" max="366" step="1" inputmode="numeric" required><div class="hint">Anche approssimative.</div></div>
+        </div>
+        <div class="field"><label for="problema">Qual è il problema principale?</label>
+          <select id="problema" name="problema"><option value="">Seleziona</option><option>Poche prenotazioni</option><option>Pieno solo in alta stagione</option><option>Prezzi troppo bassi</option><option>Recensioni</option><option>Annuncio nuovo, pochi dati</option><option>Altro</option></select></div>
+        <label class="check big"><input type="checkbox" name="vuole_checkup" id="vuole" value="si" checked> <span>Voglio il check-up video del mio annuncio</span></label>
+        <label class="check"><input type="checkbox" name="privacy" id="privacy" value="accettata" required> <span>Ho letto l'<a href="https://rmgestioni.it/privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per ricevere guida e check-up.</span></label>
+        <label class="check"><input type="checkbox" name="marketing" value="si"> <span>Voglio ricevere aggiornamenti e offerte di R&amp;M Gestioni Immobiliari (facoltativo).</span></label>
+        <button class="btn" type="submit" id="submit">Voglio il check-up gratuito</button>
+        <p class="formnote">Gratis · Nessuna carta · Solo 20 check-up a settimana</p>
+        <p class="error" id="err" role="alert"></p>
+      </form>
+
+      <div class="ok card" id="ok" aria-live="polite">
+        <div class="tag">Richiesta ricevuta</div>
+        <h3 id="ok-title">Grazie, la guida è in arrivo</h3>
+        <p id="ok-text"></p>
+        <a class="btn" href="/guida-10-errori.pdf" target="_blank" rel="noopener" id="dl">Scarica subito la guida</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: le obiezioni -->
+<section class="ivory">
+  <div class="wrap narrow">
+    <div class="sec-head"><div class="eyebrow">Domande frequenti</div><h2>Prima di chiedercelo</h2></div>
+    <details><summary>Dov'è la fregatura, se è gratis?</summary><p>Nessuna. Il check-up ci serve a farti vedere come lavoriamo. Se dopo il video vuoi l'analisi completa te la proponiamo, ma decidi tu: non ci devi niente.</p></details>
+    <details><summary>Uso già i prezzi smart della piattaforma. Serve comunque?</summary><p>Sì. I prezzi automatici puntano a riempire il calendario, non a farti guadagnare di più: spesso scendono troppo proprio nei periodi di punta. Nel check-up ti mostriamo come si posiziona il tuo prezzo di alta stagione rispetto ai concorrenti.</p></details>
+    <details><summary>Non posso farlo da solo con le guide online?</summary><p>Le guide dicono cosa fare in generale, e la nostra te la regaliamo. Il check-up ti dice cosa cambiare nel tuo annuncio, confrontato con i tuoi concorrenti diretti, in ordine di importanza.</p></details>
+    <details><summary>Adesso è bassa stagione, non è meglio aspettare?</summary><p>No, è il momento migliore. Le prime prenotazioni per l'estate arrivano in autunno e in inverno: se il tuo annuncio e i tuoi prezzi sono ancora quelli di quest'anno, le perdi o le incassi a un prezzo troppo basso.</p></details>
+    <details><summary>Dovete accedere al mio account?</summary><p>No. Per il check-up e per l'audit ci basta il link pubblico dell'annuncio. Solo per Audit + Applicazione ti chiediamo di aggiungerci come co-host, senza condividere la password.</p></details>
+    <details><summary>Perché chiedete prezzo medio e notti prenotate?</summary><p>Per capire il potenziale del tuo annuncio e preparare un check-up utile. Se il margine di miglioramento è piccolo, te lo diciamo onestamente e ti mandiamo solo la guida.</p></details>
+    <details><summary>Lavorate solo in una zona?</summary><p>No. Check-up e audit si fanno a distanza, per annunci in tutta Italia.</p></details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="dark final">
+  <div class="wrap">
+    <h2>Il vicino si sta già preparando <em class="g">per il 2027.</em></h2>
+    <p>In 48 ore sai cosa cambiare nel tuo annuncio. Gratis, senza impegno, con la guida in regalo.</p>
+    <a class="btn" href="#form">Voglio il check-up gratuito</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="data:image/png;base64,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" alt="R&amp;M Gestioni Immobiliari" width="409" height="282">
+    <div><a href="tel:+393485259881">+39 348 525 9881</a> · <a href="mailto:matteo@rmgestioni.it">matteo@rmgestioni.it</a> · <a href="https://rmgestioni.it/privacy.html">Privacy</a></div>
+  </div>
+</footer>
+
+<a class="btn sticky" href="#form" id="sticky">Voglio il check-up gratuito</a>
+
+<script>
+(function(){
+  // video: mostra il segnaposto finché il file non è caricato sul sito
+  var pl = document.getElementById('player'), v = pl.querySelector('video');
+  v.addEventListener('loadedmetadata', function(){ pl.classList.remove('empty'); });
+  v.querySelector('source').addEventListener('error', function(){ pl.classList.add('empty'); });
+  if (v.readyState > 0) pl.classList.remove('empty');
+  // ---- dinamica: header, barra lettura, comparse allo scroll ----
+  var hdr = document.getElementById('top'), bar = document.getElementById('progress');
+  function onScroll(){
+    var y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+    hdr.classList.toggle('scrolled', y > 40);
+    bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var sel = '.sec-head, .pains li, .verdict, .items li, .pricebox, .guarantee, .step, .areas div, .tier, .launch, .about, .vid > div, .player, details, .form-wrap > div, .final h2, .final p';
+  var els = document.querySelectorAll(sel);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { var t = en.target; t.classList.add('in'); io.unobserve(t); setTimeout(function(){ t.style.transitionDelay = ''; }, 1400); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){
+      var sib = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.classList.add('reveal'); el.style.transitionDelay = Math.min(sib, 6) * 80 + 'ms';
+      io.observe(el);
+    });
+  } else { els.forEach(function(el){ el.classList.add('in'); }); }
+
+  var SOGLIA = 8000; // fatturato potenziale minimo per il check-up video (€)
+  var f = document.getElementById('lead'), err = document.getElementById('err'), btn = document.getElementById('submit');
+  var p = new URLSearchParams(location.search), utm = [];
+  ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){ if(p.get(k)) utm.push(k+'='+p.get(k)); });
+  document.getElementById('utm').value = utm.join('&');
+
+  // pulsante fisso su mobile: nascosto quando il modulo è visibile
+  var sticky = document.getElementById('sticky');
+  var formVisible = false;
+  function upd(){ sticky.style.visibility = (window.scrollY > 600 && !formVisible) ? 'visible' : 'hidden'; }
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(e){ formVisible = e[0].isIntersecting; upd(); }).observe(document.getElementById('form'));
+  window.addEventListener('scroll', upd, { passive: true }); upd();
+
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault(); err.style.display = 'none';
+    if (f.querySelector('[name=_gotcha]').value) return;
+    var bad = Array.prototype.find.call(f.querySelectorAll('[required]'), function(el){ return el.type === 'checkbox' ? !el.checked : !el.checkValidity(); });
+    if (bad) { err.textContent = bad.type === 'checkbox' ? 'Per continuare serve il consenso privacy.' : 'Controlla il campo: ' + (f.querySelector('label[for="'+bad.id+'"]') || {}).textContent; err.style.display = 'block'; bad.focus(); return; }
+
+    var fatt = Math.round((+f.prezzo_medio.value || 0) * (+f.notti_2026.value || 0));
+    var vuole = document.getElementById('vuole').checked;
+    var qual = vuole && fatt >= SOGLIA;
+    document.getElementById('fatturato').value = fatt;
+    document.getElementById('qualificato').value = qual ? 'si' : 'no';
+
+    btn.disabled = true; btn.textContent = 'Invio in corso...';
+    fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } })
+      .then(function(r){ if (!r.ok) throw new Error();
+        if (window.gtag) gtag('event', 'generate_lead', { lead_source: 'check-up', qualified: qual ? 'si' : 'no', value: fatt });
+        if (window.fbq) fbq('track', 'Lead', { content_name: 'check-up', status: qual ? 'qualificato' : 'non_qualificato' });
+        f.style.display = 'none';
+        var t = document.getElementById('ok-text');
+        if (qual) { document.getElementById('ok-title').textContent = 'Fatto: il tuo check-up è in preparazione';
+          t.textContent = 'Ti abbiamo mandato la guida via email. Entro 48 ore ricevi su WhatsApp il video con il check-up del tuo annuncio. Intanto puoi scaricare la guida qui sotto e iniziare dalla checklist finale.'; }
+        else if (vuole) { t.textContent = 'Ti abbiamo mandato la guida via email: con la checklist finale puoi correggere da solo gli errori principali. Il check-up video lo riserviamo agli annunci con un potenziale di incasso più alto, dove l’analisi fa la differenza. Se hai domande, scrivici su WhatsApp.'; }
+        else { t.textContent = 'Ti abbiamo mandato la guida via email. Puoi anche scaricarla subito qui sotto.'; }
+        document.getElementById('ok').style.display = 'block';
+        document.getElementById('ok').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function(){ btn.disabled = false; btn.textContent = 'Voglio il check-up gratuito'; err.textContent = 'Invio non riuscito. Riprova o scrivici su WhatsApp al +39 348 525 9881.'; err.style.display = 'block'; });
+  });
+})();
+</script>
+</body>
+</html>
