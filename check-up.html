@@ -361,7 +361,8 @@ details[open] summary:after{transform:rotate(180deg)}
   Copertina facoltativa: video-cover.jpg (1920x1080).
   Video verticale? Togli la classe "wide" dal div .player.
   Preferisci YouTube? Sostituisci <video>...</video> con l'iframe di YouTube e togli la classe "empty". -->
-<section id="video">
+<!-- SEZIONE VIDEO NASCOSTA: per riattivarla togli l'attributo "hidden" dalla riga qui sotto -->
+<section id="video" hidden>
   <div class="wrap vid">
     <div>
       <div class="eyebrow">In 90 secondi</div>
@@ -375,7 +376,7 @@ details[open] summary:after{transform:rotate(180deg)}
       <a class="btn" href="#form">Voglio il check-up gratuito</a>
     </div>
     <div class="player wide empty" id="player">
-      <video controls playsinline preload="metadata" poster="/video-cover.jpg">
+      <video controls playsinline preload="none" poster="/video-cover.jpg">
         <source src="/video-checkup.mp4" type="video/mp4">
       </video>
       <div class="ph" aria-hidden="true">
