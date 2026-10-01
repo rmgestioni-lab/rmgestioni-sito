@@ -314,8 +314,71 @@ details[open] summary:after{transform:rotate(180deg)}
 .btn-o:hover{background:var(--gold-l);color:var(--ink)}
 .tier-note{font-size:12.5px;color:#8f877a;text-align:center;margin-top:10px}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('consent', 'revoke');
+fbq('init', '2353537081854874');
+try { if (localStorage.getItem('rm_marketing_consent') === 'granted') { fbq('consent', 'grant'); } } catch (e) {}
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2353537081854874&ev=PageView&noscript=1"
+/></noscript>
+
+<!-- Meta Pixel: consenso marketing (solo su questa pagina) -->
+<style>
+#rm-mkt-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink);color:var(--ivory);padding:16px 20px;font-family:"Jost",system-ui,sans-serif;font-size:14px;line-height:1.5;display:flex;flex-wrap:wrap;align-items:center;gap:14px;box-shadow:0 -2px 16px rgba(0,0,0,.25)}
+#rm-mkt-consent p{margin:0;flex:1 1 260px}
+#rm-mkt-consent a{color:var(--gold-l);text-decoration:underline}
+#rm-mkt-consent button{border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+#rm-mkt-accept{background:var(--gold);color:var(--ink)}
+#rm-mkt-reject{background:transparent;color:var(--ivory);border:1px solid var(--muted-d) !important}
+</style>
+<div id="rm-mkt-consent" style="display:none">
+  <p>Usiamo un cookie di marketing (Meta Pixel) per capire l'efficacia di questa pagina. Leggi la <a href="/privacy.html">Privacy Policy</a>.</p>
+  <button id="rm-mkt-reject" type="button">Rifiuta</button>
+  <button id="rm-mkt-accept" type="button">Accetta</button>
+</div>
+<script>
+(function () {
+  var KEY = 'rm_marketing_consent';
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  var banner = document.getElementById('rm-mkt-consent');
+  if (saved !== 'granted' && saved !== 'denied') { banner.style.display = 'flex'; }
+
+  document.getElementById('rm-mkt-accept').addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'granted'); } catch (e) {}
+    if (window.fbq) fbq('consent', 'grant');
+    banner.style.display = 'none';
+  });
+  document.getElementById('rm-mkt-reject').addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'denied'); } catch (e) {}
+    banner.style.display = 'none';
+  });
+
+  // Evento Contact sui link WhatsApp, senza bloccare l'apertura.
+  // Delegato su document: lo script gira subito dopo <body>, prima che il
+  // resto della pagina (e quindi i link) sia stato analizzato dal browser.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="wa.me/"]');
+    if (a && window.fbq) fbq('track', 'Contact');
+  });
+})();
+</script>
+<!-- Fine Meta Pixel: consenso marketing -->
+
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 <header id="top">
