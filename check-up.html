@@ -314,6 +314,25 @@ details[open] summary:after{transform:rotate(180deg)}
 .btn-o:hover{background:var(--gold-l);color:var(--ink)}
 .tier-note{font-size:12.5px;color:#8f877a;text-align:center;margin-top:10px}
 </style>
+<style>
+/* Sezione "Chi ti fa il check-up" e riga con avatar nel modulo.
+   Selettori piu' specifici di ".about img" per non ereditarne sfondo e padding. */
+.about.chi{max-width:1000px}
+.chi-grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(32px,5vw,64px);align-items:center}
+.chi-foto{--d:320px;box-sizing:content-box;width:var(--d);height:var(--d);padding:6px;border:2px solid #C9A45E;border-radius:50%;background:var(--ivory)}
+.about .chi-foto img{width:100%;height:100%;max-width:none;padding:0;background:none;border-radius:50%;object-fit:cover}
+.chi-firma{margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)}
+.about .chi-firma img{height:110px;width:auto;max-width:none;padding:0;background:none;border-radius:0;margin-left:-10px}
+.chi-nome{font-family:"Jost",system-ui,sans-serif;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:#B08D4A;margin-top:6px}
+.chi-riga{display:flex;align-items:center;gap:14px;margin:18px 0 4px}
+.chi-riga img{flex:none;width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid #C9A45E}
+.chi-riga span{font-size:16px;font-weight:500;line-height:1.4;color:var(--ink)}
+@media (max-width:760px){
+  .chi-grid{grid-template-columns:1fr;gap:32px}
+  .chi-foto{--d:220px;justify-self:center}
+  .about .chi-firma img{height:80px}
+}
+</style>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -585,12 +604,19 @@ src="https://www.facebook.com/tr?id=2353537081854874&ev=PageView&noscript=1"
 
 <!-- ABOUT -->
 <section class="ivory">
-  <div class="wrap about narrow">
-    <div>
-      <div class="eyebrow">Chi siamo</div>
-      <h2 style="font-size:clamp(32px,4vw,44px);margin-bottom:18px">Non vendiamo corsi. <em class="g">Gestiamo immobili.</em></h2>
-      <p><b>R&amp;M Gestioni Immobiliari</b> si occupa di property management e revenue management per affitti brevi: ogni giorno decidiamo prezzi, scriviamo annunci e gestiamo ospiti di ville e appartamenti.</p>
-      <p>Il check-up usa lo stesso metodo che applichiamo agli immobili che gestiamo noi. Per questo ti diciamo cosa funziona, non cosa suona bene.</p>
+  <div class="wrap about narrow chi">
+    <div class="chi-grid">
+      <div class="chi-foto"><img src="/matteo-cerchio.jpg" width="320" height="320" alt="Matteo, co-fondatore di R&amp;M Gestioni Immobiliari" loading="lazy" decoding="async"></div>
+      <div>
+        <div class="eyebrow">Chi ti fa il check-up</div>
+        <h2 style="font-size:clamp(32px,4vw,44px);margin-bottom:18px">Non vendiamo corsi. <em class="g">Gestiamo immobili.</em></h2>
+        <p>Sono Matteo, co-fondatore di <b>R&amp;M Gestioni Immobiliari</b>. Ogni giorno gestiamo prezzi, annunci e ospiti di ville e appartamenti in Toscana e in Sardegna.</p>
+        <p>Il check-up usa lo stesso metodo che applichiamo alle case che gestiamo noi. Per questo ti dico cosa funziona, non cosa suona bene. E il video sul tuo annuncio lo registro io.</p>
+        <div class="chi-firma">
+          <img src="/firma-matteo.png" width="813" height="490" alt="Firma di Matteo" loading="lazy" decoding="async">
+          <div class="chi-nome">Matteo · Co-fondatore, R&amp;M Gestioni Immobiliari</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -601,6 +627,7 @@ src="https://www.facebook.com/tr?id=2353537081854874&ev=PageView&noscript=1"
     <div class="intro">
       <div class="eyebrow">Richiedi il check-up</div>
       <h2 style="font-size:clamp(34px,4.2vw,46px)">Mandaci il link del tuo annuncio</h2>
+      <div class="chi-riga"><img src="/matteo-avatar.jpg" width="56" height="56" alt="Matteo" loading="lazy" decoding="async"><span>Il video lo registro io, Matteo, entro 48 ore.</span></div>
       <p>Prezzo medio e notti prenotate ci servono per preparare un check-up utile: indicali anche in modo approssimativo.</p>
       <ul class="recap">
         <li><b>Subito:</b> la guida "I 10 errori" via email</li>
