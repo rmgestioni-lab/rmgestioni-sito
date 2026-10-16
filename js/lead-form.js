@@ -41,6 +41,9 @@
     if (form.elements._honey && form.elements._honey.value) return; // anti-spam: campo trappola compilato
 
     var payload = { _template: 'table', _captcha: 'false', Tipologia: form.dataset.tipo };
+    // Utile a capire da quale canale arriva la richiesta (nessun cookie, nessun dato salvato nel browser)
+    payload['Pagina di invio'] = location.pathname + location.search;
+    if (document.referrer) payload['Provenienza'] = document.referrer;
     Array.prototype.forEach.call(form.elements, function (el) {
       if (!el.name || el.name.charAt(0) === '_' || el.type === 'submit') return;
       var label = el.id && form.querySelector('label[for="' + el.id + '"]');
